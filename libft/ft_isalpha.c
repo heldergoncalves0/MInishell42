@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 14:53:03 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:14:21 by helferna         ###   ########.fr       */
+/*   Created: 2022/10/26 15:27:08 by helferna          #+#    #+#             */
+/*   Updated: 2022/11/01 17:21:05 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
-int main(void)
+int	ft_isalpha(int str)
 {
-    executor();
-    return (0);
+	return ((str >= 'a' && str <= 'z') || (str >= 'A' && str <= 'Z'));
 }

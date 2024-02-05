@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 14:53:03 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:14:21 by helferna         ###   ########.fr       */
+/*   Created: 2022/10/26 17:36:31 by helferna          #+#    #+#             */
+/*   Updated: 2022/10/26 17:39:26 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
-int main(void)
+int	ft_isprint(int ch)
 {
-    executor();
-    return (0);
+	return (ch >= 32 && ch <= 126);
 }

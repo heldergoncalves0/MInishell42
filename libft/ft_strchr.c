@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 14:53:03 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:14:21 by helferna         ###   ########.fr       */
+/*   Created: 2022/10/30 13:00:55 by helferna          #+#    #+#             */
+/*   Updated: 2022/11/03 14:05:41 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
-int main(void)
+#include "libft.h"
+
+char	*ft_strchr(const char *s, int c)
 {
-    executor();
-    return (0);
+	while (*s && (unsigned char)c != *s)
+		s++;
+	if ((unsigned char)c == *s)
+		return ((char *)s);
+	return (0);
 }

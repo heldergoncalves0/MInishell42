@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 14:53:03 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:14:21 by helferna         ###   ########.fr       */
+/*   Created: 2022/10/30 22:02:43 by helferna          #+#    #+#             */
+/*   Updated: 2022/11/01 16:42:34 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
-int main(void)
+#include "libft.h"
+
+void	*ft_calloc(size_t count, size_t size)
 {
-    executor();
-    return (0);
+	size_t	total;
+	void	*dst;
+
+	total = count * size;
+	dst = malloc(total);
+	if (dst == NULL)
+		return (dst);
+	ft_bzero(dst, total);
+	return (dst);
 }

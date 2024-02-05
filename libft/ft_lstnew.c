@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 14:53:03 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:14:21 by helferna         ###   ########.fr       */
+/*   Created: 2022/11/02 18:20:20 by helferna          #+#    #+#             */
+/*   Updated: 2022/11/02 19:29:03 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
-int main(void)
+#include "libft.h"
+
+t_list	*ft_lstnew(void *content)
 {
-    executor();
-    return (0);
+	t_list	*head;
+
+	head = (t_list *)malloc(sizeof(t_list));
+	if (!head)
+		return (NULL);
+	head -> content = content;
+	head -> next = NULL;
+	return (head);
 }

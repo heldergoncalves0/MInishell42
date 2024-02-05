@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 14:53:03 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:14:21 by helferna         ###   ########.fr       */
+/*   Created: 2022/10/26 15:37:35 by helferna          #+#    #+#             */
+/*   Updated: 2022/10/31 10:16:21 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
-int main(void)
+#include <stdio.h>
+
+int	ft_isdigit(int str)
 {
-    executor();
-    return (0);
+	if (str >= '0' && str <= '9')
+		return (1);
+	return (0);
 }
+
+/*int main(void)
+{
+	char *a;
+	int b;
+
+	a = "43434d53";
+	b = ft_isdigit(a);
+	printf("%d", b);
+}*/

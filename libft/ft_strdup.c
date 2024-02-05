@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/05 14:53:03 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:14:21 by helferna         ###   ########.fr       */
+/*   Created: 2022/10/30 22:06:30 by helferna          #+#    #+#             */
+/*   Updated: 2022/10/31 23:12:42 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
-int main(void)
+#include "libft.h"
+
+char	*ft_strdup(const char *s1)
 {
-    executor();
-    return (0);
+	char	*s2;
+
+	s2 = malloc(ft_strlen(s1) + 1);
+	if (!s2)
+		return (0);
+	ft_memcpy(s2, s1, ft_strlen(s1) + 1);
+	return (s2);
 }
