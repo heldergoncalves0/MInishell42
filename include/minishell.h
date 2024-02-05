@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:11:50 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:31:45 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@
 # define RES "\e[0;0m"
 
 //executor
-void	executor(void);
+void	executor(char **env);
 
 #endif

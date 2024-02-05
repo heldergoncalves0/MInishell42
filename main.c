@@ -6,14 +6,16 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:21:33 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:22:19 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:32:23 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int main(void)
+int main(int argc, char *argv[], char **env)
 {
-    executor();
+    (void)argv;
+    (void)argc;
+    executor(env);
     return (0);
 }
