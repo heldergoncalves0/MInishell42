@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/31 10:31:43 by helferna          #+#    #+#             */
-/*   Updated: 2022/11/04 13:37:07 by helferna         ###   ########.fr       */
+/*   Created: 2024/02/06 13:21:50 by gcatarin          #+#    #+#             */
+/*   Updated: 2024/02/06 13:30:09 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, size_t start, size_t len)
 {
 	char	*new_str;
 	size_t	i;
@@ -33,4 +32,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		new_str[j++] = s[i++];
 	new_str[j] = '\0';
 	return (new_str);
+}
+
+size_t ft_strlen(char *s)
+{
+	size_t i;
+	
+	i = 0;
+	while(s[i])
+		i++;
+	return(i);
 }
