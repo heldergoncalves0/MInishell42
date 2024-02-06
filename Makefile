@@ -5,18 +5,19 @@
 #                                                     +:+ +:+         +:+      #
 #    By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/13 17:33:02 by helferna          #+#    #+#              #
-#    Updated: 2024/02/05 17:15:05 by helferna         ###   ########.fr        #
+#    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
+#    Updated: 2024/02/06 17:18:50 by helferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME  = minishell
 OS    = $(shell uname)
-CC    = @gcc
+CC    = @cc
 FLAGS = -Wall -Wextra -g -fsanitize=address -lreadline
 LFT   = libft/libft.a
 INC   = -I./libft
-SRC   = main.c executor/executor.c
+SRC   = src/main.c src/executor/executor.c src/builtins/exec_builtin.c src/builtins/cd.c src/builtins/unset.c \
+		src/builtins/pwd.c
 OBJ   = $(patsubst src/%.c, obj/%.o, $(SRC))
 
 all: $(MLX) $(LFT) obj $(NAME)

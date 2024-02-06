@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/05 17:31:45 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:15:24 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <sys/wait.h>
+# include <stdbool.h>
 
 //colors
 # define RED "\e[0;31m"
@@ -32,7 +33,19 @@
 # define WHT "\e[0;37m"
 # define RES "\e[0;0m"
 
+//useless defines
+# define BUILTIN_COUNT 7
+
+typedef struct s_mini{
+	char **cmd_paths;
+	char *path;
+}	t_mini;
+
 //executor
-void	executor(char **env);
+int		executor(char **env, t_mini *mini);
+void	exec_builtin(char **cmd, t_mini *mini, char **env);
+void	cd(t_mini *mini, char *path, char **env);
+void	unset(t_mini	*mini, char **env, char *envar);
+void	pwd(char **envp);
 
 #endif
