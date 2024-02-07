@@ -3,29 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
 /*   Updated: 2024/02/07 15:34:16 by helferna         ###   ########.fr       */
+=======
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
+/*   Updated: 2024/02/07 21:45:17 by gcatarin         ###   ########.fr       */
+>>>>>>> parser
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	error_msg(char *s){
-	write(2, s, ft_strlen(s));
-}
-
-void	exitcase(t_paths *p)
+void	exitcase(t_shell *p, char *s)
 {
-	printf("exit\n");
+	write(2, s, ft_strlen(s));
 	leave(p);
 }
 
-void	leave(t_paths *p)
+void	leave(t_shell *p)
 {
 	//int i;
 
+<<<<<<< HEAD
 	clear_history();
 	free(p);
 	// free(p->input);
@@ -50,4 +54,10 @@ void	leave(t_paths *p)
 	// 	i++;
 	// }
 	 exit(0);
+=======
+	rl_clear_history();
+	(void )p;
+	//free as structs
+	exit(0);
+>>>>>>> parser
 }

@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:27:08 by helferna          #+#    #+#             */
-/*   Updated: 2022/11/01 17:21:05 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/07 20:18:57 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isalpha(int str)
 {
 	return ((str >= 'a' && str <= 'z') || (str >= 'A' && str <= 'Z'));
+}
+
+
+int	ft_isspace(char s)
+{
+	if (s == ' ' || (s > 8 && s < 14))
+		return (1);
+	return (0);
 }

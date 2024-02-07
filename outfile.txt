@@ -1,4 +1,0 @@
-executor
-main.c
-outfile.txt
-teste.txt

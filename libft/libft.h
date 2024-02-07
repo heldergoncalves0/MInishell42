@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:24:27 by helferna          #+#    #+#             */
-/*   Updated: 2023/03/13 16:39:28 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/07 20:18:37 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,5 @@ char	*ft_strjoin_gnl(char *s1, char *s2);
 size_t	ft_strlen_gnl(char *str);
 int		adjust_buffer_after_newline(char *buffer);
 int		count_word(const char *s, char c);
-
+int		ft_isspace(char s);
 #endif
