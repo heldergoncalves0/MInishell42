@@ -1,0 +1,15 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     minishell
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003204, symSize: 0x2C }
+  - { offsetInCU: 0x33, offset: 0x33, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003204, symSize: 0x2C }
+  - { offsetInCU: 0x26, offset: 0x79, size: 0x8, addend: 0x0, symName: _find_executable_path, symObjAddr: 0x0, symBinAddr: 0x100003248, symSize: 0x154 }
+  - { offsetInCU: 0x3B, offset: 0x8E, size: 0x8, addend: 0x0, symName: _.str, symObjAddr: 0x480, symBinAddr: 0x100003CA0, symSize: 0x0 }
+  - { offsetInCU: 0x66, offset: 0xB9, size: 0x8, addend: 0x0, symName: _.str.1, symObjAddr: 0x4A0, symBinAddr: 0x100003CC0, symSize: 0x0 }
+  - { offsetInCU: 0x83, offset: 0xD6, size: 0x8, addend: 0x0, symName: _.str.2, symObjAddr: 0x4C0, symBinAddr: 0x100003CE0, symSize: 0x0 }
+  - { offsetInCU: 0xA0, offset: 0xF3, size: 0x8, addend: 0x0, symName: _.str.3, symObjAddr: 0x4E0, symBinAddr: 0x100003D00, symSize: 0x0 }
+  - { offsetInCU: 0xB1, offset: 0x104, size: 0x8, addend: 0x0, symName: _.str.4, symObjAddr: 0x500, symBinAddr: 0x100003D20, symSize: 0x0 }
+  - { offsetInCU: 0xC6, offset: 0x119, size: 0x8, addend: 0x0, symName: _find_executable_path, symObjAddr: 0x0, symBinAddr: 0x100003248, symSize: 0x154 }
+  - { offsetInCU: 0x126, offset: 0x179, size: 0x8, addend: 0x0, symName: _executor, symObjAddr: 0x154, symBinAddr: 0x10000339C, symSize: 0x280 }
+...

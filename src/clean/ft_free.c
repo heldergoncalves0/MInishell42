@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 11:37:54 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:34:16 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	leave(t_paths *p)
 {
 	//int i;
 
-	rl_clear_history();
+	clear_history();
 	free(p);
 	// free(p->input);
 	// i = 0;
