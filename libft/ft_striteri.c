@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 21:45:17 by gcatarin         ###   ########.fr       */
+/*   Created: 2022/11/02 13:28:31 by helferna          #+#    #+#             */
+/*   Updated: 2022/11/02 13:36:24 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-
-void	exitcase(t_shell *p, char *s)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	write(2, s, ft_strlen(s));
-	leave(p);
-}
+	unsigned int	i;
 
-void	leave(t_shell *p)
-{
-	//int i;
-
-	rl_clear_history();
-	(void )p;
-	//free as structs
-	exit(0);
+	i = 0;
+	if (s)
+	{
+		while (s[i])
+		{
+			f(i, &s[i]);
+			i++;
+		}
+	}
 }

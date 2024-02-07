@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 21:45:17 by gcatarin         ###   ########.fr       */
+/*   Created: 2022/10/26 15:37:35 by helferna          #+#    #+#             */
+/*   Updated: 2022/10/31 10:16:21 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <stdio.h>
 
-void	exitcase(t_shell *p, char *s)
+int	ft_isdigit(int str)
 {
-	write(2, s, ft_strlen(s));
-	leave(p);
+	if (str >= '0' && str <= '9')
+		return (1);
+	return (0);
 }
 
-void	leave(t_shell *p)
+/*int main(void)
 {
-	//int i;
+	char *a;
+	int b;
 
-	rl_clear_history();
-	(void )p;
-	//free as structs
-	exit(0);
-}
+	a = "43434d53";
+	b = ft_isdigit(a);
+	printf("%d", b);
+}*/

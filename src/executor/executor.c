@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/06 18:01:13 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:30:21 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,22 @@ bool	is_builtin(char **builtin_list, char *cmd)
 	return (false);
 }
 
-int	executor(char **env, t_mini *mini)
-{
-    mini->path = getenv("PATH");
-	char *full_cmd[] = {"ls", "-la", NULL};
-	mini->cmd_paths = ft_split(mini->path, ':');
-	char *executable_path = NULL;
+// int	executor(char **env, t_mini *mini)
+// {
+//     mini->path = getenv("PATH");
+// 	char *full_cmd[] = {"ls", "-la", NULL};
+// 	mini->cmd_paths = ft_split(mini->path, ':');
+// 	char *executable_path = NULL;
 	
-	if (is_builtin((char*[]){"echo", "cd", "pwd", "env", "exit", "export", "unset"}, full_cmd[0]))
-		exec_builtin(full_cmd, mini, env);
-	else
-	{
-		executable_path = find_executable_path(full_cmd[0], mini->cmd_paths);
-		if (!executable_path)
-			perror(full_cmd[0]);
-		if (!execve(executable_path, full_cmd, env))
-			perror(full_cmd[0]);
-	}
-	return (1);
-}
+// 	if (is_builtin((char*[]){"echo", "cd", "pwd", "env", "exit", "export", "unset"}, full_cmd[0]))
+// 		exec_builtin(full_cmd, mini, env);
+// 	else
+// 	{
+// 		executable_path = find_executable_path(full_cmd[0], mini->cmd_paths);
+// 		if (!executable_path)
+// 			perror(full_cmd[0]);
+// 		if (!execve(executable_path, full_cmd, env))
+// 			perror(full_cmd[0]);
+// 	}
+// 	return (1);
+// }

@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 21:45:17 by gcatarin         ###   ########.fr       */
+/*   Created: 2022/10/30 13:00:55 by helferna          #+#    #+#             */
+/*   Updated: 2022/11/03 14:05:41 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	exitcase(t_shell *p, char *s)
+char	*ft_strchr(const char *s, int c)
 {
-	write(2, s, ft_strlen(s));
-	leave(p);
-}
-
-void	leave(t_shell *p)
-{
-	//int i;
-
-	rl_clear_history();
-	(void )p;
-	//free as structs
-	exit(0);
+	while (*s && (unsigned char)c != *s)
+		s++;
+	if ((unsigned char)c == *s)
+		return ((char *)s);
+	return (0);
 }

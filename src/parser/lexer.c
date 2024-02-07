@@ -3,92 +3,103 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 13:12:58 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/07 21:51:53 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	read_words(int i, char *str, t_lex *lex_lst)
+static char	*line_treat(char *str, char *new, size_t *index)
 {
-	int	j;
+	size_t	i;
+	size_t	j;
 
-	j = 0;
-	while (str[i + j] && !(check_token(str[i + j])))
+	i = (str[0] == '>' || str[0] == '<' || str[0] == '|');
+	i += (i && (str[1] == '>' || str[1] == '<'));
+	if (i)
 	{
-		if (is_quote(str[i + j]))
-			str = remove_quote(str, i + j);
-		if (is_whitespace(str[i + j]))
-			break ;
-		else
-			j++;
-	}
-	if (!add_token(ft_substr(str, i, j), 0, lex_lst))
-		return (-1);
-	return (j);
+		j = *index;
+		new[j++] = '\2';
+		if (str[0] == '|')
+			str[0] = '\3';
+		new[j++] = str[0];
+		if (i == 2)
+			new[j++] = str[1];
+		new[j++] = '\2';
+		index[0] = j;
+	}		 
+	return (str + i);
 }
 
-int	handle_token(char *str, int i, t_lex *lex_lst)
+static char	*line_dup(char *str, char *new)
 {
-	char	*token;
+	char	flag;
+	size_t	i;
+	size_t	j;
 
-	token = check_token(str[i]);
-	if (strncmp(token, "GREAT", 5))
-	{
-		token = check_token(str[i + 1]);
-		if (strncmp(token, "GREAT", 5))
-		{
-			 if (!add_token("GREATGREAT", 1, lex_lst))
-			 	return (-1);
-			return (2);
-		}
-	}
-	else if (strncmp(token, "LESS", 4))
-	{
-		token = check_token(str[i + 1]);
-		if (strncmp(token, "LESS", 4))
-		{
-			if (!add_token("LESSLESS", 1, lex_lst))
-				return (-1);
-			return (2);
-		}
-	}
-	else if (token)
-	{
-		if (!add_token(token, 1, lex_lst))
-			return (-1);
-		return (1);
-	}
-	return (0);
-}
-
-void	tokeniser(t_paths *p, t_lex *lex_lst)
-{
-	int	i;
-	int	j;
-
+	flag = 0;
 	i = 0;
-	if (check_token(p->args[ft_strlen(p->args) - 1]))
+	while (*str)
 	{
-		error_msg("Syntax Error!");
-		return ;
+		j = i;
+		if (*str == flag)
+			flag = 0;
+		else if (flag == 0 && (*str == '\'' || *str == '\"'))
+			flag = *str;
+		if (!flag && ft_isspace(*str))
+			*str = '\2';
+		else if (flag == 0)
+			str = line_treat(str, new, &i);
+		if (j != i)
+			continue;
+		new[i++] = *str;
+		str++;
 	}
-	while (p->args[i])
-	{
-		j = 0;
-		i += skip_spaces(p->args, i);
-		if (check_token(p->args[i]))
-			j = handle_token(p->args, i, lex_lst);
-		else
-			j = read_words(i, p->args, lex_lst);
-		if (j < 0)
-		{
-			error_msg("Failure adding node!");
-			return ;
-		}
-		i += j;
+	return (new);
+}
+
+t_cmd	*new_cmd(char **args)
+{
+	t_cmd	*cmd;
+	size_t	j;
+	
+	j = 0;
+	cmd = ft_calloc(sizeof(t_cmd), 1);
+	if (cmd == NULL)
+		return (NULL);
+	cmd->args = args;
+	printf("====== cmd ======\n");
+	while (args[j])
+		printf("line: %s\n" , args[j++]);
+	return (cmd);
+}
+
+void	tokeniser(const char *str, t_shell *p)
+{
+	char	*tokens;
+	char	**cmds;
+	size_t	i;
+	t_cmd	*end;
+	t_cmd	*cmd;
+
+	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
+	cmds = ft_split(tokens, '\3');
+	p->cmd = NULL;
+	end = NULL;
+	i = 0;
+	while (cmds[i])
+	{	
+		cmd = new_cmd(ft_split(cmds[i], '\2'));
+		if (cmd == NULL)
+			break;
+		if (!p->cmd)
+			p->cmd = cmd;
+		else if (end)
+			end->next = cmd;
+		end = cmd;
+		i++;
 	}
 }

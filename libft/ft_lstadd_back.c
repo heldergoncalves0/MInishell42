@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 21:45:17 by gcatarin         ###   ########.fr       */
+/*   Created: 2022/11/02 20:23:12 by helferna          #+#    #+#             */
+/*   Updated: 2022/11/02 20:50:36 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	exitcase(t_shell *p, char *s)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	write(2, s, ft_strlen(s));
-	leave(p);
-}
+	t_list	*back;
 
-void	leave(t_shell *p)
-{
-	//int i;
-
-	rl_clear_history();
-	(void )p;
-	//free as structs
-	exit(0);
+	back = *lst;
+	if (!back)
+	{
+		*lst = new;
+		return ;
+	}
+	back = ft_lstlast(*lst);
+	back -> next = new;
 }

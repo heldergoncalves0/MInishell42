@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 21:45:17 by gcatarin         ###   ########.fr       */
+/*   Created: 2022/10/26 15:27:08 by helferna          #+#    #+#             */
+/*   Updated: 2024/02/07 20:18:57 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-
-void	exitcase(t_shell *p, char *s)
+int	ft_isalpha(int str)
 {
-	write(2, s, ft_strlen(s));
-	leave(p);
+	return ((str >= 'a' && str <= 'z') || (str >= 'A' && str <= 'Z'));
 }
 
-void	leave(t_shell *p)
-{
-	//int i;
 
-	rl_clear_history();
-	(void )p;
-	//free as structs
-	exit(0);
+int	ft_isspace(char s)
+{
+	if (s == ' ' || (s > 8 && s < 14))
+		return (1);
+	return (0);
 }

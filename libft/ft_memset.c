@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 21:45:17 by gcatarin         ###   ########.fr       */
+/*   Created: 2022/10/26 17:40:06 by helferna          #+#    #+#             */
+/*   Updated: 2022/10/31 20:53:29 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	exitcase(t_shell *p, char *s)
+void	*ft_memset(char *dest, int c, size_t len)
 {
-	write(2, s, ft_strlen(s));
-	leave(p);
-}
+	size_t	i;
 
-void	leave(t_shell *p)
-{
-	//int i;
-
-	rl_clear_history();
-	(void )p;
-	//free as structs
-	exit(0);
+	i = 0;
+	while (i < len)
+	{
+		((unsigned char *)dest)[i] = c;
+		i++;
+	}
+	return (dest);
 }

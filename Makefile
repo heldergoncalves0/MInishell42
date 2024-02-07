@@ -3,22 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/07 11:52:53 by helferna         ###   ########.fr        #
+#    Updated: 2024/02/07 21:53:29 by gcatarin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME  = minishell
 OS    = $(shell uname)
 CC    = @cc
-FLAGS = -Wall -Wextra -g -fsanitize=address -lreadline
+FLAGS = -Wall -Wextra -g -lreadline #-fsanitize=address
 LFT   = libft/libft.a
 INC   = -I./libft
-SRC   = src/main.c src/executor/executor.c src/builtins/exec_builtin.c src/builtins/cd.c src/builtins/unset.c \
-		src/builtins/pwd.c src/parser/lexer.c src/parser/lexer_utils.c src/parser/ft_quotes.c \
-		src/clean/ft_free.c src/lst/lst.c
+SRC   = src/main.c src/parser/lexer.c src/clean/ft_free.c
+#  src/executor/executor.c src/builtins/exec_builtin.c src/builtins/cd.c src/builtins/unset.c \
+# 		src/builtins/pwd.c src/parser/lexer_utils.c src/parser/ft_quotes.c \
+# 		 src/lst/ft_lists.c src/lst/ft_lists_extra.c
 OBJ   = $(patsubst src/%.c, obj/%.o, $(SRC))
 
 all: $(MLX) $(LFT) obj $(NAME)
@@ -46,5 +47,12 @@ fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean all
+
+
+r: 
+	make re && clear && ./minishell
+
+v: 
+	make re && clear && valgrind ./minishell
 
 .PHONY: all
