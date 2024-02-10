@@ -3,21 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:58:02 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/06 17:17:55 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/10 19:46:37 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
-void	exec_builtin(char **cmd, t_mini *mini, char **env)
+int	execute_builtin(t_cmd *c, t_shell *s, int in, int out)
 {
-	if (ft_strncmp(cmd[0], "cd", 2) == 0)
-		cd(mini, "ola/estou/aqui", env);
-	if (ft_strncmp(cmd[0], "unset", 5) == 0)
-		unset(mini, env, "USER");
-	if (ft_strncmp(cmd[0], "pwd", 3) == 0)
-		pwd(env);
+	int i;
+	
+	i = 0;
+	(void) in;
+	(void) out;
+	if (ft_strncmp(c->args[0], "cd", 3) == 0 && ++i)
+		cd_cmd(getenv("PWD"), s->env);
+	else if (ft_strncmp(c->args[0], "unset", 6) == 0 && ++i)
+		unset_cmd(s->env, c->args[1]);
+	else if (ft_strncmp(c->args[0], "export", 7) == 0 && ++i)
+		export_cmd();
+	else if (ft_strncmp(c->args[0], "pwd", 4) == 0 && ++i)
+		pwd_cmd(s->env);
+	else if (ft_strncmp(c->args[0], "echo", 5) == 0 && ++i)
+		echo_cmd(c);
+	else if (ft_strncmp(c->args[0], "exit", 5) == 0 && ++i)
+		exit_cmd(s);
+	else if (ft_strncmp(c->args[0], "env", 4) == 0 && ++i)
+		env_cmd(s->env);
+	return (i);
 }

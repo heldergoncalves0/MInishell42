@@ -6,24 +6,48 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 21:45:17 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/10 19:15:15 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
-void	exitcase(t_shell *p, char *s)
+void	*free_array(char **args)
 {
-	write(2, s, ft_strlen(s));
-	leave(p);
+	int		i;
+
+	i = 0;
+	while (args && args[i])
+	{
+		free(args[i++]);
+	}
+	free(args);
+	return (NULL);
 }
 
-void	leave(t_shell *p)
+t_cmd *free_cmds(t_cmd *c)
 {
-	//int i;
+	t_cmd	*tmp;
+	int		i;
 
+	i = 0;
+	tmp = c;
+	while (c)
+	{
+		tmp = c->next;
+		c->args = free_array (c->args);
+		free(c->path);
+		free(c);
+		c = tmp;
+	}
+	return (NULL);
+}
+
+void	free_shell(t_shell *s)
+{
 	rl_clear_history();
-	(void )p;
-	//free as structs
+	free_cmds(s->cmd);
+	free_array(s->env);
+	printf("exit\n");
 	exit(0);
 }

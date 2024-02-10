@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 17:14:09 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/06 17:18:13 by helferna         ###   ########.fr       */
+/*   Created: 2024/02/10 18:15:36 by gcatarin          #+#    #+#             */
+/*   Updated: 2024/02/10 19:33:42 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
-void	pwd(char **env)
+void	pwd_cmd(char **env)
 {
 	int	i;
 
