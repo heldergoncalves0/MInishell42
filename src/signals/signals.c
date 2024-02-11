@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/10 18:15:36 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/10 19:33:42 by gcatarin         ###   ########.fr       */
+/*   Created: 2024/02/10 18:36:06 by gcatarin          #+#    #+#             */
+/*   Updated: 2024/02/10 18:40:26 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd_cmd(char **env)
+void	sigint_handler(int signal)
 {
-	int	i;
+	if (signal == SIGINT)
+		printf("\nIntercepted SIGINT!\n");
+		//leave(s);
+}
 
-	i = 0;
-	while (env[i] && ft_strncmp(env[i], "PWD=", 4))
-		i++;
-	if (env[i])
-		printf("%s\n", env[i] + 4);
+void set_signal_action(void)
+{
+	struct sigaction	act;	
+	
+	ft_bzero(&act, sizeof(act));	// Set all of the structure's bits to 0 to avoid errors - relating to uninitialized variables...
+	
+	act.sa_handler = &sigint_handler;// Set the signal handler as the default action
+
+	sigaction(SIGINT, &act, NULL);
 }

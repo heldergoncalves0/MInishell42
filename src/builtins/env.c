@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/10 18:15:36 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/10 19:33:42 by gcatarin         ###   ########.fr       */
+/*   Created: 2024/02/10 18:25:40 by gcatarin          #+#    #+#             */
+/*   Updated: 2024/02/10 19:32:02 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd_cmd(char **env)
+void	env_cmd(char **env)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	while (env[i] && ft_strncmp(env[i], "PWD=", 4))
-		i++;
-	if (env[i])
-		printf("%s\n", env[i] + 4);
+	while (env[i])
+		printf("%s\n", env[i++]);
 }

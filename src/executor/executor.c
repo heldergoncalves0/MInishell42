@@ -3,28 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/07 15:00:20 by helferna         ###   ########.fr       */
-=======
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/07 16:30:21 by gcatarin         ###   ########.fr       */
->>>>>>> parser
+/*   Updated: 2024/02/11 14:42:12 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
-char	*find_executable_path(char *binary, char **path)
+static char	*find_executable_path(char *binary)
 {
 	char	*tmp;
 	char	*command;
 	int		i;
-
+	char 	**path;
+	
+	if (access(binary, X_OK) == 0)
+		return (ft_strdup(binary));
+	path = ft_split(getenv("PATH"), ':');
 	i = 0;
 	while (path[i])
 	{
@@ -32,58 +29,34 @@ char	*find_executable_path(char *binary, char **path)
 		command = ft_strjoin(tmp, binary);
 		free(tmp);
 		if (access(command, X_OK) == 0)
+		{
+			free_array(path);
 			return (command);
+		}
 		free(command);
 		i++;
 	}
+	free_array(path);
 	return (NULL);
 }
 
-bool	is_builtin(char **builtin_list, char *cmd)
+void	execute_cmd(t_cmd *c, t_shell *s, int in, int out)
 {
-	int	i;
-	
-	i = 0;
-	while (i < BUILTIN_COUNT)
-	{
-		if (ft_strncmp(cmd, builtin_list[i], ft_strlen(cmd)) == 0)
-			return (true);
-		i++;
-	}
-	return (false);
+	if (!execute_builtin(c, s, in, out))
+		execve(c->path, c->args, s->env);
 }
 
-// int	executor(char **env, t_mini *mini)
-// {
-//     mini->path = getenv("PATH");
-// 	char *full_cmd[] = {"ls", "-la", NULL};
-// 	mini->cmd_paths = ft_split(mini->path, ':');
-// 	char *executable_path = NULL;
-	
-<<<<<<< HEAD
-	if (is_builtin((char*[]){"echo", "cd", "pwd", "env", "exit", "export", "unset"}, full_cmd[0]))
-		exec_builtin(full_cmd, mini, env);
-	else
+void	executor(t_shell *s)
+{
+	t_cmd	*cmd;
+	int 	in;
+	int		out;
+
+	cmd = s->cmd;
+	while (cmd)
 	{
-		executable_path = find_executable_path(full_cmd[0], mini->cmd_paths);
-		if (!executable_path)
-			perror(full_cmd[0]);
-		if (!execve(executable_path, full_cmd, env))
-			perror(full_cmd[0]);
+		cmd->path = find_executable_path(cmd->args[0]);
+		execute_cmd(cmd, s, in, out);
+		cmd = cmd->next;
 	}
-	return (1);
 }
-=======
-// 	if (is_builtin((char*[]){"echo", "cd", "pwd", "env", "exit", "export", "unset"}, full_cmd[0]))
-// 		exec_builtin(full_cmd, mini, env);
-// 	else
-// 	{
-// 		executable_path = find_executable_path(full_cmd[0], mini->cmd_paths);
-// 		if (!executable_path)
-// 			perror(full_cmd[0]);
-// 		if (!execve(executable_path, full_cmd, env))
-// 			perror(full_cmd[0]);
-// 	}
-// 	return (1);
-// }
->>>>>>> parser

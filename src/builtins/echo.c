@@ -3,16 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:12:46 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/06 15:20:37 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:21:44 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
-void	echo(char **echo_cmd)
+void	echo_cmd(t_cmd *c)
 {
-	printf("%s\n", echo_cmd[1]);
+	int	i;
+	int	flag;
+
+	i = 1;
+	flag = 0;
+	while (ft_strncmp(c->args[i], "-n", 3) == 0)
+	{
+		flag = 1;
+		i++;
+	}
+	while (c->args[i])
+		printf("%s", c->args[i++]);
+	if (flag == 0)
+		printf("\n");	
 }

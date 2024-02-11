@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/06 16:39:20 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/10 19:51:09 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	set(char *envar, char *content, char **env)
 {
-	char    *tmp;
+	char	*tmp;
 	char	*new;
 	int		i;
 
@@ -27,12 +27,23 @@ void	set(char *envar, char *content, char **env)
     free(tmp);
 	free(new);
 }
-void	cd(t_mini *mini, char *path, char **env)
+
+void	cd_cmd(char *path, char **env)
 {
-	int i = 0;
-	while (ft_strncmp(env[i], "PWD", ft_strlen("PWD")))
+	char	*oldpwd;
+	int		i;
+
+	i = 0;
+	while (env[i] && ft_strncmp(env[i], "OLDPWD=", 7))
 		i++;
-	printf("OLDPWD: %s\n", env[i]);
+	if (env[i])
+		printf("%s\n", env[i] + 4);
+
     set("PWD", path, env);
-	printf("PWD: %s\n", env[i]);
+
+	i = 0;
+	while (env[i] && ft_strncmp(env[i], "PWD=", 4))
+		i++;
+	if (env[i])
+		printf("%s\n", env[i] + 4);
 }

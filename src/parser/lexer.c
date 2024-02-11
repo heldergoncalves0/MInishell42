@@ -6,11 +6,11 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/07 21:51:53 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/10 19:20:38 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static char	*line_treat(char *str, char *new, size_t *index)
 {
@@ -58,10 +58,13 @@ static char	*line_dup(char *str, char *new)
 		new[i++] = *str;
 		str++;
 	}
-	return (new);
+	if (flag == 0)
+		return (new);
+	free(new);
+	return (NULL);
 }
 
-t_cmd	*new_cmd(char **args)
+t_cmd	*new_cmd(char **args, int index)
 {
 	t_cmd	*cmd;
 	size_t	j;
@@ -70,36 +73,47 @@ t_cmd	*new_cmd(char **args)
 	cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (cmd == NULL)
 		return (NULL);
+	cmd->index  = index;
 	cmd->args = args;
-	printf("====== cmd ======\n");
-	while (args[j])
-		printf("line: %s\n" , args[j++]);
 	return (cmd);
 }
 
-void	tokeniser(const char *str, t_shell *p)
+void	cmd_loop(char *tokens, t_shell *s)
 {
-	char	*tokens;
 	char	**cmds;
 	size_t	i;
 	t_cmd	*end;
 	t_cmd	*cmd;
 
-	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
 	cmds = ft_split(tokens, '\3');
-	p->cmd = NULL;
+	s->cmd = NULL;
 	end = NULL;
 	i = 0;
 	while (cmds[i])
-	{	
-		cmd = new_cmd(ft_split(cmds[i], '\2'));
+	{
+		cmd = new_cmd(ft_split(cmds[i], '\2'), i + 1);
 		if (cmd == NULL)
 			break;
-		if (!p->cmd)
-			p->cmd = cmd;
+		if (!s->cmd)
+			s->cmd = cmd;
 		else if (end)
 			end->next = cmd;
 		end = cmd;
 		i++;
 	}
+	free_array(cmds);
+}
+
+void	tokeniser(const char *str, t_shell *s)
+{
+	char	*tokens;
+	int		j;
+
+	j = 0 ;
+	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
+	if (tokens != NULL)
+		cmd_loop(tokens, s);
+	else
+		write(2, "Syntax Error!\n", 14);
+	free(tokens);
 }

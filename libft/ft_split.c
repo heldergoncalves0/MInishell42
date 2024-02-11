@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:57:47 by helferna          #+#    #+#             */
-/*   Updated: 2023/06/15 21:28:48 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:01:01 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ char	**ft_split(char const *s, char c)
 	int		end;
 	int		index_split;
 
+	if (!s)
+		return (ft_calloc(sizeof(char *), 1));
 	split = (char **)malloc(sizeof(char *) * (get_length(c, (char *)s) + 1));
 	if (!split || !s)
 		return (0);

@@ -6,7 +6,7 @@
 #    By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/07 21:53:29 by gcatarin         ###   ########.fr        #
+#    Updated: 2024/02/10 18:29:08 by gcatarin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,17 +15,18 @@ OS    = $(shell uname)
 CC    = @cc
 FLAGS = -Wall -Wextra -g -lreadline #-fsanitize=address
 LFT   = libft/libft.a
-INC   = -I./libft
-SRC   = src/main.c src/parser/lexer.c src/clean/ft_free.c
-#  src/executor/executor.c src/builtins/exec_builtin.c src/builtins/cd.c src/builtins/unset.c \
-# 		src/builtins/pwd.c src/parser/lexer_utils.c src/parser/ft_quotes.c \
-# 		 src/lst/ft_lists.c src/lst/ft_lists_extra.c
+INC   = -I./libft -I./include
+SRC   = src/main.c src/parser/lexer.c src/clean/ft_free.c src/executor/executor.c \
+		src/builtins/exec_builtin.c src/builtins/echo.c src/builtins/cd.c src/builtins/unset.c \
+		src/builtins/env.c src/builtins/exit.c src/builtins/export.c src/builtins/pwd.c \
+		src/utils/utils.c
+
 OBJ   = $(patsubst src/%.c, obj/%.o, $(SRC))
 
 all: $(MLX) $(LFT) obj $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) -o $@ $^ $(LFT)
+	$(CC) $(FLAGS) -I./include -o $@ $^ $(LFT)
 
 $(LFT):
 	@make -sC libft
@@ -48,11 +49,15 @@ fclean: clean
 
 re: fclean all
 
-
 r: 
 	make re && clear && ./minishell
 
-v: 
-	make re && clear && valgrind ./minishell
+# v: 
+# 	make re && clear && valgrind ./minishell
 
+v: re readline.supp
+	@valgrind --show-leak-kinds=all --leak-check=full --suppressions=readline.supp  ./minishell
+
+readline.supp:
+	@wget https://raw.githubusercontent.com/benjaminbrassart/minishell/master/readline.supp 2> /dev/null 1> /dev/null
 .PHONY: all
