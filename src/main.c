@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/10 19:23:37 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/11 15:30:09 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+	TODO:
+		-SYNTAX ERROR PARA QUANDO NÃO TEM NADA DEPOIS DO PIPE EX.: "CMD1 |" 
+*/
 
 void	minishell_loop(t_shell *shell, char **env)
 {
@@ -33,6 +38,7 @@ void	minishell_loop(t_shell *shell, char **env)
 			free(line);
 			if (shell->cmd)
 				executor(shell);
+			//ft_list(shell->cmd);
 			shell->cmd = free_cmds(shell->cmd);
 		}
 		else

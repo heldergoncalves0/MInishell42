@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/10 19:51:09 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/11 14:57:11 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	set(char *envar, char *content, char **env)
 
 void	cd_cmd(char *path, char **env)
 {
-	char	*oldpwd;
 	int		i;
 
 	i = 0;
@@ -38,9 +37,7 @@ void	cd_cmd(char *path, char **env)
 		i++;
 	if (env[i])
 		printf("%s\n", env[i] + 4);
-
     set("PWD", path, env);
-
 	i = 0;
 	while (env[i] && ft_strncmp(env[i], "PWD=", 4))
 		i++;

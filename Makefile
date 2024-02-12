@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+         #
+#    By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/10 18:29:08 by gcatarin         ###   ########.fr        #
+#    Updated: 2024/02/11 14:56:25 by helferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME  = minishell
 OS    = $(shell uname)
 CC    = @cc
-FLAGS = -Wall -Wextra -g -lreadline #-fsanitize=address
+FLAGS = -Wall -Wextra -g -lreadline -fsanitize=address
 LFT   = libft/libft.a
 INC   = -I./libft -I./include
 SRC   = src/main.c src/parser/lexer.c src/clean/ft_free.c src/executor/executor.c \

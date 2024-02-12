@@ -6,17 +6,13 @@
 /*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/11 14:36:31 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/11 14:46:24 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	*free_array(char **args)
-{
-	int		i;
-
-void	exitcase(t_shell *p, char *s)
 {
 	int		i;
 
@@ -49,7 +45,7 @@ t_cmd *free_cmds(t_cmd *c)
 
 void	free_shell(t_shell *s)
 {
-	rl_clear_history();
+	clear_history();
 	free_cmds(s->cmd);
 	free_array(s->env);
 	printf("exit\n");
