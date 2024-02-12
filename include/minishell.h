@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/10 19:45:54 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:35:14 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	tokeniser(const char *str, t_shell *s);
 void	executor(t_shell *s);
 
 // //------------------------BUILTINS------------------------//
-int		execute_builtin(t_cmd *c, t_shell *s, int in, int out);
+int		execute_builtin(t_shell *s, int in, int out);
 void	echo_cmd(t_cmd *c);
 void	cd_cmd(char *path, char **env);
 void	unset_cmd(char **env, char *envar);

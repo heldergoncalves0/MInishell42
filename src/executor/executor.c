@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/12 11:19:32 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:53:10 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,49 @@ static char	*find_executable_path(char *binary)
 	return (NULL);
 }
 
-void	execute_cmd(t_cmd *c, t_shell *s, int in, int out)
+void	handle_heredoc(t_shell *s)
+{
+	char 	*tmp;
+	char 	*hered;
+	char 	*line;
+	pid_t 	pid;
+	int 	pipe_fd[3];
+
+	pipe(pipe_fd);
+	hered = ft_calloc(1, sizeof(char));
+	while (1)
+	{
+		line = readline(">");
+		if (ft_strncmp(line, s->cmd->args[2], 3) == 0)
+		{
+			ft_putstr_fd(hered,	pipe_fd[1]);
+			free(hered);
+			break ;
+		}
+		tmp = ft_strjoin(line, "\n");
+		hered = ft_strjoin(hered, tmp);
+		free(tmp);
+		free(line);
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		s->cmd->args[1] = NULL;
+		s->cmd->args[2] = NULL;
+		close(pipe_fd[1]);
+		dup2(pipe_fd[0], STDIN_FILENO);
+		close(pipe_fd[0]);
+		execve(s->cmd->path, s->cmd->args, s->env);
+	}
+	else if (pid > 0)
+	{
+		close(pipe_fd[0]);
+        close(pipe_fd[1]);
+		waitpid(pid, NULL, 0);
+	}
+}
+
+void	execute_cmd(t_shell *s, int in, int out)
 {
 	pid_t	pid;
 	int		status;
@@ -58,33 +100,33 @@ void	execute_cmd(t_cmd *c, t_shell *s, int in, int out)
             dup2(out, STDOUT_FILENO);
             close(out);
         }
-		if (!execute_builtin(c, s, in, out))
-			execve(c->path, c->args, s->env);
+		if (!execute_builtin(s, in, out))
+			execve(s->cmd->path, s->cmd->args, s->env);
 	}
 }
 
 void	executor(t_shell *s)
 {
-	t_cmd	*cmd;
 	int		in = 0;
 	int		out = 0;
 	int		pipe_fd[3];
 
 	in = pipe_fd[2];
-	cmd = s->cmd;
-	while (cmd)
+	while (s->cmd)
 	{
-		cmd->path = find_executable_path(cmd->args[0]);
-		if (cmd->next != NULL)
+		s->cmd->path = find_executable_path(s->cmd->args[0]);
+		if (ft_strncmp(s->cmd->args[1], "<<", 2) == 0)
+			handle_heredoc(s);
+		else if (s->cmd->next != NULL)
 		{
 			pipe(pipe_fd);
-			execute_cmd(cmd, s, in, pipe_fd[1]);
+			execute_cmd(s, in, pipe_fd[1]);
 			close(pipe_fd[1]);
 			in = pipe_fd[0];
 		}
 		else
-		    execute_cmd(cmd, s, in, STDOUT_FILENO);
-		cmd = cmd->next;
+		    execute_cmd(s, in, STDOUT_FILENO);
+		s->cmd = s->cmd->next;
 	}
 	while (wait(NULL) > 0);
 }

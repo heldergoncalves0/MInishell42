@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/11 15:30:09 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:20:22 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	minishell_loop(t_shell *shell, char **env)
 		{
 			add_history(str);
 			tokeniser(str, shell);
-			// ft_list(shell->cmd);
+			//ft_list(shell->cmd);
 			free(str);
 			free(line);
 			if (shell->cmd)
