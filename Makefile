@@ -6,7 +6,7 @@
 #    By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/13 20:01:04 by gcatarin         ###   ########.fr        #
+#    Updated: 2024/02/13 20:13:35 by gcatarin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,7 @@ fclean: clean
 re: fclean all
 
 r: 
-	make re && clear
-	./minishell
+	@make re && clear && ./minishell
 
 # v: 
 # 	make re && clear && valgrind ./minishell

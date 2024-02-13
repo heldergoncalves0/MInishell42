@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:24:27 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/07 20:18:37 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:19:41 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_lstadd_front(t_list **lst, t_list *new);
@@ -78,4 +77,5 @@ size_t	ft_strlen_gnl(char *str);
 int		adjust_buffer_after_newline(char *buffer);
 int		count_word(const char *s, char c);
 int		ft_isspace(char s);
+int		ft_putstr_fd(char *s, int fd);
 #endif

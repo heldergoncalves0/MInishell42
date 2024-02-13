@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 20:04:05 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:18:49 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,10 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		free(str);
 		//ft_list(shell->cmd);
 		split_redirect(shell);
-		if (execute_redirects(shell, shell->cmd) != 0)
-		{
-			ft_list(shell->cmd);
-			executor(shell);
-		}
-		else
-			printf("ALGO DEU ERRADO!\n");
+		execute_redirects(shell, shell->cmd);
+		ft_list(shell->cmd);
+		executor(shell);
+		
 	}
 	shell->cmd = free_cmds(shell->cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 20:07:18 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:23:31 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 	}
 	wait(NULL);
 	redir->fd = open("/tmp/tmp.txt", O_RDONLY);
+	if (redir->fd == -1)
+		cmd->is_error_redir = 1;
 	if (cmd->in_file != -1)
 		close(cmd->in_file);
 	cmd->in_file = redir->fd;

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 20:05:49 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:22:20 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_cmd {
 	int		out_file;
 	int		fd[2];
 	t_redir	*red;
+	int		is_error_redir;
 	struct	s_cmd *next;
 }	t_cmd;
 

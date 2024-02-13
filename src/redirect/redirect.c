@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:21:25 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 20:06:10 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:25:10 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,17 +109,14 @@ int	execute_redirects(t_shell *s, t_cmd *cmd)
 		redir = cmd->red;
 		while (redir)
 		{
-			if (redir->type == APPEND)
-				if (handle_append(cmd, redir) == 0)
-					return (0); //DAR FREE
-			if (redir->type == INFILE)
-				if (handle_infile(cmd, redir) == 0)
-					return (0); //DAR FREE
-			if (redir->type == OUTFILE)
-				if (handle_outfile(cmd, redir) == 0)
-					return (0); //DAR FREE
+			if (redir->type == APPEND && handle_append(cmd, redir) == 0)
+				return (ft_putstr_fd("No such file or directory\n", 2));
+			if (redir->type == INFILE && handle_infile(cmd, redir) == 0)
+				return (ft_putstr_fd("No such file or directory\n", 2));
+			if (redir->type == OUTFILE && handle_outfile(cmd, redir) == 0)
+				return (ft_putstr_fd("No such file or directory\n", 2));
 			if (redir->type == HEREDOC)
-				handle_heredoc(s, cmd, redir);
+				handle_heredoc(s, cmd, redir);////
 			redir = redir->next;
 		}
 		cmd = cmd->next;

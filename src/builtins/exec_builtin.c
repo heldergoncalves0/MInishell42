@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:58:02 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 19:50:29 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:28:30 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	execute_builtin(t_cmd *cmd, t_shell *s, int in, int out)
 	int	i;
 
 	i = 0;
+	if (cmd->is_error_redir)
+		return (0);
 	// if (ft_strncmp(s->cmd->args[0], "cd", 3) == 0 && ++i)
 	// 	cd_cmd(getenv("PWD"), s->env);
 	// else if (ft_strncmp(s->cmd->args[0], "unset", 6) == 0 && ++i)
