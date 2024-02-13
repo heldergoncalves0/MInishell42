@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:36:06 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/12 19:08:18 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 12:46:56 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	sigint_handler(int signal)
 void	set_signal_action(void)
 {
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	//signal(SIGQUIT, SIG_IGN);
 }

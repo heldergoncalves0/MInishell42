@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/12 18:50:28 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:11:43 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,19 @@ static char	*line_dup(char *str, char *new)
 	return (flag_return(flag, new));
 }
 
-t_cmd	*new_cmd(char **args, int index)
+static t_cmd	*new_cmd(char **args)
 {
 	t_cmd	*cmd;
-	size_t	j;
 
-	j = 0;
 	cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (cmd == NULL)
 		return (NULL);
-	cmd->index = index;
 	cmd->args = args;
+	cmd->fd[0] = 0;
+	cmd->fd[1] = 1;
+	cmd->in_file = -1;
+	cmd->out_file = -1;
+	cmd->path = find_executable_path(cmd->args[0]);
 	return (cmd);
 }
 
@@ -88,7 +90,7 @@ void	cmd_loop(char *tokens, t_shell *s)
 	i = 0;
 	while (cmds[i])
 	{
-		cmd = new_cmd(ft_split(cmds[i], '\2'), i + 1);
+		cmd = new_cmd(ft_split(cmds[i], '\2'));
 		if (cmd == NULL)
 			break ;
 		if (!s->cmd)
@@ -101,7 +103,7 @@ void	cmd_loop(char *tokens, t_shell *s)
 	free_array(cmds);
 }
 
-void	tokeniser(const char *str, t_shell *s)
+int	tokeniser(const char *str, t_shell *s)
 {
 	char	*tokens;
 	int		j;
@@ -110,7 +112,11 @@ void	tokeniser(const char *str, t_shell *s)
 	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
 	if (tokens == NULL || tokens[ft_strlen(tokens) - 1] == '\2')
 		write(2, "Syntax Error!\n", 14);
-	else
+	else 
+	{
 		cmd_loop(tokens, s);
+		j = 1;
+	}
 	free(tokens);
+	return (j);
 }

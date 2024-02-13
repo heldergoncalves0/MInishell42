@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/12 19:33:00 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:37:18 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,45 @@
 //useless defines
 # define BUILTIN_COUNT 7
 
-// typedef enum e_token_type{
-// 	WORD,
-// 	REDIR,
-// 	PIPE
-// }t_token_type;
+typedef enum e_redir_type{
+	NONE,
+	INFILE,
+	OUTFILE,
+	HEREDOC,
+	APPEND
+}	t_redir_type;
+
+typedef struct s_redir {
+	char			*args[2];
+	int				fd;
+	t_redir_type	type;
+	struct	s_redir *next;
+}	t_redir;
 
 typedef struct s_cmd {
-	char *path;
-	char **args;
-	int	index;
+	char 	*path;
+	char 	**args;
+	int		in_file;
+	int		out_file;
+	int		fd[2];
+	t_redir	*red;
 	struct	s_cmd *next;
 }	t_cmd;
+
 
 typedef struct s_shell{
 	t_cmd	*cmd;
 	char	**env;
 }	t_shell;
 
-//-------------------------LEXER------------------------------//
-void	tokeniser(const char *str, t_shell *s);
+//--------------------------- LEXER ----------------------------//
+int	tokeniser(const char *str, t_shell *s);
 
-//-------------------------executor---------------------------//
+//---------------------------- EXE -----------------------------//
 void	executor(t_shell *s);
+char	*find_executable_path(char *binary);
 
-// //------------------------BUILTINS-------------------------//
+// //----------------------- BUILTINS --------------------------//
 int		execute_builtin(t_shell *s, int in, int out);
 void	echo_cmd(t_cmd *c);
 void	cd_cmd(char *path, char **env);
@@ -72,13 +86,13 @@ void	exit_cmd(t_shell *s);
 void	env_cmd(char **env);
 void	export_cmd();
 
-//--------------------------- UTILS ---------------------------//
+//--------------------------- UTILS ----------------------------//
 char	**copy_array(char **s);
-void	ft_list(t_cmd *c);
 char	**search_heredocs(t_shell *s);
 char	*flag_return(int flag, char *new);
+int		ft_double_strlen(char **s);
 
-//---------------------------- FREE ---------------------------//
+//---------------------------- FREE ----------------------------//
 void	*free_array(char **args);
 t_cmd 	*free_cmds(t_cmd *c);
 void	free_shell(t_shell *s);
@@ -86,7 +100,14 @@ void	free_shell(t_shell *s);
 //---------------------------- SIGNALS -------------------------//
 void	set_signal_action(void);
 
-//---------------------------- HANDLES -------------------------//
-char	*handle_redir_out(t_shell *s);
+//---------------------------- LISTS ---------------------------//
+void	ft_listredir(t_redir *c);
+void	ft_list(t_cmd *c);
+
+//---------------------------- REDIR ---------------------------//
+void	split_redirect(t_shell *s);
+void	execute_redirects(t_cmd *cmd);
+t_redir	*redir_compares(char **args);
+void	handle_heredoc(t_cmd *cmd, t_redir *redir);
 
 #endif
