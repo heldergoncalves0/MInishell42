@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 20:27:30 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:55:57 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,15 @@ void	execute_cmd(t_cmd  *cmd, t_shell *s, int in, int out)
 		if (pid == 0)
 		{
 			dup2(in, STDIN_FILENO);
-			if (in != STDIN_FILENO)
-				close(in);
+			close_fd(in);
 			dup2(out, STDOUT_FILENO);
-			if (out != STDOUT_FILENO)
-				close(out);
+			close_fd(out);
 			execve(cmd->path, cmd->args, s->env);
 			exit(127);
 		}
 	}
-	if (in != STDIN_FILENO)
-		close(in);
-	if (out != STDOUT_FILENO)
-		close(out);
+	close_fd(in);
+	close_fd(out);
 }
 
 void	executor(t_shell *s)
@@ -82,8 +78,7 @@ void	executor(t_shell *s)
 		if (cmd->out_file != -1)
 		{	
 			out = cmd->out_file;
-			if (cmd->fd[1] != 1)
-				close(cmd->fd[1]);
+			close_fd(cmd->fd[1]);
 		}
 		if (cmd->in_file != -1)
 			in = cmd->in_file;

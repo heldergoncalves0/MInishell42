@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 20:22:20 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 21:37:54 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_cmd {
 typedef struct s_shell{
 	t_cmd	*cmd;
 	char	**env;
+	int		status;
 }	t_shell;
 
 //--------------------------- LEXER ----------------------------//
@@ -75,13 +76,13 @@ char	*find_executable_path(char *binary);
 
 // //----------------------- BUILTINS --------------------------//
 int		execute_builtin(t_cmd *cmd, t_shell *s, int in, int out);
-void	echo_cmd(t_cmd *c);
-void	cd_cmd(char *path, char **env);
-void	unset_cmd(char **env, char *envar);
-void	pwd_cmd(char **env);
+void	echo_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+void	pwd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	exit_cmd(t_cmd *cmd, t_shell *s, int in, int out);
-void	env_cmd(char **env);
-void	export_cmd();
+void	env_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 
 //--------------------------- UTILS ----------------------------//
 char	**copy_array(char **s);
@@ -109,6 +110,10 @@ int		is_redir(t_cmd *c, int i);
 int		handle_infile(t_cmd *cmd, t_redir *redir);
 int		handle_append(t_cmd *cmd, t_redir *redir);
 void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir);
- int	handle_outfile(t_cmd *cmd, t_redir *redir);
- 
+int		handle_outfile(t_cmd *cmd, t_redir *redir);
+int 	close_fd(int fd);
+int		ft_strncmp_env(char *key, char *str);
+char	*get_env(t_shell *s, char *key);
+void	set_env(t_shell *s, char *key, char *value);
+
 #endif

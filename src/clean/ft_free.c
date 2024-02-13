@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 19:55:31 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:41:22 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_redir	*free_redirs(t_redir *redir)
 	{
 		tmp = redir->next;
 		free_array(redir->args);
-		//free(redir);	
 		redir = tmp;
 	}
 	return (NULL);
@@ -66,6 +65,6 @@ void	free_shell(t_shell *s)
 	clear_history();
 	free_cmds(s->cmd);
 	free_array(s->env);
-	printf("exit\n");
-	exit(0);
+	ft_putstr_fd("exit\n", 2);
+	exit(s->status);
 }

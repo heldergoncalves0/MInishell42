@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:16:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 15:21:38 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:54:52 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,12 @@ int	ft_double_strlen(char **s)
 	while (s[len])
 		len++;
 	return (len);
+}
+
+
+int close_fd(int fd)
+{
+	if (fd != 0 && fd != 1 && fd != -1)
+		close(fd);
+	return (1);
 }
