@@ -6,36 +6,25 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:21:25 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 17:39:09 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:06:10 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_redir(t_cmd *c, int i)
-{
-	if (ft_strncmp(c->args[i], ">", 2) == 0)
-		return (1);
-	else if (ft_strncmp(c->args[i], "<", 2) == 0)
-		return (1);
-	else if (ft_strncmp(c->args[i], ">>", 3) == 0)
-		return (1);
-	else if (ft_strncmp(c->args[i], "<<", 3) == 0)
-		return (1);
-	return (0);
-}
 static t_redir	*redir_struct(char *name, char *file, t_redir_type type)
 {
-	t_redir*redir_ptr;
+	t_redir	*redir_ptr;
 
 	redir_ptr = ft_calloc(sizeof(t_redir), 1);
 	redir_ptr->args[0] = name;
 	redir_ptr->args[1] = file;
 	redir_ptr->type = type;
+
 	return (redir_ptr);
 }
 
-t_redir*redir_compares(char **args)
+t_redir	*redir_compares(char **args)
 {
 	int i;
 
@@ -51,7 +40,7 @@ t_redir*redir_compares(char **args)
 	return (NULL);
 }
 
-void clean_redir_cmd(t_cmd *c)
+void	clean_redir_cmd(t_cmd *c)
 {
 	size_t		i;
 	size_t		j;
@@ -111,7 +100,7 @@ void	split_redirect(t_shell *s)
 	}
 }
 
-void	execute_redirects(t_cmd *cmd)
+int	execute_redirects(t_shell *s, t_cmd *cmd)
 {
 	t_redir	*redir;
 
@@ -121,15 +110,32 @@ void	execute_redirects(t_cmd *cmd)
 		while (redir)
 		{
 			if (redir->type == APPEND)
-				printf("APPEND\n");
+				if (handle_append(cmd, redir) == 0)
+					return (0); //DAR FREE
 			if (redir->type == INFILE)
-				handle_infile(cmd, redir);
+				if (handle_infile(cmd, redir) == 0)
+					return (0); //DAR FREE
 			if (redir->type == OUTFILE)
-				printf("OUTFILE\n");
+				if (handle_outfile(cmd, redir) == 0)
+					return (0); //DAR FREE
 			if (redir->type == HEREDOC)
-				handle_heredoc(cmd, redir);
+				handle_heredoc(s, cmd, redir);
 			redir = redir->next;
 		}
 		cmd = cmd->next;
 	}
+	return (1);
+}
+
+ int	is_redir(t_cmd *c, int i)
+{
+	if (ft_strncmp(c->args[i], ">", 2) == 0)
+		return (1);
+	else if (ft_strncmp(c->args[i], "<", 2) == 0)
+		return (1);
+	else if (ft_strncmp(c->args[i], ">>", 3) == 0)
+		return (1);
+	else if (ft_strncmp(c->args[i], "<<", 3) == 0)
+		return (1);
+	return (0);
 }

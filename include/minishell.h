@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 16:37:18 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:05:49 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@
 # define WHT "\e[0;37m"
 # define RES "\e[0;0m"
 
-//useless defines
-# define BUILTIN_COUNT 7
-
 typedef enum e_redir_type{
 	NONE,
 	INFILE,
@@ -47,7 +44,7 @@ typedef enum e_redir_type{
 }	t_redir_type;
 
 typedef struct s_redir {
-	char			*args[2];
+	char			*args[3];
 	int				fd;
 	t_redir_type	type;
 	struct	s_redir *next;
@@ -63,7 +60,6 @@ typedef struct s_cmd {
 	struct	s_cmd *next;
 }	t_cmd;
 
-
 typedef struct s_shell{
 	t_cmd	*cmd;
 	char	**env;
@@ -77,12 +73,12 @@ void	executor(t_shell *s);
 char	*find_executable_path(char *binary);
 
 // //----------------------- BUILTINS --------------------------//
-int		execute_builtin(t_shell *s, int in, int out);
+int		execute_builtin(t_cmd *cmd, t_shell *s, int in, int out);
 void	echo_cmd(t_cmd *c);
 void	cd_cmd(char *path, char **env);
 void	unset_cmd(char **env, char *envar);
 void	pwd_cmd(char **env);
-void	exit_cmd(t_shell *s);
+void	exit_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	env_cmd(char **env);
 void	export_cmd();
 
@@ -106,8 +102,12 @@ void	ft_list(t_cmd *c);
 
 //---------------------------- REDIR ---------------------------//
 void	split_redirect(t_shell *s);
-void	execute_redirects(t_cmd *cmd);
+int		execute_redirects(t_shell *s, t_cmd *cmd);
 t_redir	*redir_compares(char **args);
-void	handle_heredoc(t_cmd *cmd, t_redir *redir);
-
+int		is_redir(t_cmd *c, int i);
+int		handle_infile(t_cmd *cmd, t_redir *redir);
+int		handle_append(t_cmd *cmd, t_redir *redir);
+void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir);
+ int	handle_outfile(t_cmd *cmd, t_redir *redir);
+ 
 #endif

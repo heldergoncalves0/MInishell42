@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   infile.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/10 18:36:06 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 19:09:47 by gcatarin         ###   ########.fr       */
+/*   Created: 2024/02/13 17:42:06 by gcatarin          #+#    #+#             */
+/*   Updated: 2024/02/13 18:57:41 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sigint_handler(int signal)
+int	handle_infile(t_cmd *cmd, t_redir *redir)
 {
-	if (signal == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+	redir->fd = open(redir->args[1], O_RDONLY , 0644);
+	if (redir->fd == -1)
+		return (0);
+	if (cmd->in_file != -1)
+		close(cmd->in_file);
+	cmd->in_file = redir->fd;
+	return (1);
 }
 
-void	set_signal_action(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-}

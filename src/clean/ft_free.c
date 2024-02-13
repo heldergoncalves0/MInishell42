@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/12 18:49:45 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:55:31 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,38 @@ void	*free_array(char **args)
 	return (NULL);
 }
 
-t_cmd	*free_cmds(t_cmd *c)
+t_redir	*free_redirs(t_redir *redir)
+{
+	t_redir	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = redir;
+	while (redir)
+	{
+		tmp = redir->next;
+		free_array(redir->args);
+		//free(redir);	
+		redir = tmp;
+	}
+	return (NULL);
+}
+
+t_cmd	*free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 	int		i;
 
 	i = 0;
-	tmp = c;
-	while (c)
+	tmp = cmd;
+	while (cmd)
 	{
-		tmp = c->next;
-		c->args = free_array (c->args);
-		free(c->path);
-		free(c);
-		c = tmp;
+		tmp = cmd->next;
+		free_redirs(cmd->red);
+		cmd->args = free_array(cmd->args);
+		free(cmd->path);
+		free(cmd);
+		cmd = tmp;
 	}
 	return (NULL);
 }

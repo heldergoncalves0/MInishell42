@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 17:38:58 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:47:38 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,16 @@ void	executor(t_shell *s)
 		if (cmd->next && pipe(cmd->fd) == -1)
 			exit(1);
 		out = cmd->fd[1];
+		if (cmd->out_file != -1)
+		{	
+			out = cmd->out_file;
+			if (cmd->fd[1] != 1)
+				close(cmd->fd[1]);
+		}
 		if (cmd->in_file != -1)
 			in = cmd->in_file;
-		execute_cmd(cmd, s, in, out);
+		if (!execute_builtin(cmd, s, in, out))
+			execute_cmd(cmd, s, in, out);
 		in = cmd->fd[0];
 		cmd = cmd->next;
 	}

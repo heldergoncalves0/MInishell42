@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 17:37:10 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:07:18 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	handle_heredoc_read(t_redir *redir)
 }
 
 
-void	handle_heredoc(t_cmd *cmd, t_redir *redir)
+void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 {
 	int pid;
 	
@@ -45,7 +45,7 @@ void	handle_heredoc(t_cmd *cmd, t_redir *redir)
 			exit(1);
 		handle_heredoc_read(redir);
 		close(redir->fd);
-		exit(0);
+		exit_cmd(cmd, s, -1, -1);
 	}
 	wait(NULL);
 	redir->fd = open("/tmp/tmp.txt", O_RDONLY);
