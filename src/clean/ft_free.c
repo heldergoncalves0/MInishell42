@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/11 14:46:24 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:49:45 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*free_array(char **args)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (args && args[i])
@@ -25,7 +25,7 @@ void	*free_array(char **args)
 	return (NULL);
 }
 
-t_cmd *free_cmds(t_cmd *c)
+t_cmd	*free_cmds(t_cmd *c)
 {
 	t_cmd	*tmp;
 	int		i;

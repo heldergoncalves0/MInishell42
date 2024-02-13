@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:12:46 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/10 18:21:44 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:48:37 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	echo_cmd(t_cmd *c)
 	while (c->args[i])
 		printf("%s", c->args[i++]);
 	if (flag == 0)
-		printf("\n");	
+		printf("\n");
 }

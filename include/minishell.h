@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/12 16:35:14 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:33:00 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include <stdbool.h>
 
 //colors
@@ -55,13 +56,13 @@ typedef struct s_shell{
 	char	**env;
 }	t_shell;
 
-//-------------------------LEXER--------------------------//
+//-------------------------LEXER------------------------------//
 void	tokeniser(const char *str, t_shell *s);
 
-//-------------------------executor----------------------//
+//-------------------------executor---------------------------//
 void	executor(t_shell *s);
 
-// //------------------------BUILTINS------------------------//
+// //------------------------BUILTINS-------------------------//
 int		execute_builtin(t_shell *s, int in, int out);
 void	echo_cmd(t_cmd *c);
 void	cd_cmd(char *path, char **env);
@@ -74,10 +75,18 @@ void	export_cmd();
 //--------------------------- UTILS ---------------------------//
 char	**copy_array(char **s);
 void	ft_list(t_cmd *c);
+char	**search_heredocs(t_shell *s);
+char	*flag_return(int flag, char *new);
 
-//---------------------------- FREE --------------------------//
+//---------------------------- FREE ---------------------------//
 void	*free_array(char **args);
 t_cmd 	*free_cmds(t_cmd *c);
 void	free_shell(t_shell *s);
+
+//---------------------------- SIGNALS -------------------------//
+void	set_signal_action(void);
+
+//---------------------------- HANDLES -------------------------//
+char	*handle_redir_out(t_shell *s);
 
 #endif

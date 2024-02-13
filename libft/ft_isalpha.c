@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:27:08 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/07 20:18:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:43:29 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@ int	ft_isalpha(int str)
 {
 	return ((str >= 'a' && str <= 'z') || (str >= 'A' && str <= 'Z'));
 }
-
 
 int	ft_isspace(char s)
 {

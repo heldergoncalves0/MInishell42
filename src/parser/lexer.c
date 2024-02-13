@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/12 13:07:08 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:50:28 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*line_treat(char *str, char *new, size_t *index)
 			new[j++] = str[1];
 		new[j++] = '\2';
 		index[0] = j;
-	}		 
+	}
 	return (str + i);
 }
 
@@ -54,26 +54,23 @@ static char	*line_dup(char *str, char *new)
 		else if (flag == 0)
 			str = line_treat(str, new, &i);
 		if (j != i)
-			continue;
+			continue ;
 		new[i++] = *str;
 		str++;
 	}
-	if (flag == 0)
-		return (new);
-	free(new);
-	return (NULL);
+	return (flag_return(flag, new));
 }
 
 t_cmd	*new_cmd(char **args, int index)
 {
 	t_cmd	*cmd;
 	size_t	j;
-	
+
 	j = 0;
 	cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (cmd == NULL)
 		return (NULL);
-	cmd->index  = index;
+	cmd->index = index;
 	cmd->args = args;
 	return (cmd);
 }
@@ -93,7 +90,7 @@ void	cmd_loop(char *tokens, t_shell *s)
 	{
 		cmd = new_cmd(ft_split(cmds[i], '\2'), i + 1);
 		if (cmd == NULL)
-			break;
+			break ;
 		if (!s->cmd)
 			s->cmd = cmd;
 		else if (end)
@@ -111,9 +108,9 @@ void	tokeniser(const char *str, t_shell *s)
 
 	j = 0 ;
 	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
-	if (tokens != NULL)
-		cmd_loop(tokens, s);
-	else
+	if (tokens == NULL || tokens[ft_strlen(tokens) - 1] == '\2')
 		write(2, "Syntax Error!\n", 14);
+	else
+		cmd_loop(tokens, s);
 	free(tokens);
 }
