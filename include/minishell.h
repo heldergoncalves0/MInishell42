@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 21:37:54 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:24:19 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	executor(t_shell *s);
 char	*find_executable_path(char *binary);
 
 // //----------------------- BUILTINS --------------------------//
-int		execute_builtin(t_cmd *cmd, t_shell *s, int in, int out);
+int		execute_builtin_init(t_cmd  *cmd, t_shell *s, int in, int out);
 void	echo_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out);
