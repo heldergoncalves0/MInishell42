@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 20:41:22 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:58:52 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ void	free_shell(t_shell *s)
 	clear_history();
 	free_cmds(s->cmd);
 	free_array(s->env);
-	ft_putstr_fd("exit\n", 2);
+	//ft_putstr_fd("exit\n", 2);
 	exit(s->status);
 }

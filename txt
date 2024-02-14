@@ -1,0 +1,18 @@
+total 1360
+drwxr-xr-x 9 helferna 2022_lisboa    4096 Feb 14 12:31 .
+drwxr-xr-x 9 helferna 2022_lisboa     111 Feb  6 12:14 ..
+-rw-r--r-- 1 helferna 2022_lisboa       0 Feb 14 12:18 file1
+-rw-r--r-- 1 helferna 2022_lisboa      82 Feb 14 12:18 file2
+drwxr-xr-x 8 helferna 2022_lisboa    4096 Feb 14 10:12 .git
+drwxr-xr-x 2 helferna 2022_lisboa      25 Feb 14 10:12 include
+-rw-r--r-- 1 helferna 2022_lisboa       9 Feb 14 12:24 lal
+drwxr-xr-x 2 helferna 2022_lisboa    4096 Feb 14 12:31 libft
+-rw-r--r-- 1 helferna 2022_lisboa    2215 Feb 14 11:23 Makefile
+-rwxr-xr-x 1 helferna 2022_lisboa 1359456 Feb 14 12:31 minishell
+drwxr-xr-x 3 helferna 2022_lisboa      22 Feb 13 11:15 minishell.dSYM
+drwxr-xr-x 9 helferna 2022_lisboa     123 Feb 14 12:31 obj
+-rw-r--r-- 1 helferna 2022_lisboa       2 Feb 14 12:26 out2
+-rw-r--r-- 1 helferna 2022_lisboa     209 Feb 13 11:15 readline.supp
+drwxr-xr-x 9 helferna 2022_lisboa     123 Feb 14 10:12 src
+-rw-r--r-- 1 helferna 2022_lisboa       0 Feb 14 12:32 txt
+drwxr-xr-x 2 helferna 2022_lisboa      27 Feb 13 11:15 .vscode

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:40 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 21:50:43 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:41:36 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_env(t_shell *s, char *key)
 void	set_env(t_shell *s, char *key, char *value)
 {
 	int		i;
-	int		j;;
+	int		j;
 
 	i = 0;
 	while (s->env[i])
