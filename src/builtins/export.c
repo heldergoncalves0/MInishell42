@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/14 14:11:00 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:21:12 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ static char **sort_env(char **env_copy)
 	char	*tmp;
 	int		len;
 
-	len = 0;
-	while (env_copy[len])
-		len++;
+	len = ft_double_strlen(env_copy);
 	i = 0;
 	j = i + 1;
 	while (i < len)
@@ -57,11 +55,28 @@ static	void print_sorted_env(t_cmd *cmd, t_shell *shell, int in, int out)
 	free_array(env_copy);
 }
 
+void	add_var_env(t_shell *s, char *str, char *var_value)
+{
+	s->env = copy_array_export(s->env, str, "\0");
+}
+
 void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
-	int		i;
-	
-	i = 0;
+	char 	*var_name;
+	char	*var_value;
+
 	if (!cmd->args[1])
 		print_sorted_env(cmd, s, in, out);
+	else
+	{
+		var_name = ft_strdup(cmd->args[1]);
+		var_value = ft_strchr(var_name, '=');
+		add_var_env(s, var_name, var_value);
+		if (var_value != NULL)
+		{
+			var_value = ft_substr(var_value, 1, ft_strlen(var_value) - 1);
+			set_env(s, var_name, var_value);
+		}
+		free(var_name);
+	}
 }

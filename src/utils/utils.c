@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:16:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 20:54:52 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:55:36 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,21 @@ int close_fd(int fd)
 	if (fd != 0 && fd != 1 && fd != -1)
 		close(fd);
 	return (1);
+}
+
+char	**copy_array_export(char **s, char *str, char *c)
+{
+	int		len;
+	char	**new;
+	int		i;
+
+	len = 0;
+	while (s[len])
+		len++;
+	i = -1;
+	new = ft_calloc(sizeof(char *), len + 2);
+	while (s[++i])
+		new[i] = ft_strdup(s[i]);
+	new[i] = ft_strjoin(str, c);
+	return (new);
 }

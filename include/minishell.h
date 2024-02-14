@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/14 14:24:19 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:11:45 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <stdbool.h>
 
@@ -75,7 +76,7 @@ void	executor(t_shell *s);
 char	*find_executable_path(char *binary);
 
 // //----------------------- BUILTINS --------------------------//
-int		execute_builtin_init(t_cmd  *cmd, t_shell *s, int in, int out);
+int		is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out);
 void	echo_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out);
@@ -115,5 +116,6 @@ int 	close_fd(int fd);
 int		ft_strncmp_env(char *key, char *str);
 char	*get_env(t_shell *s, char *key);
 void	set_env(t_shell *s, char *key, char *value);
+char	**copy_array_export(char **s, char *str, char *c);
 
 #endif

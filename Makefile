@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/14 14:00:32 by helferna         ###   ########.fr        #
+#    Updated: 2024/02/14 18:25:10 by gcatarin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ r:
 # 	make re && clear && valgrind ./minishell
 
 v: re readline.supp
-	@valgrind --show-leak-kinds=all --leak-check=full --suppressions=readline.supp  ./minishell
+	@valgrind  --track-fds=yes --show-leak-kinds=all --leak-check=full --suppressions=readline.supp  ./minishell
 
 readline.supp:
 	@wget https://raw.githubusercontent.com/benjaminbrassart/minishell/master/readline.supp 2> /dev/null 1> /dev/null

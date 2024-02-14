@@ -6,11 +6,32 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:12:46 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 20:49:48 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:21:48 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int		flag_n_echo(char *s)
+{
+	int	i;
+
+	i = 0;
+
+	if (s[i] && s[i] == '-')
+	{
+		i++;
+		while (s[i] == 'n')
+			i++;
+		if (i <= 1)
+			return (0);
+		else
+			return (i);
+	}
+	else
+		return (0);
+
+}
 
 void	echo_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
@@ -19,10 +40,11 @@ void	echo_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 
 	i = 1;
 	flag = 0;
-	while (ft_strncmp(cmd->args[i], "-n", 3) == 0)////-nnnnnnnnnnn
+	while (flag_n_echo(cmd->args[i]))
 	{
 		flag = 1;
-		i++;
+		if (cmd->args[++i] == NULL)
+			break ;
 	}
 	while (cmd->args[i])
 	{	

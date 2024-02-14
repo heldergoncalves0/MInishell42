@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:48:05 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 20:52:03 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:44:56 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
-	int	i;
-
-	i = 0;
+	if (!cmd->args[1])
+		ft_putstr_fd("not enough arguments", 2);
 }

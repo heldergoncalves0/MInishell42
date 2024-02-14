@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/14 14:24:30 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:40:45 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*find_executable_path(char *binary)
 void	execute_cmd(t_cmd  *cmd, t_shell *s, int in, int out)
 {
 	pid_t	pid;
-	int		status;
+	//int		status;
 
 	if (cmd->is_error_redir == 0)
 	{
@@ -55,12 +55,24 @@ void	execute_cmd(t_cmd  *cmd, t_shell *s, int in, int out)
 			dup2(out, STDOUT_FILENO);
 			close_fd(out);
 			execve(cmd->path, cmd->args, s->env);
+			ft_putstr_fd("not found\n", 2);
 			exit(127);
 		}
 	}
 	close_fd(in);
 	close_fd(out);
 }
+
+void	exit_status(t_cmd *cmd)
+{
+	while (cmd)
+	{
+		wait(NULL);
+		cmd = cmd->next;
+	}
+
+}
+
 
 void	executor(t_shell *s)
 {
@@ -71,7 +83,7 @@ void	executor(t_shell *s)
 	in = 0;
 	cmd = s->cmd;
 	while (cmd)
-	{	
+	{
 		if (cmd->next && pipe(cmd->fd) == -1)
 			exit(1);
 		out = cmd->fd[1];
@@ -82,15 +94,11 @@ void	executor(t_shell *s)
 		}
 		if (cmd->in_file != -1)
 			in = cmd->in_file;
-		if (!execute_builtin_init(cmd, s, in, out))
+		if (!is_builtin_execute(cmd, s, in, out))
 			execute_cmd(cmd, s, in, out);
 		in = cmd->fd[0];
 		cmd = cmd->next;
 	}
 	cmd = s->cmd;
-	while (cmd)
-	{
-		wait(NULL);
-		cmd = cmd->next;
-	}
+	exit_status(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 20:56:05 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:44:08 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 			free_shell(s);
 		}
 		handle_heredoc_read(redir);
-		close_fd(redir->fd);
+		close_fd(redir->fd);//s
 		free_shell(s);
 	}
 	wait(NULL);

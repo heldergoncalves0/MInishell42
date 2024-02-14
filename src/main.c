@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 21:52:59 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/14 21:27:03 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ void	valid_input(t_shell *shell, char *str, char *line)
 	if (tokeniser(str, shell))
 	{
 		free(str);
-		//ft_list(shell->cmd);
 		split_redirect(shell);
 		execute_redirects(shell, shell->cmd);
-		//ft_list(shell->cmd);
+		ft_list(shell->cmd);
 		executor(shell);
-		
 	}
 	shell->cmd = free_cmds(shell->cmd);
 }
