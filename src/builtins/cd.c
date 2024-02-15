@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/14 18:43:11 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:15:53 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 	char *pwd;
 	char *tmp;
 
+	tmp = NULL;
+	(void)in;
+	(void)out;
 	if (chdir(cmd->args[1]) == 0)
 	{
 		set_env(s, "OLDPWD", get_env(s, "PWD"));

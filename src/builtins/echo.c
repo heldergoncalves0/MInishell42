@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:12:46 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/14 18:21:48 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:14:54 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	echo_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 	int	i;
 	int	flag;
 
+	(void)s;
+	(void)in;
 	i = 1;
 	flag = 0;
 	while (flag_n_echo(cmd->args[i]))

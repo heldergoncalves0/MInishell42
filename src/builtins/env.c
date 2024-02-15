@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:40 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/14 12:41:36 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:16:32 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	ft_strncmp_env(char *key, char *str)
 {
 	int	i;
-	int	ret;
 
 	i = 0;
 	while (str[i] == key[i])
@@ -29,15 +28,15 @@ int	ft_strncmp_env(char *key, char *str)
 
 char	*get_env(t_shell *s, char *key)
 {
-	int		i;
-	int		j;
+	int			i;
+	size_t		key_len;
 
 	i = 0;
 	while (s->env[i])
 	{	
-		j = ft_strncmp_env(key, s->env[i]);
-		if (j)
-			return (s->env[i] + j);
+		key_len = ft_strlen(key);
+		if (ft_strncmp(s->env[i], key, key_len) == 0 && s->env[i][key_len] == '=')
+			return (s->env[i] + key_len + 1);
 		i++;
 	}
 	return ("");

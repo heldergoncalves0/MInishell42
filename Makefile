@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+         #
+#    By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/14 18:25:10 by gcatarin         ###   ########.fr        #
+#    Updated: 2024/02/15 12:12:16 by helferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC   = src/main.c src/parser/lexer.c src/clean/ft_free.c src/executor/executor.
 		src/builtins/exec_builtin.c src/builtins/echo.c src/builtins/cd.c src/builtins/unset.c \
 		src/builtins/env.c src/builtins/exit.c src/builtins/export.c src/builtins/pwd.c \
 		src/utils/utils.c src/signals/signals.c src/redirect/heredoc.c src/utils/ft_lists.c \
-		src/redirect/redirect.c src/redirect/infile.c src/redirect/outfile.c
+		src/redirect/redirect.c src/redirect/infile.c src/redirect/outfile.c src/expander/expander.c
 
 OBJ   = $(patsubst src/%.c, obj/%.o, $(SRC))
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/14 21:21:12 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:18:19 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static	void print_sorted_env(t_cmd *cmd, t_shell *shell, int in, int out)
 	char	**env_copy;
 	int		i;
 
+	(void)cmd;
+	(void)in;
 	i = 0;
 	env_copy = sort_env(copy_array(shell->env));
 	while (env_copy[i])
@@ -57,6 +59,7 @@ static	void print_sorted_env(t_cmd *cmd, t_shell *shell, int in, int out)
 
 void	add_var_env(t_shell *s, char *str, char *var_value)
 {
+	(void)var_value;
 	s->env = copy_array_export(s->env, str, "\0");
 }
 

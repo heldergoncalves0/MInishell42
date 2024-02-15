@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/14 21:27:03 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:13:34 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		free(str);
 		split_redirect(shell);
 		execute_redirects(shell, shell->cmd);
-		ft_list(shell->cmd);
+		expander(shell);
+		//ft_list(shell->cmd);
 		executor(shell);
 	}
 	shell->cmd = free_cmds(shell->cmd);
