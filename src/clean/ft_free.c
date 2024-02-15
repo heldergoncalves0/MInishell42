@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/14 18:22:54 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:22:24 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ void	*free_array(char **args)
 t_redir	*free_redirs(t_redir *redir)
 {
 	t_redir	*tmp;
-	int		i;
 
-	i = 0;
 	tmp = redir;
 	while (redir)
 	{
@@ -44,9 +42,7 @@ t_redir	*free_redirs(t_redir *redir)
 t_cmd	*free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
-	int		i;
 
-	i = 0;
 	tmp = cmd;
 	while (cmd)
 	{
