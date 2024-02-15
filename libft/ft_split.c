@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:57:47 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/12 19:36:08 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:50:04 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (ft_calloc(sizeof(char *), 1));
 	split = (char **)malloc(sizeof(char *) * (get_length(c, (char *)s) + 1));
-	if (!split || !s)
+	if (!split)
 		return (0);
 	i = 0;
 	index_split = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/15 13:13:34 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:44:20 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		split_redirect(shell);
 		execute_redirects(shell, shell->cmd);
 		expander(shell);
-		//ft_list(shell->cmd);
 		executor(shell);
 	}
 	shell->cmd = free_cmds(shell->cmd);
@@ -50,7 +49,7 @@ void	minishell_loop(t_shell *shell, char **env)
 	}
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	static t_shell	shell;
 

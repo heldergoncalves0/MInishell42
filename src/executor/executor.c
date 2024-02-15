@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/14 21:40:45 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:34:12 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ char	*find_executable_path(char *binary)
 	return (NULL);
 }
 
-void	execute_cmd(t_cmd  *cmd, t_shell *s, int in, int out)
+void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	pid_t	pid;
-	//int		status;
+	int		status;
 
 	if (cmd->is_error_redir == 0)
 	{
@@ -54,8 +54,11 @@ void	execute_cmd(t_cmd  *cmd, t_shell *s, int in, int out)
 			close_fd(in);
 			dup2(out, STDOUT_FILENO);
 			close_fd(out);
-			execve(cmd->path, cmd->args, s->env);
-			ft_putstr_fd("not found\n", 2);
+			if (cmd->path)
+				execve(cmd->path, cmd->args, s->env);
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+			free_shell(s);
 			exit(127);
 		}
 	}
@@ -70,15 +73,13 @@ void	exit_status(t_cmd *cmd)
 		wait(NULL);
 		cmd = cmd->next;
 	}
-
 }
-
 
 void	executor(t_shell *s)
 {
 	int		in;
 	int		out;
-	t_cmd 	*cmd;
+	t_cmd	*cmd;
 
 	in = 0;
 	cmd = s->cmd;
@@ -88,7 +89,7 @@ void	executor(t_shell *s)
 			exit(1);
 		out = cmd->fd[1];
 		if (cmd->out_file != -1)
-		{	
+		{
 			out = cmd->out_file;
 			close_fd(cmd->fd[1]);
 		}
@@ -102,3 +103,4 @@ void	executor(t_shell *s)
 	cmd = s->cmd;
 	exit_status(cmd);
 }
+// yes | head

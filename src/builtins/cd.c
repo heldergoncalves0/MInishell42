@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/15 13:15:53 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:51:25 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
-	char *pwd;
-	char *tmp;
+	char	*pwd;
+	char	*tmp;
 
 	tmp = NULL;
 	(void)in;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/15 12:36:50 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:47:49 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,18 @@ typedef struct s_redir {
 	char			*args[3];
 	int				fd;
 	t_redir_type	type;
-	struct	s_redir *next;
+	struct s_redir	*next;
 }	t_redir;
 
 typedef struct s_cmd {
-	char 	*path;
-	char 	**args;
-	int		in_file;
-	int		out_file;
-	int		fd[2];
-	t_redir	*red;
-	int		is_error_redir;
-	struct	s_cmd *next;
+	char			*path;
+	char			**args;
+	int				in_file;
+	int				out_file;
+	int				fd[2];
+	t_redir			*red;
+	int				is_error_redir;
+	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_shell{
@@ -69,7 +69,7 @@ typedef struct s_shell{
 }	t_shell;
 
 //--------------------------- LEXER ----------------------------//
-int	tokeniser(const char *str, t_shell *s);
+int		tokeniser(const char *str, t_shell *s);
 
 //---------------------------EXPANDER---------------------------//
 void	expander(t_shell *shell);
@@ -93,10 +93,16 @@ char	**copy_array(char **s);
 char	**search_heredocs(t_shell *s);
 char	*flag_return(int flag, char *new);
 int		ft_double_strlen(char **s);
+void	clean_expand_cmd(t_cmd *c);
+int		close_fd(int fd);
+int		ft_strncmp_env(char *key, char *str);
+char	*get_env(t_shell *s, char *key);
+void	set_env(t_shell *s, char *key, char *value);
+char	**copy_array_export(char **s, char *str, char *c);
 
 //---------------------------- FREE ----------------------------//
 void	*free_array(char **args);
-t_cmd 	*free_cmds(t_cmd *c);
+t_cmd	*free_cmds(t_cmd *c);
 void	free_shell(t_shell *s);
 
 //---------------------------- SIGNALS -------------------------//
@@ -115,10 +121,5 @@ int		handle_infile(t_cmd *cmd, t_redir *redir);
 int		handle_append(t_cmd *cmd, t_redir *redir);
 void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir);
 int		handle_outfile(t_cmd *cmd, t_redir *redir);
-int 	close_fd(int fd);
-int		ft_strncmp_env(char *key, char *str);
-char	*get_env(t_shell *s, char *key);
-void	set_env(t_shell *s, char *key, char *value);
-char	**copy_array_export(char **s, char *str, char *c);
 
 #endif

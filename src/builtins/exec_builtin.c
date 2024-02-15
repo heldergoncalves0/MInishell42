@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:58:02 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/14 21:26:37 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:21:25 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out)
 		return (0);
 	if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
 		cd_cmd(cmd, s, in, out);
-	// else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
-	// 	unset_cmd(s->env, cmd->args[1]);
-	// else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-	// 	export_cmd(cmd, s, in, out);
+	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
+		unset_cmd(cmd, s, in, out);
+	else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
+		export_cmd(cmd, s, in, out);
 	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		pwd_cmd(cmd, s, in, out);
 	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)

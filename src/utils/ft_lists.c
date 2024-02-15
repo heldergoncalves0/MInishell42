@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:15:50 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 16:54:31 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:44:30 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,4 @@ void	ft_listredir(t_redir *c)
 		printf("	type: %d\n", c->type);
 		c = c->next;
 	}
-
 }

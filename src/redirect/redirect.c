@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:21:25 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 20:25:10 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:05:57 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,30 @@ static t_redir	*redir_struct(char *name, char *file, t_redir_type type)
 	redir_ptr->args[0] = name;
 	redir_ptr->args[1] = file;
 	redir_ptr->type = type;
-
 	return (redir_ptr);
 }
 
 t_redir	*redir_compares(char **args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_strncmp(args[0], ">", 2) == 0)
-		return(redir_struct(args[0], args[1], OUTFILE));
+		return (redir_struct(args[0], args[1], OUTFILE));
 	else if (ft_strncmp(args[0], "<", 2) == 0)
-		return(redir_struct(args[0], args[1], INFILE));
+		return (redir_struct(args[0], args[1], INFILE));
 	else if (ft_strncmp(args[0], "<<", 3) == 0)
-		return(redir_struct(args[0], args[1], HEREDOC));
+		return (redir_struct(args[0], args[1], HEREDOC));
 	else if (ft_strncmp(args[0], ">>", 3) == 0)
-		return(redir_struct(args[0], args[1], APPEND));
+		return (redir_struct(args[0], args[1], APPEND));
 	return (NULL);
 }
 
 void	clean_redir_cmd(t_cmd *c)
 {
-	size_t		i;
-	size_t		j;
-	int			flag;
+	size_t	i;
+	size_t	j;
+	int		flag;
 
 	j = 0;
 	i = -1;
@@ -53,12 +52,13 @@ void	clean_redir_cmd(t_cmd *c)
 	{
 		flag = is_redir(c, i);
 		if (flag)
-		{	
+		{
 			j = i;
 			c->args[i] = 0;
 			i++;
 			while (c->args[++i])
-			{	c->args[j++] = c->args[i];
+			{
+				c->args[j++] = c->args[i];
 				c->args[i] = 0;
 			}
 			c->args[j] = 0;
@@ -93,7 +93,6 @@ void	split_redirect(t_shell *s)
 				i += (*cmd->args[i + 1] != '\0');
 			}
 			i++;
-		
 		}
 		clean_redir_cmd(cmd);
 		cmd = cmd->next;
@@ -105,7 +104,7 @@ int	execute_redirects(t_shell *s, t_cmd *cmd)
 	t_redir	*redir;
 
 	while (cmd)
-	{	
+	{
 		redir = cmd->red;
 		while (redir)
 		{
@@ -122,17 +121,4 @@ int	execute_redirects(t_shell *s, t_cmd *cmd)
 		cmd = cmd->next;
 	}
 	return (1);
-}
-
- int	is_redir(t_cmd *c, int i)
-{
-	if (ft_strncmp(c->args[i], ">", 2) == 0)
-		return (1);
-	else if (ft_strncmp(c->args[i], "<", 2) == 0)
-		return (1);
-	else if (ft_strncmp(c->args[i], ">>", 3) == 0)
-		return (1);
-	else if (ft_strncmp(c->args[i], "<<", 3) == 0)
-		return (1);
-	return (0);
 }

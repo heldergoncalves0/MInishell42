@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:25:04 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/13 20:56:44 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:00:18 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	handle_append(t_cmd *cmd, t_redir *redir)
 	cmd->out_file = redir->fd; 
 	return (1);
 }
+
 int	handle_outfile(t_cmd *cmd, t_redir *redir)
 {
 	redir->fd = open(redir->args[1], O_TRUNC | O_CREAT | O_WRONLY, 0644);
