@@ -6,14 +6,14 @@
 #    By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/15 14:36:55 by gcatarin         ###   ########.fr        #
+#    Updated: 2024/02/15 20:37:58 by gcatarin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME  = minishell
 OS    = $(shell uname)
 CC    = @cc
-FLAGS = -Wall -Wextra -g -lreadline #-fsanitize=address
+FLAGS = -Wall -Wextra -g -lreadline -fsanitize=address
 LFT   = libft/libft.a
 INC   = -I./libft -I./include
 SRC   = src/main.c src/parser/lexer.c src/clean/ft_free.c src/executor/executor.c \

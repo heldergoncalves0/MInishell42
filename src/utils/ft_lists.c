@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:15:50 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/15 15:44:30 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/15 20:08:17 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	ft_list(t_cmd *c)
 		return ;
 	printf("====== cmd ======\n");
 	while (c->args[i])
-		printf("arg:%s\n", c->args[i++]);
+	{
+		ft_putstr_fd("arg :", 2);
+		ft_putstr_fd(c->args[i++], 2);
+		ft_putstr_fd("\n", 2);
+	}
 	printf("in: %d\n", c->in_file);
 	printf("out: %d\n", c->out_file);
 	ft_listredir(c->red);
