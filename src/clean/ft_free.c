@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@students.42lisboa.co    +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:44:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/15 10:22:24 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:34:13 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ void	*free_array(char **args)
 
 	i = 0;
 	while (args && args[i])
-	{
 		free(args[i++]);
-	}
 	free(args);
 	return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/15 18:38:52 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:35:16 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_shell{
 
 //--------------------------- LEXER ----------------------------//
 int		tokeniser(const char *str, t_shell *s);
+void	handle_quotes(t_shell *s);
 
 //---------------------------EXPANDER---------------------------//
 void	expander(t_shell *shell);
