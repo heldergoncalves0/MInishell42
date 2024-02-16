@@ -7,9 +7,13 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2024/02/16 17:05:15 by helferna         ###   ########.fr       */
 =======
 /*   Updated: 2024/02/16 17:10:01 by gcatarin         ###   ########.fr       */
+>>>>>>> parser
+=======
+/*   Updated: 2024/02/16 17:17:00 by gcatarin         ###   ########.fr       */
 >>>>>>> parser
 /*                                                                            */
 /* ************************************************************************** */
@@ -32,7 +36,7 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		//ft_list(shell->cmd);
 =======
 		expander(shell);
-		handle_quotes(shell);
+		//handle_quotes(shell);
 		ft_list(shell->cmd);
 >>>>>>> parser
 		executor(shell);
