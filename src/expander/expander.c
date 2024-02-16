@@ -6,96 +6,92 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/15 20:38:51 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:43:22 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static char	*valid_argument(t_shell *shell, char *str)
+{
+	int	i;
+	char *ret;
 
-static char	*get_env_ret(t_shell *shell, char *ret)
+	ret = str;
+	i = 0;
+	while (ret[i])
+	{
+		if (!ft_isalnum(ret[i]))
+		{
+			ret[i] = '\0';
+			break ;
+		}
+		i++;
+	}
+	return (ret);
+}
+
+static char	*get_env_ret(t_shell *s, char *ret)
 {
 	char	*env_value;
 
-	env_value = get_env(shell, ret);
+	env_value = get_env(s, ret);
 	if (ft_strlen(env_value) != 0)
+	{
+		// ft_putstr_fd("env_value: ", 2);
+		// ft_putstr_ln(env_value, 2);
 		return (ft_strdup(env_value));
-	return (ft_strdup("2"));
-}
-
-static char	*valid_argument(t_shell *shell, char *str, int j)
-{
-	int	i;
-	char 	*ret;
-
-	i = ft_strlen(str);
-	ret = ft_calloc(i, sizeof(char));
-	i = 0;
-	while (str[j])
-	{
-		if (!ft_isalnum(str[j]))
-			break ;
-		ret[i] = str[j];
-		i++;
-		j++;
 	}
-	return (ret);
+	return (ft_strdup("nada"));
 }
 
-static char	*check_expand(t_shell *s, char *str)
+static char	*check_expand(t_shell *s, t_cmd *cmd)
 {
-	int i;
-	int	j;
-	char *ret;
-	char *retu;
+	size_t	i;
+	size_t	j;
+	char	*arg;
+	char	*tmp;
 
-	ret = NULL;
-	retu = NULL;
-	i = 0;
+	i = -1;
 	j = 0;
-	while (str[i])
+	arg = NULL;
+	tmp = NULL;
+	while (cmd->args[++i])
 	{
-		if (str[i] == '$')
+		ft_putstr_fd("argumento: ", 2);
+		ft_putstr_ln(cmd->args[i], 2);
+		if (cmd->args[i][j] == '$')
 		{
-			if (str[++i])
-			{
-				retu = valid_argument(s, str, i);
-				retu = get_env_ret(s, retu);
-				if (ft_strncmp(retu, "\2", 2) != 0)
-				{
-					ret = ft_strjoin(ret, retu);
-					ret = ft_strjoin(ret, "\0");
-					j += ft_strlen(ret);
-					i += ft_strlen(retu) - 1;
-				}
-			}
-			else
-				return (ft_strdup("2"));
+			arg = valid_argument(s, ++cmd->args[i]);
+		// ft_putstr_fd("arg: ", 2);
+		// ft_putstr_ln(arg, 2);
+			cmd->args[i] = ft_strjoin(get_env_ret(s, arg), cmd->args[i]);
+		 ft_putstr_fd("FIM: ", 2);
+		 ft_putstr_ln(cmd->args[i] , 2);
+			check_expand(s, cmd);
+			break ;
 		}
-		else
-			ret[j++] = str[i];
-		i++;
+		j += ft_strlen(arg);
 	}
-	free(retu);
-	free(str);
-	return (ret);
 }
 
 void	expander(t_shell *shell)
 {
-	int		i;
+	size_t		i;
 	t_cmd	*cmd;
 
 	cmd = shell->cmd;
 	i = 0;
 	while (cmd)
 	{
-		while (cmd->args[i] != NULL)	
+		if (cmd->args[i] != NULL)	
 		{
-			cmd->args[i] = check_expand(shell, cmd->args[i]);
+			// cmd->args[i] = 
+			// ft_putstr_ln(cmd->args[i], 2);
+			check_expand(shell, cmd);
 			i++;
 		}
-		clean_expand_cmd(cmd);
+		// clean_expand_cmd(cmd);
 		cmd = cmd->next;
 	}
 }
