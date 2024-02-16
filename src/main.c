@@ -6,7 +6,11 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/02/16 17:05:15 by helferna         ###   ########.fr       */
+=======
+/*   Updated: 2024/02/16 17:10:01 by gcatarin         ###   ########.fr       */
+>>>>>>> parser
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +26,15 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		handle_quotes(shell);
 		split_redirect(shell);
 		execute_redirects(shell, shell->cmd);
+<<<<<<< HEAD
 		ft_list(shell->cmd);
 		//expander(shell);
 		//ft_list(shell->cmd);
+=======
+		expander(shell);
+		handle_quotes(shell);
+		ft_list(shell->cmd);
+>>>>>>> parser
 		executor(shell);
 	}
 	shell->cmd = free_cmds(shell->cmd);

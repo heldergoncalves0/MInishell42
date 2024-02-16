@@ -6,7 +6,7 @@
 #    By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/16 14:24:06 by helferna         ###   ########.fr        #
+#    Updated: 2024/02/16 17:25:14 by helferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ r:
 # 	make re && clear && valgrind ./minishell
 
 v: re readline.supp
+	clear
 	@valgrind  --track-fds=yes --show-leak-kinds=all --leak-check=full --suppressions=readline.supp  ./minishell
 
 readline.supp:

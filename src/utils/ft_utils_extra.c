@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:03:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/15 16:17:59 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:03:36 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,20 @@ int	is_redir(t_cmd *c, int i)
 	return (0);
 }
 
-void	clean_expand_cmd(t_cmd *c)
+char	*ft_strchr_quotes(const char *s, int c)
 {
-	size_t	i;
-	size_t	j;
-	int		flag;
+	int	flag;
 
-	j = 0;
-	i = -1;
-	while (c->args[++i])
+	flag = 0;
+	while (*s)
 	{
-		if (ft_strncmp(c->args[i], "\2", 2) == 0)
-		{
-			j = i;
-			c->args[i] = 0;
-			while (c->args[++i])
-			{
-				c->args[j++] = c->args[i];
-				c->args[i] = 0;
-			}
-			c->args[j] = 0;
-			clean_expand_cmd(c);
-			break ;
-		}
+		if (*s == 39 && flag == 0)
+			flag = 1;
+		else if ((unsigned char)c == *s && flag == 0)
+			return ((char *)s);
+		else if (*s == 39)
+			flag = 0;
+		s++;
 	}
+	return (0);
 }
