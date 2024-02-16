@@ -6,7 +6,7 @@
 #    By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/16 10:30:02 by gcatarin         ###   ########.fr        #
+#    Updated: 2024/02/16 12:18:53 by gcatarin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ r:
 # 	make re && clear && valgrind ./minishell
 
 v: re readline.supp
+	clear
 	@valgrind  --track-fds=yes --show-leak-kinds=all --leak-check=full --suppressions=readline.supp  ./minishell
 
 readline.supp:

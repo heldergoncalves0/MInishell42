@@ -6,18 +6,16 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 11:43:22 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:59:54 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*valid_argument(t_shell *shell, char *str)
+static char	*valid_argument(t_shell *shell, char *ret)
 {
 	int	i;
-	char *ret;
 
-	ret = str;
 	i = 0;
 	while (ret[i])
 	{
@@ -31,70 +29,100 @@ static char	*valid_argument(t_shell *shell, char *str)
 	return (ret);
 }
 
-static char	*get_env_ret(t_shell *s, char *ret)
+static char	*get_env_return(t_shell *s, char *ret)
 {
 	char	*env_value;
 
 	env_value = get_env(s, ret);
 	if (ft_strlen(env_value) != 0)
-	{
-		// ft_putstr_fd("env_value: ", 2);
-		// ft_putstr_ln(env_value, 2);
 		return (ft_strdup(env_value));
-	}
-	return (ft_strdup("nada"));
+	return (ft_strdup(""));
 }
 
-static char	*check_expand(t_shell *s, t_cmd *cmd)
+static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 {
 	size_t	i;
 	size_t	j;
+	char	*ret;
+	int		flag;
+
+	i = 0;
+	j = 0;
+	flag = 0;
+	ret = (char *)malloc(sizeof(char) * (ft_strlen(str) + ft_strlen(tmp)) + 1);
+	while (str[j])
+	{
+		if (str[j] == 39 && quote == 0)
+			flag = 1;
+		else if (str[j] == '$' && flag == 0)
+		{
+			while((str[++j] == *arg) && *arg)
+				*arg++;
+			while (*tmp)
+				ret[i++] = *tmp++;
+			flag++;
+		}
+		else if (str[j] == 39)
+			flag = 0;
+		else
+			ret[i++] = str[j++];
+	}
+	ret[i] = '\0';
+	free(str);
+	return (ret);
+}
+
+static char	*expand_argument(t_shell *s, char *str, size_t j, int flag)
+{
 	char	*arg;
 	char	*tmp;
 
-	i = -1;
-	j = 0;
 	arg = NULL;
 	tmp = NULL;
-	while (cmd->args[++i])
+	while (str[j])
 	{
-		ft_putstr_fd("argumento: ", 2);
-		ft_putstr_ln(cmd->args[i], 2);
-		if (cmd->args[i][j] == '$')
+		if (str[j] == 39 && flag == 0)
+			flag = 1;
+		else if (str[j] == '$' && flag == 0)
 		{
-			arg = valid_argument(s, ++cmd->args[i]);
-		// ft_putstr_fd("arg: ", 2);
-		// ft_putstr_ln(arg, 2);
-			cmd->args[i] = ft_strjoin(get_env_ret(s, arg), cmd->args[i]);
-		 ft_putstr_fd("FIM: ", 2);
-		 ft_putstr_ln(cmd->args[i] , 2);
-			check_expand(s, cmd);
-			break ;
+			arg = valid_argument(s, ft_strdup(ft_strchr_quotes(str, '$') + 1));
+			j += ft_strlen(arg) + 1;
+			tmp = get_env_return(s, arg);
+			str = clear_expand(str, arg, tmp, 0);
+			free(tmp);
+			free(arg);
+			return (str);
 		}
-		j += ft_strlen(arg);
+		if (str[j] == 39)
+			flag = 0;
+		j++;
 	}
+	return (str);
 }
 
 void	expander(t_shell *shell)
 {
-	size_t		i;
+	size_t	i;
+	size_t	j;
 	t_cmd	*cmd;
 
 	cmd = shell->cmd;
 	i = 0;
 	while (cmd)
 	{
-		if (cmd->args[i] != NULL)	
+		if (cmd->args[i] != NULL)
 		{
-			// cmd->args[i] = 
-			// ft_putstr_ln(cmd->args[i], 2);
-			check_expand(shell, cmd);
-			i++;
+			j = -1;
+			while (cmd->args[++j])
+			{
+				while (ft_strchr_quotes(cmd->args[j], '$') != NULL)
+					cmd->args[j] = expand_argument(shell, cmd->args[j], 0, 0);
+			}
+			j++;
 		}
-		// clean_expand_cmd(cmd);
 		cmd = cmd->next;
 	}
 }
 // echo ${PWD/atacu}
 // >|cat
-// CAT << "$USER
+// CAT << "$USER"
