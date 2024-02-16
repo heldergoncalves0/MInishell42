@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 13:59:11 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:05:15 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		ft_list(shell->cmd);
 		//expander(shell);
 		//ft_list(shell->cmd);
-		//executor(shell);
+		executor(shell);
 	}
 	shell->cmd = free_cmds(shell->cmd);
 }
