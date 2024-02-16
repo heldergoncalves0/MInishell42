@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/15 18:59:06 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:39:02 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_heredoc_read(t_redir *redir)
+static void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 {
 	char	*line;
 	size_t	size;
@@ -28,6 +28,8 @@ static void	handle_heredoc_read(t_redir *redir)
 			free(line);
 			break ;
 		}
+		while (ft_strchr_quotes(line, '$') != NULL)
+			line = expand_argument(shell, line, 0, 0);
 		ft_putstr_fd(line, redir->fd);
 		ft_putstr_fd("\n", redir->fd);
 		free(line);
@@ -48,7 +50,7 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 			s->status = -1;// corrigir se -1
 			free_shell(s);
 		}
-		handle_heredoc_read(redir);
+		handle_heredoc_read(redir, s);
 		close_fd(redir->fd);
 		free_shell(s);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 16:04:28 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:35:06 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ int		tokeniser(const char *str, t_shell *s);
 
 //---------------------------EXPANDER---------------------------//
 void	expander(t_shell *shell);
+char	*expand_argument(t_shell *s, char *str, size_t j, int flag);
+char	*clear_expand(char *str, char *arg, char *tmp, int quote);
+char	*get_env_return(t_shell *s, char *ret);
+char	*valid_argument(t_shell *shell, char *ret);
 
 //---------------------------- EXE -----------------------------//
 void	executor(t_shell *s);
