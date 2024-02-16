@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 17:10:01 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:17:00 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		split_redirect(shell);
 		execute_redirects(shell, shell->cmd);
 		expander(shell);
-		handle_quotes(shell);
+		//handle_quotes(shell);
 		ft_list(shell->cmd);
 		executor(shell);
 	}

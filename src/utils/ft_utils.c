@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:16:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/15 15:45:16 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:23:42 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ char	**copy_array_export(char **s, char *str, char *c)
 	while (s[++i])
 		new[i] = ft_strdup(s[i]);
 	new[i] = ft_strjoin(str, c);
+	free_array(s);
 	return (new);
 }
