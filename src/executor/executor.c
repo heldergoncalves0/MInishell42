@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 12:26:48 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/18 21:11:50 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		pid = fork();
 		if (pid == 0)
 		{
+			set_signal_action(3);
 			dup2(in, STDIN_FILENO);
 			close_fd(in);
 			dup2(out, STDOUT_FILENO);
@@ -61,6 +62,7 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			free_shell(s);
 			exit(127);
 		}
+		set_signal_action(2);
 	}
 	close_fd(in);
 	close_fd(out);

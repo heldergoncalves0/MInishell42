@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 18:35:01 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:05:08 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,4 @@ void	expander(t_shell *shell)
 		cmd = cmd->next;
 	}
 }
-// echo ${PWD/atacu}
-// >|cat
 // CAT << "$USER"

@@ -6,11 +6,18 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/16 18:39:02 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/18 20:27:41 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int check_signal_g(void)
+{
+    if (g_signal == 10 || g_signal == 11)
+		return (1);
+	return (0);
+}
 
 static void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 {
@@ -21,9 +28,9 @@ static void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 	while (1)
 	{
 		line = readline(">> ");
-		if (line == EOF)
-			ft_putstr_fd("\n\nDEU MERDA\n\n", 2);
-		if (!line || ft_strncmp(line, redir->args[1], size) == 0)
+		// if (line == EOF)
+		// 	ft_putstr_fd("\n\nDEU MERDA\n\n", 2);
+		if (!line || ft_strncmp(line, redir->args[1], size) == 0 || check_signal_g())
 		{
 			free(line);
 			break ;
@@ -44,6 +51,7 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 	if (pid == 0)
 	{
 		s->status = 0;
+		set_signal_action(1);
 		redir->fd = open("/tmp/tmp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (redir->fd == -1)
 		{

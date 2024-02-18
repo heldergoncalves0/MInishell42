@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+         #
+#    By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/16 17:36:22 by gcatarin         ###   ########.fr        #
+#    Updated: 2024/02/18 21:40:02 by helferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,10 +52,8 @@ fclean: clean
 re: fclean all
 
 r: 
-	@make re && clear && ./minishell
-
-# v: 
-# 	make re && clear && valgrind ./minishell
+	@make re && clear 
+	./minishell
 
 v: re readline.supp
 	clear

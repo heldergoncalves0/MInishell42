@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 17:17:00 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/18 21:21:39 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		execute_redirects(shell, shell->cmd);
 		expander(shell);
 		//handle_quotes(shell);
-		ft_list(shell->cmd);
+		//ft_list(shell->cmd);
 		executor(shell);
 	}
 	shell->cmd = free_cmds(shell->cmd);
@@ -37,6 +37,7 @@ void	minishell_loop(t_shell *shell, char **env)
 	shell->env = copy_array(env);
 	while (1)
 	{
+		set_signal_action(0);
 		line = readline("Minishell: ");
 		if (line == NULL)
 			free_shell(shell);
@@ -57,6 +58,6 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
-	set_signal_action();
+	//set_signal_action(0);
 	minishell_loop(&shell, env);
 }

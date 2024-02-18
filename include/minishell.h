@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 18:35:06 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:55:15 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 # define CYN "\e[0;36m"
 # define WHT "\e[0;37m"
 # define RES "\e[0;0m"
+
+//----------------GLOBAL FOR SIGNAL----------------------------//
+extern	int g_signal;
 
 typedef enum e_redir_type{
 	NONE,
@@ -111,7 +114,7 @@ t_cmd	*free_cmds(t_cmd *c);
 void	free_shell(t_shell *s);
 
 //---------------------------- SIGNALS -------------------------//
-void	set_signal_action(void);
+void	set_signal_action(int sigstate);
 
 //---------------------------- LISTS ---------------------------//
 void	ft_listredir(t_redir *c);
