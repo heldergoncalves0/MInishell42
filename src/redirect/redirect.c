@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:21:25 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/15 15:05:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:05:26 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	split_redirect(t_shell *s)
 		while (cmd->args[i])
 		{
 			redir = redir_compares(&cmd->args[i]);
-			if (redir)
+			if (redir && *cmd->args[i] != '\0')
 			{
 				if (!cmd->red)
 					cmd->red = redir;

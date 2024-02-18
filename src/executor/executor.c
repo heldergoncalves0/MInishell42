@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 12:26:48 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/18 21:46:59 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ char	*find_executable_path(char *binary)
 void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	pid_t	pid;
-	int		status;
+	//int		status;
 
-	if (cmd->is_error_redir == 0)
+	if (cmd->is_error_redir == 0 && cmd->args[0] != NULL)
 	{
 		pid = fork();
 		if (pid == 0)

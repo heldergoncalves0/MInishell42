@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 16:04:28 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:27:18 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ typedef struct s_cmd {
 typedef struct s_shell{
 	t_cmd	*cmd;
 	char	**env;
+	char	**export;
 	int		status;
 }	t_shell;
 
 //--------------------------- LEXER ----------------------------//
-int		tokeniser(const char *str, t_shell *s);
+void	tokeniser(const char *str, t_shell *s);
 
 //---------------------------EXPANDER---------------------------//
 void	expander(t_shell *shell);
@@ -122,5 +123,17 @@ int		handle_infile(t_cmd *cmd, t_redir *redir);
 int		handle_append(t_cmd *cmd, t_redir *redir);
 void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir);
 int		handle_outfile(t_cmd *cmd, t_redir *redir);
+char	*expand_argument(t_shell *s, char *str, size_t j, int flag);
+void	handle_quotes(t_shell *s);
+
+int		is_arg_redir(char *s);
+int		sintax_verify(t_shell *shell);
+int		ft_putstr_ln(char *s, int fd);
+char	**sort_env(char **env_copy);
+int		var_exist(char **s, char *str);
+int		ft_biggerncmp(char *s1, char *s2, int l1, int l2);
+char	**add_var_export(char **s, char *str, int flag);
+char	**overwrite_var(char **s, char *str, int flag);
+char	*get_var_name(char *str);
 
 #endif

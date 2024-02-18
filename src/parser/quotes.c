@@ -6,99 +6,70 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:08:21 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/16 17:09:58 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:52:08 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	c_set(char c, char const *set)
+static char	*delete_quotes(char *arg, char c)
 {
-	int	i;
-
+	size_t	i;
+	size_t	j;
+	char	*ret;
+	
+	ret = calloc(1, ft_strlen(arg));
 	i = 0;
-	while (set[i])
+	j = 0;
+	while (arg[j])
 	{
-		if (set[i] == c)
-			return (1);
-		i++;
+		while (arg[j] == c)
+			j++;
+		if (arg[j])
+			ret[i++] = arg[j++];
 	}
-	return (0);
+	free(arg);
+	return (ret);
 }
 
-// static int	get_something(char *str)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		flag;
-
-// 	i = 0;
-// 	j = 0;
-// 	flag = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '\"')
-// 		{
-// 			flag = 1;
-// 			i++;
-// 		}
-// 		while (str[i] && flag)
-// 		{
-// 			if (str[i] == '\"')
-// 				flag = 0;
-// 			j++;
-// 			i++;
-// 		}
-// 		if (!flag)
-// 			i++;
-// 		j++;
-// 	}
-// 	ft_putstr_fd("Len: ", 2);
-// 	ft_putendl_fd(ft_itoa(j), 2);
-// 	return (j);
-// }
-
-static char *trim_quotes(char *arg)
+static char	*trim_quotes(char *arg, char c)
 {
-	char	*trimmed;
-	int		len;
-	int		i;
-	
-	len = ft_strlen(arg);
-	trimmed = (char *) malloc(sizeof(char) * len + 1);
+	size_t	i;
+	size_t	j;
+	char *ret;
+
 	i = 0;
-	len = 0;
-	while (arg[i])
+	j = 1;
+	ret = calloc(1, ft_strlen(arg));
+	arg = delete_quotes(arg, c);
+	if (arg[0] == c)
 	{
-		if (arg[i] != '\"')
-			trimmed[len++] = arg[i];
-		i++;
+		while (arg[j] != c)
+			ret[i++] = arg[j++];
+		ret[i + 1] = '\0';
+		free(arg);
+		return (ret);
 	}
-	trimmed[len] = '\0';
-	return (trimmed);
+	free(ret);
+	return (arg);
 }
 
 void	handle_quotes(t_shell *s)
 {
 	int		i;
 	t_cmd	*cmd;
-	char	*arg;
 
 	i = 0;
 	cmd = s->cmd;
 	while (cmd)
 	{
 		i = 0;
-		while (s->cmd->args[i])
+		while (cmd->args[i])
 		{
-			// ft_putstr_fd(s->cmd->args[i], 2);
-			// ft_putstr_fd("\n", 2);
-			arg = ft_strdup(s->cmd->args[i]);
-			free(cmd->args[i]);
-			cmd->args[i] = trim_quotes(arg);
-			free(arg);
-			ft_putstr_fd(cmd->args[i], 2);
-			ft_putstr_fd("\n", 2);
+			if (cmd->args[i][0] == 34)
+				cmd->args[i] = trim_quotes(cmd->args[i], '\"');
+			if (cmd->args[i][0] == 39)
+				cmd->args[i] = trim_quotes(cmd->args[i], '\'');
 			i++;
 		}
 		cmd = cmd->next;

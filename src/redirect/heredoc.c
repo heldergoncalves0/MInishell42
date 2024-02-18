@@ -6,13 +6,13 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/15 18:59:06 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/18 19:06:04 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_heredoc_read(t_redir *redir)
+static void	handle_heredoc_read(t_redir *redir, t_shell* shell)
 {
 	char	*line;
 	size_t	size;
@@ -21,13 +21,13 @@ static void	handle_heredoc_read(t_redir *redir)
 	while (1)
 	{
 		line = readline(">> ");
-		if (line == EOF)
-			ft_putstr_fd("\n\nDEU MERDA\n\n", 2);
 		if (!line || ft_strncmp(line, redir->args[1], size) == 0)
 		{
 			free(line);
 			break ;
 		}
+		while (ft_strchr_quotes(line, '$') != NULL)
+			line = expand_argument(shell, line, 0, 0);
 		ft_putstr_fd(line, redir->fd);
 		ft_putstr_fd("\n", redir->fd);
 		free(line);
@@ -48,7 +48,7 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 			s->status = -1;// corrigir se -1
 			free_shell(s);
 		}
-		handle_heredoc_read(redir);
+		handle_heredoc_read(redir, s);
 		close_fd(redir->fd);
 		free_shell(s);
 	}
