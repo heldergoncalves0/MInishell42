@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/18 18:40:59 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:17:01 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	tokeniser(const char *str, t_shell *s)
 
 	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
 	if (tokens == NULL)
-		write(2, "error allocating tokens!\n", 14);
+		ft_putstr_fd("error allocating tokens!\n", 2);
 	else
 		cmd_loop(tokens, s);
 	free(tokens);

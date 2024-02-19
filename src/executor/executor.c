@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/18 21:46:59 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:15:17 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			close_fd(out);
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
-			ft_putstr_fd(cmd->args[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
+			cmd_not_found_error(cmd->args[0]);
 			free_shell(s);
 			exit(127);
 		}

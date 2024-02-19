@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:16:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/18 20:20:16 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:10:56 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,20 @@ int	close_fd(int fd)
 	return (1);
 }
 
-int	ft_biggerncmp(char *s1, char *s2, int l1, int l2)
+int	ft_biggerncmp(char *s1, char *s2, int size_s1)
 {
-	if (l1 > l2)
-		return (ft_strncmp(s1, s2, l1));
-	return (ft_strncmp(s1, s2, l2));
+	int	size_s2;
+	int	ret;
+
+	size_s2 = ft_strlen(s2);
+	ret = 0;
+	if (size_s1 > size_s2)
+	{
+		ret = ft_strncmp(s1, s2, size_s1);
+		free(s2);
+		return (ret);
+	}
+	ret = ft_strncmp(s1, s2, size_s2);
+	free(s2);
+	return (ret);
 }

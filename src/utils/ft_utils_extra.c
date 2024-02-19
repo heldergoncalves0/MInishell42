@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:03:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/18 18:50:46 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:13:46 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,19 @@ int	sintax_verify(t_shell *shell)
 	cmd = shell->cmd;
 	while (cmd)
 	{
-		i = 0;
-		while (cmd->args[i])
+		i = -1;
+		while (cmd->args[++i])
 		{
 			if (is_arg_redir(cmd->args[i]) == 1)
 			{
 				if (cmd->args[i + 1])
-				{	if (is_arg_redir(cmd->args[i + 1]) == 1)
-						return (ft_putstr_ln("Syntax Error!", 2));}
+				{
+					if (is_arg_redir(cmd->args[i + 1]) == 1)
+						return (ft_putstr_ln("Syntax Error!", 2));
+				}
 				else
 					return (ft_putstr_ln("Syntax Error!", 2));
 			}
-			i++;
 		}
 		cmd = cmd->next;
 	}

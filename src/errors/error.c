@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/10 18:15:36 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 12:57:12 by gcatarin         ###   ########.fr       */
+/*   Created: 2024/02/19 14:13:26 by gcatarin          #+#    #+#             */
+/*   Updated: 2024/02/19 14:21:21 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+void	invalid_name_error(char *s)
 {
-	(void) in;
-	(void) cmd;
-	ft_putstr_fd(get_env(s, "PWD"), out);
-	ft_putstr_fd("\n", out);
+	ft_putstr_fd("Minishell: export: \'", 2);
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd("\': not a valid identifier\n", 2);
 }
-//  env | grep PWD oldpwd fica a nulo sem o =
+
+void	cmd_not_found_error(char *s)
+{
+	ft_putstr_fd(s, 2);
+	ft_putstr_fd(": command not found\n", 2);
+}
+
+int	invalid_file_error(char *s)
+{
+	ft_putstr_fd("Minishell: ", 2);
+	ft_putstr_fd(s, 2);
+	return (ft_putstr_fd(": No such file or directory\n", 2));
+}

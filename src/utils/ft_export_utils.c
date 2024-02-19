@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 20:16:10 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/18 22:27:11 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:41:52 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,40 +32,24 @@ char	**add_var_export(char **s, char *str, int flag)
 	char	**new;
 	size_t	i;
 	size_t	j;
-	char	*var_name;
 
-	new = ft_calloc(sizeof(char **), ft_double_strlen(s) + 2);	
+	new = ft_calloc(sizeof(char **), ft_double_strlen(s) + 2);
 	i = 0;
 	j = 0;
 	while (s[i])
 	{
-		var_name = get_var_name(s[i]);
-		if (ft_biggerncmp(str, var_name, ft_strlen(str), ft_strlen(var_name)) < 0 && flag == 0)
+		if (ft_biggerncmp(str, get_var_name(s[i]), \
+		ft_strlen(str)) <= 0 && flag == 0)
 		{
 			new[j] = ft_strdup(str);
 			flag++;
 		}
 		else
 			new[j] = ft_strdup(s[i++]);
-		free(var_name);
 		j++;
 	}
 	if (flag == 0)
 		new[j] = ft_strdup(str);
-	free_array(s);
-	return (new);
-}
-
-char	**copy_array_export(char **s, char *str, char *c)
-{
-	char	**new;
-	int		i;
-
-	i = -1;
-	new = ft_calloc(sizeof(char *), ft_double_strlen(s) + 2);
-	while (s[++i])
-		new[i] = ft_strdup(s[i]);
-	new[i] = ft_strjoin(str, c);
 	free_array(s);
 	return (new);
 }
@@ -73,47 +57,54 @@ char	**copy_array_export(char **s, char *str, char *c)
 int	var_exist(char **s, char *str)
 {
 	size_t	i;
-	char	*var_name;
 
 	i = -1;
 	while (s[++i])
 	{
-		var_name = get_var_name(s[i]);
-		if (ft_biggerncmp(str, var_name, ft_strlen(str), ft_strlen(var_name)) == 0)
-		{
-			free(var_name);
+		if (ft_biggerncmp(str, get_var_name(s[i]), ft_strlen(str)) == 0)
 			return (0);
-		}
-		free(var_name);
 	}
 	return (1);
 }
 
-char	**overwrite_var(char **s, char *str, int flag)
+char	**overwrite_var(char **s, char *str, int flag, char *str_name)
 {
 	char	**new;
 	size_t	i;
-	size_t	j;
-	char	*var_name;
 
-	new = ft_calloc(sizeof(char **), ft_double_strlen(s) + 2);	
+	new = ft_calloc(sizeof(char **), ft_double_strlen(s) + 2);
 	i = 0;
-	j = 0;
 	while (s[i])
 	{
-		var_name = get_var_name(s[i]);
-		if (ft_biggerncmp(str, var_name, ft_strlen(str), ft_strlen(var_name)) <= 0 && flag == 0)
+		if (ft_biggerncmp(str, get_var_name(s[i]), \
+		ft_strlen(str)) == 0 && flag == 0)
 		{
-			new[j] = ft_strdup(str);
+			new[i] = ft_strdup(str_name);
 			flag++;
 		}
 		else
-			new[j] = ft_strdup(s[i++]);
-		free(var_name);
-		j++;
+			new[i] = ft_strdup(s[i]);
+		i++;
 	}
 	if (flag == 0)
-		new[j] = ft_strdup(str);
+		new[i] = ft_strdup(str);
 	free_array(s);
 	return (new);
+}
+
+int	valid_name(char *s, int in)
+{
+	size_t	i;
+
+	i = 0;
+	(void) in;
+	if (s[i] == '_' && ft_strlen(s) < 2)
+		return (1);
+	while (s[i])
+	{
+		if (ft_isalpha(s[i]) || s[i] != '_')
+			return (1);
+		i++;
+	}
+	return (0);
 }
