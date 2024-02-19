@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 14:57:31 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:06:05 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	*find_executable_path(char *binary)
 void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	pid_t	pid;
-	//int		status;
 
 	if (cmd->is_error_redir == 0 && cmd->args[0] != NULL)
 	{
@@ -86,6 +85,7 @@ void	executor(t_shell *s)
 	cmd = s->cmd;
 	while (cmd)
 	{
+		cmd->path = find_executable_path(cmd->args[0]);
 		if (cmd->next && pipe(cmd->fd) == -1)
 			exit(1);
 		out = cmd->fd[1];

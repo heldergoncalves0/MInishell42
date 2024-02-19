@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:17:01 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:04:00 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static t_cmd	*new_cmd(char **args)
 	cmd->fd[1] = 1;
 	cmd->in_file = -1;
 	cmd->out_file = -1;
-	cmd->path = find_executable_path(cmd->args[0]);
+	cmd->path = NULL;
 	return (cmd);
 }
 

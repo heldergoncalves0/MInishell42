@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 16:00:19 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:06:32 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	valid_input(t_shell *shell, char *str, char *line)
 	free(str);
 	if (sintax_verify(shell) == 0)
 	{
-		// ft_list(shell->cmd);
 		split_redirect(shell, 0);
 		execute_redirects(shell, shell->cmd);
 		expander(shell);
+		//ft_list(shell->cmd);
 		handle_quotes(shell);
 		executor(shell);
 	}
