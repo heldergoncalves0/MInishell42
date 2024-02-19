@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 14:15:17 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:40:44 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		pid = fork();
 		if (pid == 0)
 		{
+			set_signal_action(3);
 			dup2(in, STDIN_FILENO);
 			close_fd(in);
 			dup2(out, STDOUT_FILENO);
@@ -60,16 +61,20 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			free_shell(s);
 			exit(127);
 		}
+		set_signal_action(2);
 	}
 	close_fd(in);
 	close_fd(out);
 }
 
-void	exit_status(t_cmd *cmd)
+void	exit_status(t_shell *s, t_cmd *cmd)
 {
+	// pid_t	pid;
+
+	(void) s;
 	while (cmd)
 	{
-		wait(NULL);
+		// waitpid(pid, &s->status, <<);
 		cmd = cmd->next;
 	}
 }
@@ -100,6 +105,6 @@ void	executor(t_shell *s)
 		cmd = cmd->next;
 	}
 	cmd = s->cmd;
-	exit_status(cmd);
+	exit_status(s, cmd);
 }
 // yes | head

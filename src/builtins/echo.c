@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:12:46 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/18 21:46:37 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:03:02 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,12 @@ int	flag_n_echo(char *s)
 		return (0);
 }
 
-void	echo_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+void	echo_cmd(t_cmd *cmd, t_shell *s, int flag, int out)
 {
 	int	i;
-	int	flag;
 
-	(void) in;
 	(void) s;
 	i = 1;
-	flag = 0;
 	if (cmd->args[i] == NULL)
 		ft_putstr_fd("\n", out);
 	else

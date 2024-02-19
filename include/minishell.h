@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 14:32:00 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:43:31 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define CYN "\e[0;36m"
 # define WHT "\e[0;37m"
 # define RES "\e[0;0m"
+
+extern	int g_signal;
 
 typedef enum e_redir_type{
 	NONE,
@@ -81,7 +83,7 @@ char	*find_executable_path(char *binary);
 
 // //----------------------- BUILTINS --------------------------//
 int		is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out);
-void	echo_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+void	echo_cmd(t_cmd *cmd, t_shell *s, int flag, int out);
 void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	pwd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
@@ -100,6 +102,7 @@ int		ft_strncmp_env(char *key, char *str);
 char	*get_env(t_shell *s, char *key);
 void	set_env(t_shell *s, char *key, char *value);
 char	*ft_strchr_quotes(const char *s, int c);
+int		ft_isquoted(char c, int flag);
 
 //---------------------------- FREE ----------------------------//
 void	*free_array(char **args);
@@ -107,7 +110,7 @@ t_cmd	*free_cmds(t_cmd *c);
 void	free_shell(t_shell *s);
 
 //---------------------------- SIGNALS -------------------------//
-void	set_signal_action(void);
+void	set_signal_action(int sigstate);
 
 //---------------------------- LISTS ---------------------------//
 void	ft_listredir(t_redir *c);
@@ -136,6 +139,7 @@ int		valid_name(char *s, int in);
 void	invalid_name_error(char *s);
 void	cmd_not_found_error(char *s);
 int		invalid_file_error(char *s);
+void	ctrl_d_error(char *s);
 
 int		is_arg_redir(char *s);
 int		sintax_verify(t_shell *shell);

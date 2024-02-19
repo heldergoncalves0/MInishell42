@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:08:21 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/18 16:52:08 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:05:00 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*delete_quotes(char *arg, char c)
 	size_t	i;
 	size_t	j;
 	char	*ret;
-	
+
 	ret = calloc(1, ft_strlen(arg));
 	i = 0;
 	j = 0;
@@ -36,7 +36,7 @@ static char	*trim_quotes(char *arg, char c)
 {
 	size_t	i;
 	size_t	j;
-	char *ret;
+	char	*ret;
 
 	i = 0;
 	j = 1;

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 14:36:13 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:28:03 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	valid_input(t_shell *shell, char *str, char *line)
 	free(str);
 	if (sintax_verify(shell) == 0)
 	{
-		// ft_list(shell->cmd);
 		split_redirect(shell, 0);
 		execute_redirects(shell, shell->cmd);
 		expander(shell);
@@ -39,6 +38,7 @@ void	minishell_loop(t_shell *shell, char **env)
 	shell->export = sort_env(copy_array(shell->env), 0);
 	while (1)
 	{
+		set_signal_action(0);
 		line = readline("Minishell: ");
 		if (line == NULL)
 			free_shell(shell);
@@ -59,6 +59,7 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
-	set_signal_action();
 	minishell_loop(&shell, env);
 }
+
+// tcgetattr()

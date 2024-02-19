@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/18 21:51:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:06:23 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ static char	*get_env_return(t_shell *s, char *ret)
 	return (ft_strdup(""));
 }
 
-static int	ft_isquoted(char c, int flag)
-{
-	if (c == 39 && flag == 0)
-		return(1);
-	return (0);
-}
-
 static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 {
 	size_t	i;
@@ -62,7 +55,7 @@ static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 		quote = ft_isquoted(str[i], quote);
 		if (str[j] == '$' && flag == 0)
 		{
-			while((str[++j] == *arg) && *arg)
+			while ((str[++j] == *arg) && *arg)
 				flag = *arg++;
 			while (*tmp)
 				ret[i++] = *tmp++;

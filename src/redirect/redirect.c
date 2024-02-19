@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:21:25 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:24:22 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:05:18 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	execute_redirects(t_shell *s, t_cmd *cmd)
 			if (redir->type == OUTFILE && handle_outfile(cmd, redir) == 0)
 				return (invalid_file_error(redir->args[1]));
 			if (redir->type == HEREDOC)
-				handle_heredoc(s, cmd, redir);////
+				handle_heredoc(s, cmd, redir);
 			redir = redir->next;
 		}
 		cmd = cmd->next;
