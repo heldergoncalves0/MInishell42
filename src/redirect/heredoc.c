@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:58:43 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:21:27 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int check_signal_g(void)
 {
-    if (g_signal == 10 || g_signal == 11)
+    if (g_signal == 11)
 		return (1);
 	return (0);
 }
@@ -28,9 +28,14 @@ static void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 	while (1)
 	{
 		line = readline(">> ");
-		// if (line == EOF)
-		// 	ft_putstr_fd("\n\nDEU MERDA\n\n", 2);
-		if (!line || ft_strncmp(line, redir->args[1], size) == 0 || check_signal_g())
+		if (line == NULL)
+		{
+			ft_putstr_fd("Here-document delimited by end-of-file\n", 2);
+			close_fd(redir->fd);
+		    free_shell(shell);
+			free(line);
+		}
+		if (ft_strncmp(line, redir->args[1], size) == 0 || check_signal_g())
 		{
 			free(line);
 			break ;

@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 14:59:13 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:00:19 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
-	//set_signal_action(0);
 	minishell_loop(&shell, env);
 }

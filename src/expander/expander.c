@@ -6,13 +6,13 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 14:57:16 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:16:29 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*valid_argument(char *ret)
+char	*valid_argument(char *ret)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ static int	ft_isquoted(char c, int flag)
 	return (0);
 }
 
-static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
+char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 {
 	size_t	i;
 	size_t	j;
