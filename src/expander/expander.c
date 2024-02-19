@@ -6,13 +6,13 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/18 16:05:08 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:57:16 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*valid_argument(t_shell *shell, char *ret)
+static char	*valid_argument(char *ret)
 {
 	int	i;
 
@@ -39,7 +39,14 @@ char	*get_env_return(t_shell *s, char *ret)
 	return (ft_strdup(""));
 }
 
-char	*clear_expand(char *str, char *arg, char *tmp, int quote)
+static int	ft_isquoted(char c, int flag)
+{
+	if (c == 39 && flag == 0)
+		return(1);
+	return (0);
+}
+
+static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 {
 	size_t	i;
 	size_t	j;
@@ -49,21 +56,17 @@ char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 	i = 0;
 	j = 0;
 	flag = 0;
-	ret = (char *)malloc(sizeof(char) * (ft_strlen(str) + ft_strlen(tmp)) + 1);
+	ret = ft_calloc(sizeof(char), (ft_strlen(str) + ft_strlen(tmp)) + 1);
 	while (str[j])
 	{
-		if (str[j] == 39 && quote == 0)
-			flag = 1;
-		else if (str[j] == '$' && flag == 0)
+		quote = ft_isquoted(str[i], quote);
+		if (str[j] == '$' && flag == 0)
 		{
 			while((str[++j] == *arg) && *arg)
-				*arg++;
+				flag = *arg++;
 			while (*tmp)
 				ret[i++] = *tmp++;
-			flag++;
 		}
-		else if (str[j] == 39)
-			flag = 0;
 		else
 			ret[i++] = str[j++];
 	}
@@ -85,7 +88,7 @@ char	*expand_argument(t_shell *s, char *str, size_t j, int flag)
 			flag = 1;
 		else if (str[j] == '$' && flag == 0)
 		{
-			arg = valid_argument(s, ft_strdup(ft_strchr_quotes(str, '$') + 1));
+			arg = valid_argument(ft_strdup(ft_strchr_quotes(str, '$') + 1));
 			j += ft_strlen(arg) + 1;
 			tmp = get_env_return(s, arg);
 			str = clear_expand(str, arg, tmp, 0);
@@ -123,4 +126,8 @@ void	expander(t_shell *shell)
 		cmd = cmd->next;
 	}
 }
+// echo ${PWD/atacu}
+
 // CAT << "$USER"
+
+//cat .... ctrl + c

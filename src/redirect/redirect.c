@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:21:25 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/15 15:05:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:24:22 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ void	clean_redir_cmd(t_cmd *c)
 		if (flag)
 		{
 			j = i;
-			c->args[i] = 0;
-			i++;
+			c->args[i++] = 0;
 			while (c->args[++i])
 			{
 				c->args[j++] = c->args[i];
@@ -68,22 +67,21 @@ void	clean_redir_cmd(t_cmd *c)
 	}
 }
 
-void	split_redirect(t_shell *s)
+void	split_redirect(t_shell *s, int i)
 {
 	t_redir	*redir;
 	t_redir	*end;
 	t_cmd	*cmd;
-	int		i;
 
 	end = NULL;
 	cmd = s->cmd;
 	while (cmd)
 	{
-		i = 0;
-		while (cmd->args[i])
+		i = -1;
+		while (cmd->args[++i])
 		{
 			redir = redir_compares(&cmd->args[i]);
-			if (redir)
+			if (redir && *cmd->args[i] != '\0')
 			{
 				if (!cmd->red)
 					cmd->red = redir;
@@ -92,7 +90,6 @@ void	split_redirect(t_shell *s)
 				end = redir;
 				i += (*cmd->args[i + 1] != '\0');
 			}
-			i++;
 		}
 		clean_redir_cmd(cmd);
 		cmd = cmd->next;
@@ -109,11 +106,11 @@ int	execute_redirects(t_shell *s, t_cmd *cmd)
 		while (redir)
 		{
 			if (redir->type == APPEND && handle_append(cmd, redir) == 0)
-				return (ft_putstr_fd("No such file or directory\n", 2));
+				return (invalid_file_error(redir->args[1]));
 			if (redir->type == INFILE && handle_infile(cmd, redir) == 0)
-				return (ft_putstr_fd("No such file or directory\n", 2));
+				return (invalid_file_error(redir->args[1]));
 			if (redir->type == OUTFILE && handle_outfile(cmd, redir) == 0)
-				return (ft_putstr_fd("No such file or directory\n", 2));
+				return (invalid_file_error(redir->args[1]));
 			if (redir->type == HEREDOC)
 				handle_heredoc(s, cmd, redir);////
 			redir = redir->next;

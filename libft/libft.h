@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:24:27 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/13 20:19:41 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:17:39 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,5 @@ int		adjust_buffer_after_newline(char *buffer);
 int		count_word(const char *s, char c);
 int		ft_isspace(char s);
 int		ft_putstr_fd(char *s, int fd);
+
 #endif

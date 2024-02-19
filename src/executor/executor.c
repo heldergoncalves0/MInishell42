@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/18 21:11:50 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:57:31 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ char	*find_executable_path(char *binary)
 void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	pid_t	pid;
-	int		status;
+	//int		status;
 
-	if (cmd->is_error_redir == 0)
+	if (cmd->is_error_redir == 0 && cmd->args[0] != NULL)
 	{
 		pid = fork();
 		if (pid == 0)
@@ -57,8 +57,7 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			close_fd(out);
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
-			ft_putstr_fd(cmd->args[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
+			cmd_not_found_error(cmd->args[0]);
 			free_shell(s);
 			exit(127);
 		}

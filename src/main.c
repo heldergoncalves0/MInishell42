@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/18 21:21:39 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:59:13 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ void	valid_input(t_shell *shell, char *str, char *line)
 {
 	add_history(str);
 	free(line);
-	if (tokeniser(str, shell))
+	tokeniser(str, shell);
+	free(str);
+	if (sintax_verify(shell) == 0)
 	{
-		free(str);
-		split_redirect(shell);
+		// ft_list(shell->cmd);
+		split_redirect(shell, 0);
 		execute_redirects(shell, shell->cmd);
 		expander(shell);
-		//handle_quotes(shell);
-		//ft_list(shell->cmd);
+		handle_quotes(shell);
 		executor(shell);
 	}
 	shell->cmd = free_cmds(shell->cmd);
@@ -35,6 +36,7 @@ void	minishell_loop(t_shell *shell, char **env)
 	char	*str;
 
 	shell->env = copy_array(env);
+	shell->export = sort_env(copy_array(shell->env), 0);
 	while (1)
 	{
 		set_signal_action(0);

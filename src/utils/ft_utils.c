@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:16:00 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/16 17:23:42 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:10:56 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,20 @@ int	close_fd(int fd)
 	return (1);
 }
 
-char	**copy_array_export(char **s, char *str, char *c)
+int	ft_biggerncmp(char *s1, char *s2, int size_s1)
 {
-	int		len;
-	char	**new;
-	int		i;
+	int	size_s2;
+	int	ret;
 
-	len = 0;
-	while (s[len])
-		len++;
-	i = -1;
-	new = ft_calloc(sizeof(char *), len + 2);
-	while (s[++i])
-		new[i] = ft_strdup(s[i]);
-	new[i] = ft_strjoin(str, c);
-	free_array(s);
-	return (new);
+	size_s2 = ft_strlen(s2);
+	ret = 0;
+	if (size_s1 > size_s2)
+	{
+		ret = ft_strncmp(s1, s2, size_s1);
+		free(s2);
+		return (ret);
+	}
+	ret = ft_strncmp(s1, s2, size_s2);
+	free(s2);
+	return (ret);
 }

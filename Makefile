@@ -6,14 +6,14 @@
 #    By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/18 21:40:02 by helferna         ###   ########.fr        #
+#    Updated: 2024/02/19 14:59:35 by helferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME  = minishell
 OS    = $(shell uname)
 CC    = @cc
-FLAGS = -Wall -Wextra -g -lreadline #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g  #-fsanitize=address
 LFT   = libft/libft.a
 INC   = -I./libft -I./include
 SRC   = src/main.c src/parser/lexer.c src/clean/ft_free.c src/executor/executor.c \
@@ -21,15 +21,15 @@ SRC   = src/main.c src/parser/lexer.c src/clean/ft_free.c src/executor/executor.
 		src/builtins/env.c src/builtins/exit.c src/builtins/export.c src/builtins/pwd.c \
 		src/utils/ft_utils.c src/signals/signals.c src/redirect/heredoc.c src/utils/ft_lists.c \
 		src/redirect/redirect.c src/redirect/infile.c src/redirect/outfile.c src/expander/expander.c \
-		src/utils/ft_utils_extra.c src/parser/quotes.c
+		src/utils/ft_utils_extra.c src/parser/quotes.c src/utils/ft_export_utils.c \
+		src/errors/error.c
 
 OBJ   = $(patsubst src/%.c, obj/%.o, $(SRC))
 
 all: $(MLX) $(LFT) obj $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) -I./include -o $@ $^ $(LFT)
-
+	$(CC) $(FLAGS) -I./include -lreadline  -lncurses  -o $@ $^ $(LFT) 
 $(LFT):
 	@make -sC libft
 
@@ -52,8 +52,11 @@ fclean: clean
 re: fclean all
 
 r: 
-	@make re && clear 
+	@make re && clear
 	./minishell
+
+# v: 
+# 	make re && clear && valgrind ./minishell
 
 v: re readline.supp
 	clear
