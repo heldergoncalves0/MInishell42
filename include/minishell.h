@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 15:28:34 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:42:31 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_cmd {
 	int				fd[2];
 	t_redir			*red;
 	int				is_error_redir;
+	pid_t			pid;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -149,5 +150,8 @@ int		sintax_verify(t_shell *shell);
 int		ft_putstr_ln(char *s, int fd);
 char	**sort_env(char **env_copy, int i);
 int		var_exist(char **s, char *str);
+
+//----------------------------EXIT--------------------------------//
+void	exit_status(t_shell *shell, int status);
 
 #endif

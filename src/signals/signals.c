@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:36:06 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 16:15:15 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:04:50 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,10 @@ static void	sig_hd_handler(int signal)
 	if (signal == SIGINT)
 	{
 		g_signal = 10;
-		ft_putstr_fd("\n", 2);
+		//ft_putstr_fd("\n", 2);
 		close(STDIN_FILENO); 
 		exit(0);
 	}
-	if (signal == SIGUSR1)
-	{
-	    g_signal = 11;
-		ft_putstr_fd("HereDoc delimited by end-of-line\n", 2);
-		close(STDIN_FILENO);
-	}
-	
 }
 
 void	set_signal_action(int sig_state)

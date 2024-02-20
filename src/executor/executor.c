@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 17:06:05 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:06:04 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
 			cmd_not_found_error(cmd->args[0]);
+			s->status = 127;
 			free_shell(s);
-			exit(127);
 		}
 		set_signal_action(2);
 	}
@@ -66,13 +66,22 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 	close_fd(out);
 }
 
-void	exit_status(t_cmd *cmd)
+int	div_status(int status)
 {
+	while (status >= 256)
+		status /= 256;
+	return (status);
+}
+
+static void	wait_child(t_shell *s, t_cmd *cmd)
+{
+	(void)s;
 	while (cmd)
 	{
-		wait(NULL);
+		waitpid(-1, &s->status, 0);
 		cmd = cmd->next;
 	}
+	s->status = div_status(s->status);
 }
 
 void	executor(t_shell *s)
@@ -87,7 +96,7 @@ void	executor(t_shell *s)
 	{
 		cmd->path = find_executable_path(cmd->args[0]);
 		if (cmd->next && pipe(cmd->fd) == -1)
-			exit(1);
+			exit_status(s, 1);
 		out = cmd->fd[1];
 		if (cmd->out_file != -1)
 		{
@@ -102,6 +111,6 @@ void	executor(t_shell *s)
 		cmd = cmd->next;
 	}
 	cmd = s->cmd;
-	exit_status(cmd);
+	wait_child(s, cmd);
 }
 // yes | head

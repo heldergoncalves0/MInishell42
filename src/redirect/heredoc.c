@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 16:21:27 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:06:39 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 	pid = fork();
 	if (pid == 0)
 	{
-		s->status = 0;
 		set_signal_action(1);
 		redir->fd = open("/tmp/tmp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (redir->fd == -1)

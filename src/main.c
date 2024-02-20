@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 17:06:32 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:47:03 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		handle_quotes(shell);
 		executor(shell);
 	}
-	shell->cmd = free_cmds(shell->cmd);
+	shell->cmd = free_cmds(shell->cmd);printf("EXIT STAT: %d\n", shell->status);
 }
 
 void	minishell_loop(t_shell *shell, char **env)
@@ -38,7 +38,7 @@ void	minishell_loop(t_shell *shell, char **env)
 	shell->env = copy_array(env);
 	shell->export = sort_env(copy_array(shell->env), 0);
 	while (1)
-	{
+	{printf("EXIT : %d\n", shell->status);
 		set_signal_action(0);
 		line = readline("Minishell: ");
 		if (line == NULL)
