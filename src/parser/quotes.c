@@ -6,71 +6,68 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:08:21 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 15:05:00 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:10:58 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*delete_quotes(char *arg, char c)
-{
-	size_t	i;
-	size_t	j;
-	char	*ret;
-
-	ret = calloc(1, ft_strlen(arg));
-	i = 0;
-	j = 0;
-	while (arg[j])
-	{
-		while (arg[j] == c)
-			j++;
-		if (arg[j])
-			ret[i++] = arg[j++];
-	}
-	free(arg);
-	return (ret);
-}
-
-static char	*trim_quotes(char *arg, char c)
-{
-	size_t	i;
-	size_t	j;
-	char	*ret;
-
-	i = 0;
-	j = 1;
-	ret = calloc(1, ft_strlen(arg));
-	arg = delete_quotes(arg, c);
-	if (arg[0] == c)
-	{
-		while (arg[j] != c)
-			ret[i++] = arg[j++];
-		ret[i + 1] = '\0';
-		free(arg);
-		return (ret);
-	}
-	free(ret);
-	return (arg);
-}
-
-void	handle_quotes(t_shell *s)
+static char	*remove_quotes(char *str, char flag)
 {
 	int		i;
-	t_cmd	*cmd;
+	int		j;
+	char	*new_str;
 
 	i = 0;
-	cmd = s->cmd;
+	j = 0;
+	new_str = ft_calloc(sizeof(char), ft_strlen(str) + 1);
+	while (str[j])
+	{
+		if (flag == 0 && (str[j] == '\"' || str[j] == '\''))
+			flag = str[j++];
+		else if (flag == str[j] && ++j)
+			flag = 0;
+		else
+		{
+			new_str[i] = str[j];
+			if (++j && !new_str[i++])
+				break ;
+		}
+	}
+	free(str);
+	return (new_str);
+}
+
+void	handle_redir_quotes(t_cmd *cmd)
+{
+	t_redir	*redir;
+
+	redir = cmd->red;
+	while (redir)
+	{
+		if (redir->args[1] != NULL)
+			redir->args[1] = remove_quotes(redir->args[1], 0);
+		redir = redir->next;
+	}
+}
+
+void	handle_quotes(t_shell *shell)
+{
+	t_cmd	*cmd;
+	size_t	i;
+
+	cmd = shell->cmd;
 	while (cmd)
 	{
+		handle_redir_quotes(cmd);
 		i = 0;
-		while (cmd->args[i])
+		if (cmd->args[i] != NULL)
 		{
-			if (cmd->args[i][0] == 34)
-				cmd->args[i] = trim_quotes(cmd->args[i], '\"');
-			if (cmd->args[i][0] == 39)
-				cmd->args[i] = trim_quotes(cmd->args[i], '\'');
-			i++;
+			while (cmd->args[i])
+			{
+				cmd->args[i] = remove_quotes(cmd->args[i], 0);
+				i++;
+			}
 		}
 		cmd = cmd->next;
 	}

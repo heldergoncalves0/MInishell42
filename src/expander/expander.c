@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 15:06:23 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:08:22 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*valid_argument(char *ret)
 	i = 0;
 	while (ret[i])
 	{
-		if (!ft_isalnum(ret[i]))
+		if (ret[i] != '?' && !ft_isalnum(ret[i]))
 		{
 			ret[i] = '\0';
 			break ;
@@ -29,14 +29,19 @@ static char	*valid_argument(char *ret)
 	return (ret);
 }
 
-static char	*get_env_return(t_shell *s, char *ret)
+char	*get_return(t_shell *s, char *ret)
 {
 	char	*env_value;
 
-	env_value = get_env(s, ret);
-	if (ft_strlen(env_value) != 0)
-		return (ft_strdup(env_value));
-	return (ft_strdup(""));
+    if (ft_strncmp(ret, "?", 2) == 0)
+		return (ft_itoa(s->status));
+	else
+	{
+		env_value = get_env(s, ret);
+		if (ft_strlen(env_value) != 0)
+			return (ft_strdup(env_value));
+		return (ft_strdup(""));
+	}
 }
 
 static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
@@ -52,7 +57,7 @@ static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 	ret = ft_calloc(sizeof(char), (ft_strlen(str) + ft_strlen(tmp)) + 1);
 	while (str[j])
 	{
-		quote = ft_isquoted(str[i], quote);
+		quote = ft_isquoted(str[i], quote);//
 		if (str[j] == '$' && flag == 0)
 		{
 			while ((str[++j] == *arg) && *arg)
@@ -83,7 +88,7 @@ char	*expand_argument(t_shell *s, char *str, size_t j, int flag)
 		{
 			arg = valid_argument(ft_strdup(ft_strchr_quotes(str, '$') + 1));
 			j += ft_strlen(arg) + 1;
-			tmp = get_env_return(s, arg);
+			tmp = get_return(s, arg);
 			str = clear_expand(str, arg, tmp, 0);
 			free(tmp);
 			free(arg);

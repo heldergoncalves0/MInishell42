@@ -6,11 +6,12 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 16:28:03 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:12:14 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 void	valid_input(t_shell *shell, char *str, char *line)
 {
@@ -21,10 +22,10 @@ void	valid_input(t_shell *shell, char *str, char *line)
 	if (sintax_verify(shell) == 0)
 	{
 		split_redirect(shell, 0);
-		execute_redirects(shell, shell->cmd);
 		expander(shell);
 		handle_quotes(shell);
-		executor(shell);
+		if (execute_redirects(shell, shell->cmd) == 0)
+			executor(shell);
 	}
 	shell->cmd = free_cmds(shell->cmd);
 }

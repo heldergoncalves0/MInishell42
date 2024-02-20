@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 17:03:42 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:29:53 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static t_cmd	*new_cmd(char **args)
 	cmd->fd[1] = 1;
 	cmd->in_file = -1;
 	cmd->out_file = -1;
-	cmd->path = find_executable_path(cmd->args[0]);
+	cmd->path = NULL;
 	return (cmd);
 }
 

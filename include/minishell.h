@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 16:43:31 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:51:44 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <stdbool.h>
 
 //colors
@@ -36,7 +37,7 @@
 # define WHT "\e[0;37m"
 # define RES "\e[0;0m"
 
-extern	int g_signal;
+extern int	g_signal;
 
 typedef enum e_redir_type{
 	NONE,
@@ -79,7 +80,7 @@ void	expander(t_shell *shell);
 
 //---------------------------- EXE -----------------------------//
 void	executor(t_shell *s);
-char	*find_executable_path(char *binary);
+char	*find_executable_path(char *binary, int i);
 
 // //----------------------- BUILTINS --------------------------//
 int		is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out);
@@ -126,7 +127,9 @@ int		handle_append(t_cmd *cmd, t_redir *redir);
 void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir);
 int		handle_outfile(t_cmd *cmd, t_redir *redir);
 char	*expand_argument(t_shell *s, char *str, size_t j, int flag);
-void	handle_quotes(t_shell *s);
+
+//---------------------------- QUOTES ---------------------------//
+void	handle_quotes(t_shell *shell);
 
 //------------------------- EXPORT UTILS -------------------------//
 int		ft_biggerncmp(char *s1, char *s2, int size_s1);
@@ -138,7 +141,7 @@ int		valid_name(char *s, int in);
 //----------------------------- ERROR ---------------------------//
 void	invalid_name_error(char *s);
 void	cmd_not_found_error(char *s);
-int		invalid_file_error(char *s);
+int		invalid_file_error(char *s, char *s2);
 void	ctrl_d_error(char *s);
 
 int		is_arg_redir(char *s);
@@ -146,5 +149,8 @@ int		sintax_verify(t_shell *shell);
 int		ft_putstr_ln(char *s, int fd);
 char	**sort_env(char **env_copy, int i);
 int		var_exist(char **s, char *str);
+int		change_outfile(int out, int cmd_out, int *fd);
+int		div_status(int status);
+void	exit_status(t_shell *shell, int status);
 
 #endif

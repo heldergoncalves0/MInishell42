@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils_extra.c                                   :+:      :+:    :+:   */
+/*   ft_utils_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:03:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 15:06:31 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:48:59 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,11 @@ int	ft_isquoted(char c, int flag)
 	if (c == 39 && flag == 0)
 		return (1);
 	return (0);
+}
+
+int	div_status(int status)
+{
+	while (status >= 256)
+		status /= 256;
+	return (status);
 }

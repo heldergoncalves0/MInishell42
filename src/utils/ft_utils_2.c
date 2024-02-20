@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   infile.c                                           :+:      :+:    :+:   */
+/*   ft_utils_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 17:42:06 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/15 15:00:12 by gcatarin         ###   ########.fr       */
+/*   Created: 2024/02/20 18:13:24 by gcatarin          #+#    #+#             */
+/*   Updated: 2024/02/20 20:07:43 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_infile(t_cmd *cmd, t_redir *redir)
+int	change_outfile(int out, int cmd_out, int *fd)
 {
-	redir->fd = open(redir->args[1], O_RDONLY, 0644);
-	if (redir->fd == -1 && ++cmd->is_error_redir)
-		return (0);
-	close_fd(cmd->in_file);
-	cmd->in_file = redir->fd;
-	return (1);
+	if (cmd_out != -1)
+	{
+		close_fd(fd[1]);
+		return (cmd_out);
+	}
+	return (out);
+}
+
+void	exit_status(t_shell *shell, int status)
+{
+	shell->status = status;
+	exit(shell->status);
 }
