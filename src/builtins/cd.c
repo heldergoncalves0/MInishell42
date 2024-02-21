@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/21 15:23:52 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:28:29 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,10 @@ static void	*handle_path(t_shell *s, char *str)
 
 	// if (ft_strncmp(str, "..", 3) == 0)
 	// 	go_one_up(s);
-	if (chdir(str))
-	{
-		tmp = NULL;
-		set_env(s, "OLDPWD", get_env(s, "PWD"));
-		tmp = getcwd(tmp, 0);
-		set_env(s, "PWD", tmp);
-	}
+	tmp = NULL;
+	set_env(s, "OLDPWD", get_env(s, "PWD"));
+	tmp = getcwd(tmp, 0);
+	set_env(s, "PWD", tmp);
 }
 
 void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
