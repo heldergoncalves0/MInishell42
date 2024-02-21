@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:13:26 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:21:21 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 10:49:34 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,9 @@ int	invalid_file_error(char *s)
 	ft_putstr_fd(s, 2);
 	return (ft_putstr_fd(": No such file or directory\n", 2));
 }
+
+// echo "'$?'"
+// cd . | cd ..
+// cd .. | ls -----> pwd shouldnt change
+// builtins must be executed on child processes
+// 
