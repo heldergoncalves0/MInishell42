@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/20 19:49:27 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:04:40 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,30 @@ char	*find_executable_path(char *binary, int i)
 		}
 		free_array(path);
 	}
-	return (NULL);	
+	return (NULL);
 }
-
+void close_fds(t_cmd *c){
+	while (c){
+		close(c->fd[0]);
+		close(c->fd[1]);
+		c = c->next;
+	}
+}
 void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
-	pid_t	pid;
-
 	if (cmd->is_error_redir == 0 && cmd->args[0] != NULL)
 	{
-		pid = fork();
-		if (pid == 0)
+		cmd->pid = fork();
+		s->last_pid = cmd->pid;
+		if (cmd->pid == 0)
 		{
 			set_signal_action(3);
 			dup2(in, STDIN_FILENO);
-			close_fd(in);
+			close(in);
 			dup2(out, STDOUT_FILENO);
-			close_fd(out);
+			close(out);
+			close(cmd->fd[0]);
+			close(cmd->fd[1]);
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
 			cmd_not_found_error(cmd->args[0]);
@@ -62,15 +69,21 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		}
 		set_signal_action(2);
 	}
-	close_fd(in);
-	close_fd(out);
+	close(in);
+	close(out);
 }
 
 static void	wait_child(t_shell *s, t_cmd *cmd)
 {
+	t_cmd	*first_cmd;
+
+	first_cmd = cmd;
 	while (cmd)
 	{
-		waitpid(-1, &s->status, 0);
+		if (waitpid(-1, &s->status, 0) == s->last_pid)
+		{
+			
+		}
 		cmd = cmd->next;
 	}
 	s->status = div_status(s->status);
@@ -92,7 +105,7 @@ void	executor(t_shell *s)
 		out = cmd->fd[1];
 		out = change_outfile(out, cmd->out_file, cmd->fd);
 		if (cmd->in_file != -1)
-				in = cmd->in_file;
+			in = cmd->in_file;
 		if (!is_builtin_execute(cmd, s, in, out))
 			execute_cmd(cmd, s, in, out);
 		in = cmd->fd[0];
@@ -101,3 +114,5 @@ void	executor(t_shell *s)
 	cmd = s->cmd;
 	wait_child(s, cmd);
 }
+
+// cd .. | ls

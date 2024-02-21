@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/20 19:51:44 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:03:14 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_cmd {
 	int				in_file;
 	int				out_file;
 	int				fd[2];
+	pid_t			pid;
 	t_redir			*red;
 	int				is_error_redir;
 	struct s_cmd	*next;
@@ -68,7 +69,9 @@ typedef struct s_cmd {
 typedef struct s_shell{
 	t_cmd	*cmd;
 	char	**env;
+	int		num_cmds;
 	char	**export;
+	pid_t	last_pid;
 	int		status;
 }	t_shell;
 
@@ -152,5 +155,6 @@ int		var_exist(char **s, char *str);
 int		change_outfile(int out, int cmd_out, int *fd);
 int		div_status(int status);
 void	exit_status(t_shell *shell, int status);
+t_shell	*shell(void);
 
 #endif

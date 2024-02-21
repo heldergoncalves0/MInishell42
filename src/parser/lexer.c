@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/20 15:29:53 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:03:00 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static t_cmd	*new_cmd(char **args)
 	cmd->fd[1] = 1;
 	cmd->in_file = -1;
 	cmd->out_file = -1;
+	cmd->pid = 0;
 	cmd->path = NULL;
 	return (cmd);
 }
@@ -93,6 +94,7 @@ void	cmd_loop(char *tokens, t_shell *s)
 		cmd = new_cmd(ft_split(cmds[i], '\2'));
 		if (cmd == NULL)
 			break ;
+		s->num_cmds++;
 		if (!s->cmd)
 			s->cmd = cmd;
 		else if (end)

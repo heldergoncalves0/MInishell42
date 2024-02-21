@@ -6,12 +6,18 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/20 17:12:14 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:03:54 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_shell	*shell(void)
+{
+	static t_shell shell;
+	
+	return (&shell);
+}
 
 void	valid_input(t_shell *shell, char *str, char *line)
 {

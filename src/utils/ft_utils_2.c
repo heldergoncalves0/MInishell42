@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:13:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/20 20:07:43 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:13:11 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,11 @@ void	exit_status(t_shell *shell, int status)
 {
 	shell->status = status;
 	exit(shell->status);
+}
+
+int	div_status(int status)
+{
+	while (status >= 256)
+		status /= 256;
+	return (status);
 }

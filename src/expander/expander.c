@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/20 20:08:22 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:16:24 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_return(t_shell *s, char *ret)
 {
 	char	*env_value;
 
-    if (ft_strncmp(ret, "?", 2) == 0)
+	if (ft_strncmp(ret, "?", 2) == 0)
 		return (ft_itoa(s->status));
 	else
 	{
@@ -57,8 +57,8 @@ static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 	ret = ft_calloc(sizeof(char), (ft_strlen(str) + ft_strlen(tmp)) + 1);
 	while (str[j])
 	{
-		quote = ft_isquoted(str[i], quote);//
-		if (str[j] == '$' && flag == 0)
+		quote = ft_isquoted(str[j], quote);
+		if (str[j] == '$' && flag == 0 && quote == 0)
 		{
 			while ((str[++j] == *arg) && *arg)
 				flag = *arg++;
@@ -125,7 +125,5 @@ void	expander(t_shell *shell)
 	}
 }
 // echo ${PWD/atacu}
-
-// CAT << "$USER"
 
 //cat .... ctrl + c

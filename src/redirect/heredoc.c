@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/20 19:57:38 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:07:49 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	check_signal_g(void)
 {
-	if (g_signal == 11)
+	if (g_signal == 10)
 		return (1);
 	return (0);
 }
@@ -26,17 +26,18 @@ void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 
 	size = ft_strlen(redir->args[1]) + 1;
 	while (1)
-	{
+	{set_signal_action(1);
 		line = readline(">> ");
-		if (line == NULL)
+		if (line == NULL && check_signal_g() == 0)
 		{
 			ctrl_d_error(redir->args[1]);
 			close_fd(redir->fd);
-			free_shell(shell);
 			free(line);
+			break ;
 		}
-		if (ft_strncmp(line, redir->args[1], size) == 0 || check_signal_g())
+		if ((line && ft_strncmp(line, redir->args[1], size) == 0) || check_signal_g() == 1)
 		{
+			close_fd(redir->fd);
 			free(line);
 			break ;
 		}
@@ -50,13 +51,12 @@ void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 
 void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 {
-	int	pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		s->status = 0;
-		set_signal_action(1);
+		set_signal_action(3);
 		redir->fd = open("/tmp/temp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (redir->fd < 0)
 		{
@@ -67,7 +67,7 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 		close_fd(redir->fd);
 		free_shell(s);
 	}
-	wait(NULL);//
+	wait(NULL);
 	redir->fd = open("/tmp/temp.txt", O_RDONLY);
 	if (redir->fd == -1)
 		cmd->is_error_redir = 1;

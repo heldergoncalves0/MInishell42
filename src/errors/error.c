@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:13:26 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/20 19:51:27 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:05:39 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	ctrl_d_error(char *s)
 	ft_putstr_fd("Minishell: warning: here-document ", 2);
 	ft_putstr_fd("delimited by end-of-file (wanted \"", 2);
 	ft_putstr_fd(s, 2);
-	ft_putstr_fd("\")\n", 2);
+	ft_putstr_fd("\")", 2);
 }
