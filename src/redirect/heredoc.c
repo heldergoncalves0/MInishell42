@@ -6,20 +6,20 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/20 19:06:39 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:09:32 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int check_signal_g(void)
+static int	check_signal_g(void)
 {
-    if (g_signal == 11)
+	if (g_signal == 11)
 		return (1);
 	return (0);
 }
 
-static void	handle_heredoc_read(t_redir *redir, t_shell *shell)
+void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 {
 	char	*line;
 	size_t	size;
@@ -30,9 +30,9 @@ static void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 		line = readline(">> ");
 		if (line == NULL)
 		{
-			ft_putstr_fd("Here-document delimited by end-of-file\n", 2);
+			ctrl_d_error(redir->args[1]);
 			close_fd(redir->fd);
-		    free_shell(shell);
+			free_shell(shell);
 			free(line);
 		}
 		if (ft_strncmp(line, redir->args[1], size) == 0 || check_signal_g())
@@ -55,19 +55,20 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 	pid = fork();
 	if (pid == 0)
 	{
+		s->status = 0;
 		set_signal_action(1);
-		redir->fd = open("/tmp/tmp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (redir->fd == -1)
+		redir->fd = open("/tmp/temp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (redir->fd < 0)
 		{
-			s->status = -1;// corrigir se -1
+			s->status = -1;
 			free_shell(s);
 		}
 		handle_heredoc_read(redir, s);
 		close_fd(redir->fd);
 		free_shell(s);
 	}
-	wait(NULL);
-	redir->fd = open("/tmp/tmp.txt", O_RDONLY);
+	wait(NULL);//
+	redir->fd = open("/tmp/temp.txt", O_RDONLY);
 	if (redir->fd == -1)
 		cmd->is_error_redir = 1;
 	close_fd(cmd->in_file);

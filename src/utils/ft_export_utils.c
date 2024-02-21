@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 20:16:10 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:41:52 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:47:07 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**overwrite_var(char **s, char *str, int flag, char *str_name)
 		i++;
 	}
 	if (flag == 0)
-		new[i] = ft_strdup(str);
+		new[i] = ft_strdup(str_name);
 	free_array(s);
 	return (new);
 }
@@ -100,11 +100,13 @@ int	valid_name(char *s, int in)
 	(void) in;
 	if (s[i] == '_' && ft_strlen(s) < 2)
 		return (1);
-	while (s[i])
+	while (s[i] && s[i] != '=')
 	{
-		if (ft_isalpha(s[i]) || s[i] != '_')
+		if (!ft_isalpha(s[i]) && s[i] != '_')
 			return (1);
 		i++;
 	}
+	if (s[0] == '_' && i < 2)
+		return (1);
 	return (0);
 }

@@ -6,11 +6,12 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/20 18:47:03 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:11:01 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 void	valid_input(t_shell *shell, char *str, char *line)
 {
@@ -21,11 +22,11 @@ void	valid_input(t_shell *shell, char *str, char *line)
 	if (sintax_verify(shell) == 0)
 	{
 		split_redirect(shell, 0);
-		execute_redirects(shell, shell->cmd);
 		expander(shell);
 		//ft_list(shell->cmd);
 		handle_quotes(shell);
-		executor(shell);
+		if (execute_redirects(shell, shell->cmd) == 0)
+			executor(shell);
 	}
 	shell->cmd = free_cmds(shell->cmd);printf("EXIT STAT: %d\n", shell->status);
 }
@@ -38,7 +39,7 @@ void	minishell_loop(t_shell *shell, char **env)
 	shell->env = copy_array(env);
 	shell->export = sort_env(copy_array(shell->env), 0);
 	while (1)
-	{printf("EXIT : %d\n", shell->status);
+	{
 		set_signal_action(0);
 		line = readline("Minishell: ");
 		if (line == NULL)
@@ -62,3 +63,5 @@ int	main(int ac, char **av, char **env)
 	(void) av;
 	minishell_loop(&shell, env);
 }
+
+// tcgetattr()

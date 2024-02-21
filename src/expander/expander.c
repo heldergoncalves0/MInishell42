@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/20 18:36:38 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:06:17 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,14 @@ char	*valid_argument(char *ret)
 	return (ret);
 }
 
-char	*get_env_return(t_shell *s, char *ret)
+static char	*get_env_return(t_shell *s, char *ret)
 {
 	char	*env_value;
 
-    if (ft_strncmp(ret, "?", 2) == 0)
-		return (ft_itoa(s->status));
-	else
-	{
-		env_value = get_env(s, ret);
-		if (ft_strlen(env_value) != 0)
-			return (ft_strdup(env_value));
-		return (ft_strdup(""));
-	}
+	env_value = get_env(s, ret);
+	if (ft_strlen(env_value) != 0)
+		return (ft_strdup(env_value));
+	return (ft_strdup(""));
 }
 
 static int	ft_isquoted(char c, int flag)
@@ -64,10 +59,10 @@ char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 	ret = ft_calloc(sizeof(char), (ft_strlen(str) + ft_strlen(tmp)) + 1);
 	while (str[j])
 	{
-		quote = ft_isquoted(str[i], quote);
+		quote = ft_isquoted(str[i], quote);//
 		if (str[j] == '$' && flag == 0)
 		{
-			while((str[++j] == *arg) && *arg)
+			while ((str[++j] == *arg) && *arg)
 				flag = *arg++;
 			while (*tmp)
 				ret[i++] = *tmp++;
@@ -95,7 +90,7 @@ char	*expand_argument(t_shell *s, char *str, size_t j, int flag)
 		{
 			arg = valid_argument(ft_strdup(ft_strchr_quotes(str, '$') + 1));
 			j += ft_strlen(arg) + 1;
-			tmp = get_env_return(s, arg);
+			tmp = get_return(s, arg);
 			str = clear_expand(str, arg, tmp, 0);
 			free(tmp);
 			free(arg);
