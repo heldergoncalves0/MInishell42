@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/21 11:08:16 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:28:45 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int		ft_strncmp_env(char *key, char *str);
 char	*get_env(t_shell *s, char *key);
 void	set_env(t_shell *s, char *key, char *value);
 char	*ft_strchr_quotes(const char *s, int c);
-int		ft_isquoted(char c, int flag);
 
 //---------------------------- FREE ----------------------------//
 void	*free_array(char **args);

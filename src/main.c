@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/21 11:11:01 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:42:04 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		if (execute_redirects(shell, shell->cmd) == 0)
 			executor(shell);
 	}
-	shell->cmd = free_cmds(shell->cmd);printf("EXIT STAT: %d\n", shell->status);
+	shell->cmd = free_cmds(shell->cmd);
 }
 
 void	minishell_loop(t_shell *shell, char **env)

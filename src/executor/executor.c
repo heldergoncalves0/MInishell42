@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/21 11:04:36 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:31:03 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,6 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 	}
 	close_fd(in);
 	close_fd(out);
-}
-
-int	div_status(int status)
-{
-	while (status >= 256)
-		status /= 256;
-	return (status);
 }
 
 static void	wait_child(t_shell *s, t_cmd *cmd)

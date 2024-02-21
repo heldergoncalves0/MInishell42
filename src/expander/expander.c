@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/21 11:06:17 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:58:04 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,20 @@ char	*valid_argument(char *ret)
 	return (ret);
 }
 
-static char	*get_env_return(t_shell *s, char *ret)
+static char	*get_return(t_shell *s, char *ret)
 {
 	char	*env_value;
 
-	env_value = get_env(s, ret);
-	if (ft_strlen(env_value) != 0)
-		return (ft_strdup(env_value));
-	return (ft_strdup(""));
+	if (ft_strncmp(ret, "?", 2) == 0)
+		env_value = ft_itoa(s->status);
+	else
+	{
+		env_value = get_env(s, ret);
+		if (ft_strlen(env_value) != 0)
+			return (ft_strdup(env_value));
+		return (ft_strdup(""));
+	}
+	return (env_value);
 }
 
 static int	ft_isquoted(char c, int flag)
