@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 14:08:14 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:13:33 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct s_cmd {
 	pid_t			pid;
 	t_redir			*red;
 	int				is_error_redir;
-	pid_t			pid;
 	struct s_cmd	*next;
 }	t_cmd;
 
