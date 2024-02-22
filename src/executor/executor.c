@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 17:52:20 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:20:41 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,11 @@ static void	wait_child(t_shell *s, t_cmd *cmd)
 	first_cmd = cmd;
 	while (cmd)
 	{
-		if (waitpid(-1, &s->status, 0) == s->last_pid)
-		{
-			
-		}
+		wait(NULL);
+			// if (waitpid(-1, &s->status, 0) == s->last_pid)
+			// {
+				
+			// }
 		cmd = cmd->next;
 	}
 	s->status = div_status(s->status);

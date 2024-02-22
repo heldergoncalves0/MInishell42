@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 14:13:33 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:19:56 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,9 @@ int		close_fd(int fd);
 int		ft_strncmp_env(char *key, char *str);
 char	*get_env(t_shell *s, char *key);
 void	set_env(t_shell *s, char *key, char *value);
-char	*ft_strchr_quotes(const char *s, int c);
+char	*ft_strchr_quotes(char *s, int c);
+int		ft_strint_quotes(char *s, int c);
+int		ft_isquoted(char c, int flag);
 
 //---------------------------- FREE ----------------------------//
 void	*free_array(char **args);
@@ -135,7 +137,7 @@ int		handle_infile(t_cmd *cmd, t_redir *redir);
 int		handle_append(t_cmd *cmd, t_redir *redir);
 void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir);
 int		handle_outfile(t_cmd *cmd, t_redir *redir);
-char	*expand_argument(t_shell *s, char *str, size_t j, int flag);
+char	*expand_argument(t_shell *s, char *str, size_t j);
 
 //---------------------------- QUOTES ---------------------------//
 void	handle_quotes(t_shell *shell);

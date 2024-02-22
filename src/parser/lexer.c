@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/22 14:10:03 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:21:10 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	tokeniser(const char *str, t_shell *s)
 
 	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
 	if (tokens == NULL)
-		ft_putstr_fd("error allocating tokens!\n", 2);
+		ft_putstr_fd("Syntax error, wrong number of quotes!\n", 2);
 	else
 		cmd_loop(tokens, s);
 	free(tokens);
