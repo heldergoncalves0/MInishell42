@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 17:21:40 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:19:56 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@
 # define WHT "\e[0;37m"
 # define RES "\e[0;0m"
 
-extern int	g_signal;
+//----------------GLOBAL FOR SIGNAL----------------------------//
+extern	int g_signal;
 
 typedef enum e_redir_type{
 	NONE,
@@ -75,11 +76,17 @@ typedef struct s_shell{
 	int		status;
 }	t_shell;
 
+t_shell	*shell(void);
+
 //--------------------------- LEXER ----------------------------//
 void	tokeniser(const char *str, t_shell *s);
 
 //---------------------------EXPANDER---------------------------//
 void	expander(t_shell *shell);
+char	*expand_argument(t_shell *s, char *str, size_t j, int flag);
+char	*clear_expand(char *str, char *arg, char *tmp, int quote);
+char	*get_env_return(t_shell *s, char *ret);
+char	*valid_argument(char *ret);
 
 //---------------------------- EXE -----------------------------//
 void	executor(t_shell *s);
@@ -143,9 +150,9 @@ char	*get_var_name(char *str);
 int		valid_name(char *s, int in);
 
 //----------------------------- ERROR ---------------------------//
-void	invalid_name_error(char *s);
+void	invalid_name_error(t_shell *shell, char *s);
 void	cmd_not_found_error(char *s);
-int		invalid_file_error(char *s, char *s2);
+int		invalid_file_error(t_shell *shell, char *s, char *s2);
 void	ctrl_d_error(char *s);
 
 int		is_arg_redir(char *s);

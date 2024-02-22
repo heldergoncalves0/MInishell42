@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 18:42:36 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:52:34 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,31 @@ char	*find_executable_path(char *binary, int i)
 	return (NULL);
 }
 
+void	cmd_error(t_shell *s, char *str)
+{
+	struct	stat stats;
+
+	stat(str, &stats);
+	if (S_ISDIR(stats.st_mode))
+	{
+		s->status = 126;
+		ft_putstr_fd(str, 2);
+		ft_putstr_ln(": Is a directory", 2);
+	}
+	// else if (access(str, X_OK) != 0)
+	// {
+	// 	s->status = 126;
+	// 	ft_putstr_fd(str, 2);
+	// 	ft_putstr_ln(": Permission denied", 2);
+	// }
+	else
+	{
+		s->status = 127;
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
+}
+
 void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	if (cmd->is_error_redir == 0 && cmd->args[0] != NULL)
@@ -53,12 +78,9 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			close_fd(in);
 			dup2(out, STDOUT_FILENO);
 			close_fd(out);
-			close_fd(cmd->fd[0]);
-			close_fd(cmd->fd[1]);
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
-			cmd_not_found_error(cmd->args[0]);
-			s->status = 127;
+			cmd_error(s, cmd->args[0]);
 			free_shell(s);
 		}
 		set_signal_action(2);
@@ -92,7 +114,7 @@ void	executor(t_shell *s)
 	{
 		cmd->path = find_executable_path(cmd->args[0], -1);
 		if (cmd->next && pipe(cmd->fd) == -1)
-			exit(1);
+			exit_status(s, 1);
 		out = cmd->fd[1];
 		out = change_outfile(out, cmd->out_file, cmd->fd);
 		if (cmd->in_file != -1)

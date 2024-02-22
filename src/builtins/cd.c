@@ -3,41 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/21 17:11:32 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:08:39 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+static void	handle_path(t_shell *s)
 {
-	char	*pwd;
 	char	*tmp;
 
 	tmp = NULL;
+	set_env(s, "OLDPWD", get_env(s, "PWD"));
+	tmp = getcwd(tmp, 0);
+	set_env(s, "PWD", tmp);
+	free(tmp);
+}
+
+void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+{
 	(void)in;
 	(void)out;
-	if (s->num_cmds == 1)
+
+    if (cmd->args[2])
 	{
-		if (chdir(cmd->args[1]) == 0)
-		{
-			set_env(s, "OLDPWD", get_env(s, "PWD"));
-			tmp = ft_strjoin(get_env(s, "PWD"), "/");
-			pwd = ft_strjoin(tmp, cmd->args[1]);
-			free(tmp);
-			tmp = ft_substr(pwd, 0, ft_strlen(pwd) - 1);
-			free(pwd);
-			set_env(s, "PWD", tmp);
-		}
-		else
-		{
-			ft_putstr_fd("cd: not a directory: ", 2);
-			ft_putstr_fd(cmd->args[1], 2);
-			ft_putstr_fd("\n", 2);
-		}
-	free(tmp);
+		s->status = 1;
+		ft_putstr_ln("cd: too many arguments", 2);
+	}
+	else if (chdir(cmd->args[1]) == 0)
+		handle_path(s);
+	else if (chdir(cmd->args[1]) != 0)
+	{
+		s->status = 1;
+		perror("cd");
 	}
 }

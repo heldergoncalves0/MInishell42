@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 18:15:22 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:21:04 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*valid_argument(char *ret)
+char	*valid_argument(char *ret)
 {
 	int	i;
 
@@ -34,7 +34,7 @@ static char	*valid_argument(char *ret)
 	return (ret);
 }
 
-char	*get_return(t_shell *s, char *ret)
+static char	*get_return(t_shell *s, char *ret)
 {
 	char	*env_value;
 
@@ -49,6 +49,7 @@ char	*get_return(t_shell *s, char *ret)
 			return (ft_strdup(env_value));
 		return (ft_strdup(""));
 	}
+	return (env_value);
 }
 
 static char	*clear_expand(char *str, char *arg, char *tmp, int index)

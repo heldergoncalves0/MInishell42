@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 18:33:36 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:52:28 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_shell	*shell(void)
 {
-	static t_shell shell;
-	
+	static t_shell	shell;
+
 	return (&shell);
 }
 

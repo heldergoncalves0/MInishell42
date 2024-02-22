@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 20:16:10 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 15:47:07 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:01:35 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int	valid_name(char *s, int in)
 
 	i = 0;
 	(void) in;
+	if (s[0] == '=')
+		return (1);
 	if (s[i] == '_' && ft_strlen(s) < 2)
 		return (1);
 	while (s[i] && s[i] != '=')
