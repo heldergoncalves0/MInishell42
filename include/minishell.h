@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 12:24:58 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:52:25 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int		valid_name(char *s, int in);
 //----------------------------- ERROR ---------------------------//
 void	invalid_name_error(t_shell *shell, char *s);
 void	cmd_not_found_error(char *s);
-int		invalid_file_error(char *s, char *s2);
+int		invalid_file_error(t_shell *shell, char *s, char *s2);
 void	ctrl_d_error(char *s);
 
 int		is_arg_redir(char *s);
