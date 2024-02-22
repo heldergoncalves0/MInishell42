@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:58:02 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 15:03:27 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:27:41 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out)
 {
-	if (!cmd->args[0] || cmd->is_error_redir)
+	if (!cmd->args[0] || cmd->is_error_redir)// FORK	
 		return (0);
 	if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
 		cd_cmd(cmd, s, in, out);

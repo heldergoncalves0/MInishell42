@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:13:26 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/22 13:54:11 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:08:56 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ctrl_d_error(char *s)
 	ft_putstr_fd("Minishell: warning: here-document ", 2);
 	ft_putstr_fd("delimited by end-of-file (wanted \"", 2);
 	ft_putstr_fd(s, 2);
-	ft_putstr_fd("\")\n", 2);
+	ft_putstr_fd("\")", 2);
 }
 
 // echo "'$?'"

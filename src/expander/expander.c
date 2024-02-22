@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 12:06:52 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:09:55 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*get_return(t_shell *s, char *ret)
 	char	*env_value;
 
 	if (ft_strncmp(ret, "?", 2) == 0)
-		env_value = ft_itoa(s->status);
+		return (ft_itoa(s->status));
 	else
 	{
 		env_value = get_env(s, ret);
@@ -65,8 +65,8 @@ char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 	ret = ft_calloc(sizeof(char), (ft_strlen(str) + ft_strlen(tmp)) + 1);
 	while (str[j])
 	{
-		quote = ft_isquoted(str[i], quote);//
-		if (str[j] == '$' && flag == 0)
+		quote = ft_isquoted(str[j], quote);
+		if (str[j] == '$' && flag == 0 && quote == 0)
 		{
 			while ((str[++j] == *arg) && *arg)
 				flag = *arg++;
@@ -133,7 +133,5 @@ void	expander(t_shell *shell)
 	}
 }
 // echo ${PWD/atacu}
-
-// CAT << "$USER"
 
 //cat .... ctrl + c

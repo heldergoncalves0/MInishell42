@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:13:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/21 11:29:50 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:10:48 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,11 @@ void	exit_status(t_shell *shell, int status)
 {
 	shell->status = status;
 	exit(shell->status);
+}
+
+int	div_status(int status)
+{
+	while (status >= 256)
+		status /= 256;
+	return (status);
 }
