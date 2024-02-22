@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 15:16:29 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:21:04 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ char	*valid_argument(char *ret)
 	i = 0;
 	while (ret[i])
 	{
-		if (!ft_isalnum(ret[i]))
+		if (ret[i] == '?')
+		{
+			ret[++i] = '\0';
+			break ;
+		}
+		else if (!ft_isalnum(ret[i]))
 		{
 			ret[i] = '\0';
 			break ;
@@ -29,41 +34,42 @@ char	*valid_argument(char *ret)
 	return (ret);
 }
 
-char	*get_env_return(t_shell *s, char *ret)
+static char	*get_return(t_shell *s, char *ret)
 {
 	char	*env_value;
 
-	env_value = get_env(s, ret);
-	if (ft_strlen(env_value) != 0)
-		return (ft_strdup(env_value));
-	return (ft_strdup(""));
+	if (ft_strlen(ret) == 0)
+			return (ft_strdup("$"));
+	else if (ft_strncmp(ret, "?", 2) == 0)
+		return (ft_itoa(s->status));
+	else
+	{
+		env_value = get_env(s, ret);
+		if (ft_strlen(env_value) != 0)
+			return (ft_strdup(env_value));
+		return (ft_strdup(""));
+	}
+	return (env_value);
 }
 
-static int	ft_isquoted(char c, int flag)
-{
-	if (c == 39 && flag == 0)
-		return(1);
-	return (0);
-}
-
-char	*clear_expand(char *str, char *arg, char *tmp, int quote)
+static char	*clear_expand(char *str, char *arg, char *tmp, int index)
 {
 	size_t	i;
 	size_t	j;
+	int		quote;
 	char	*ret;
-	int		flag;
 
+	ret = ft_calloc(sizeof(char), (ft_strlen(str) + ft_strlen(tmp)) + 1);
 	i = 0;
 	j = 0;
-	flag = 0;
-	ret = ft_calloc(sizeof(char), (ft_strlen(str) + ft_strlen(tmp)) + 1);
+	quote = 0;
 	while (str[j])
 	{
-		quote = ft_isquoted(str[i], quote);
-		if (str[j] == '$' && flag == 0)
+		quote = ft_isquoted(str[j], quote);
+		if (j == index - 1 && quote < 2)
 		{
-			while((str[++j] == *arg) && *arg)
-				flag = *arg++;
+			while ((str[++j] == *arg) && *arg)
+				*arg++;
 			while (*tmp)
 				ret[i++] = *tmp++;
 		}
@@ -75,13 +81,24 @@ char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 	return (ret);
 }
 
-char	*expand_argument(t_shell *s, char *str, size_t j, int flag)
+static char	*expand(t_shell *s, char *arg, char *str, int index)
 {
-	char	*arg;
 	char	*tmp;
 
+	tmp = get_return(s, arg);
+	str = clear_expand(str, arg, tmp, index);
+	free(tmp);
+	free(arg);
+	return (str);
+}
+
+char	*expand_argument(t_shell *s, char *str, size_t j)
+{
+	int		flag;
+	char	*arg;
+
+	flag = 0;
 	arg = NULL;
-	tmp = NULL;
 	while (str[j])
 	{
 		if (str[j] == 39 && flag == 0)
@@ -90,10 +107,7 @@ char	*expand_argument(t_shell *s, char *str, size_t j, int flag)
 		{
 			arg = valid_argument(ft_strdup(ft_strchr_quotes(str, '$') + 1));
 			j += ft_strlen(arg) + 1;
-			tmp = get_env_return(s, arg);
-			str = clear_expand(str, arg, tmp, 0);
-			free(tmp);
-			free(arg);
+			str = expand(s, arg, str, ft_strint_quotes(str, '$'));
 			return (str);
 		}
 		if (str[j] == 39)
@@ -119,15 +133,9 @@ void	expander(t_shell *shell)
 			while (cmd->args[++j])
 			{
 				while (ft_strchr_quotes(cmd->args[j], '$') != NULL)
-					cmd->args[j] = expand_argument(shell, cmd->args[j], 0, 0);
+					cmd->args[j] = expand_argument(shell, cmd->args[j], 0);
 			}
-			j++;
 		}
 		cmd = cmd->next;
 	}
 }
-// echo ${PWD/atacu}
-
-// CAT << "$USER"
-
-//cat .... ctrl + c

@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 15:28:34 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:19:56 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <errno.h>
 # include <stdbool.h>
 
 //colors
@@ -60,6 +61,7 @@ typedef struct s_cmd {
 	int				in_file;
 	int				out_file;
 	int				fd[2];
+	pid_t			pid;
 	t_redir			*red;
 	int				is_error_redir;
 	struct s_cmd	*next;
@@ -68,9 +70,13 @@ typedef struct s_cmd {
 typedef struct s_shell{
 	t_cmd	*cmd;
 	char	**env;
+	int		num_cmds;
 	char	**export;
+	pid_t	last_pid;
 	int		status;
 }	t_shell;
+
+t_shell	*shell(void);
 
 //--------------------------- LEXER ----------------------------//
 void	tokeniser(const char *str, t_shell *s);
@@ -84,11 +90,11 @@ char	*valid_argument(char *ret);
 
 //---------------------------- EXE -----------------------------//
 void	executor(t_shell *s);
-char	*find_executable_path(char *binary);
+char	*find_executable_path(char *binary, int i);
 
 // //----------------------- BUILTINS --------------------------//
 int		is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out);
-void	echo_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+void	echo_cmd(t_cmd *cmd, t_shell *s, int flag, int out);
 void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 void	pwd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
@@ -106,7 +112,9 @@ int		close_fd(int fd);
 int		ft_strncmp_env(char *key, char *str);
 char	*get_env(t_shell *s, char *key);
 void	set_env(t_shell *s, char *key, char *value);
-char	*ft_strchr_quotes(const char *s, int c);
+char	*ft_strchr_quotes(char *s, int c);
+int		ft_strint_quotes(char *s, int c);
+int		ft_isquoted(char c, int flag);
 
 //---------------------------- FREE ----------------------------//
 void	*free_array(char **args);
@@ -129,8 +137,10 @@ int		handle_infile(t_cmd *cmd, t_redir *redir);
 int		handle_append(t_cmd *cmd, t_redir *redir);
 void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir);
 int		handle_outfile(t_cmd *cmd, t_redir *redir);
-char	*expand_argument(t_shell *s, char *str, size_t j, int flag);
-void	handle_quotes(t_shell *s);
+char	*expand_argument(t_shell *s, char *str, size_t j);
+
+//---------------------------- QUOTES ---------------------------//
+void	handle_quotes(t_shell *shell);
 
 //------------------------- EXPORT UTILS -------------------------//
 int		ft_biggerncmp(char *s1, char *s2, int size_s1);
@@ -140,14 +150,19 @@ char	*get_var_name(char *str);
 int		valid_name(char *s, int in);
 
 //----------------------------- ERROR ---------------------------//
-void	invalid_name_error(char *s);
+void	invalid_name_error(t_shell *shell, char *s);
 void	cmd_not_found_error(char *s);
-int		invalid_file_error(char *s);
+int		invalid_file_error(t_shell *shell, char *s, char *s2);
+void	ctrl_d_error(char *s);
 
 int		is_arg_redir(char *s);
 int		sintax_verify(t_shell *shell);
 int		ft_putstr_ln(char *s, int fd);
 char	**sort_env(char **env_copy, int i);
 int		var_exist(char **s, char *str);
+int		change_outfile(int out, int cmd_out, int *fd);
+int		div_status(int status);
+void	exit_status(t_shell *shell, int status);
+t_shell	*shell(void);
 
 #endif

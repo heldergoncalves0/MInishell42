@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 17:04:00 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:21:10 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static t_cmd	*new_cmd(char **args)
 	cmd->fd[1] = 1;
 	cmd->in_file = -1;
 	cmd->out_file = -1;
+	cmd->pid = 0;
 	cmd->path = NULL;
 	return (cmd);
 }
@@ -93,6 +94,7 @@ void	cmd_loop(char *tokens, t_shell *s)
 		cmd = new_cmd(ft_split(cmds[i], '\2'));
 		if (cmd == NULL)
 			break ;
+		s->num_cmds++;
 		if (!s->cmd)
 			s->cmd = cmd;
 		else if (end)
@@ -109,7 +111,7 @@ void	tokeniser(const char *str, t_shell *s)
 
 	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
 	if (tokens == NULL)
-		ft_putstr_fd("error allocating tokens!\n", 2);
+		ft_putstr_fd("Syntax error, wrong number of quotes!\n", 2);
 	else
 		cmd_loop(tokens, s);
 	free(tokens);

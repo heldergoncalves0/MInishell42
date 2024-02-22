@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:21:25 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:24:22 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:52:41 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,16 @@ int	execute_redirects(t_shell *s, t_cmd *cmd)
 		while (redir)
 		{
 			if (redir->type == APPEND && handle_append(cmd, redir) == 0)
-				return (invalid_file_error(redir->args[1]));
+				return (invalid_file_error(s, strerror(errno), redir->args[1]));
 			if (redir->type == INFILE && handle_infile(cmd, redir) == 0)
-				return (invalid_file_error(redir->args[1]));
+				return (invalid_file_error(s, strerror(errno), redir->args[1]));
 			if (redir->type == OUTFILE && handle_outfile(cmd, redir) == 0)
-				return (invalid_file_error(redir->args[1]));
+				return (invalid_file_error(s, strerror(errno), redir->args[1]));
 			if (redir->type == HEREDOC)
-				handle_heredoc(s, cmd, redir);////
+				handle_heredoc(s, cmd, redir);
 			redir = redir->next;
 		}
 		cmd = cmd->next;
 	}
-	return (1);
+	return (0);
 }

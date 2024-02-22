@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:42:22 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:01:55 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	**sort_env(char **env_copy, int i)
 		j = i;
 		while (++j < len)
 		{
-			if (ft_strncmp(env_copy[i], env_copy[j], ft_strlen(env_copy[j])) > 0)
+			if (ft_strncmp(env_copy[i], env_copy[j], \
+			ft_strlen(env_copy[j])) > 0)
 			{
 				if (valid_name(env_copy[j], 0) == 0)
 				{
@@ -74,7 +75,7 @@ void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 
 	if (!cmd->args[1])
 		print_export(s->export, out);
-	else if (valid_name(cmd->args[1], in))
+	else if (valid_name(cmd->args[1], in) == 0)
 	{
 		var = ft_strdup(cmd->args[1]);
 		var_name = get_var_name(var);
@@ -84,6 +85,7 @@ void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 				s->export = add_var_export(s->export, var, 0);
 			else
 				s->export = overwrite_var(s->export, var_name, 0, var);
+			s->env = overwrite_var(s->env, var_name, 0, var);
 		}
 		else
 			if (var_exist(s->export, var) == 1)
@@ -92,5 +94,5 @@ void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		free(var_name);
 	}
 	else
-		invalid_name_error(cmd->args[1]);
+		invalid_name_error(s, cmd->args[1]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 20:16:10 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:41:52 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:01:35 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**overwrite_var(char **s, char *str, int flag, char *str_name)
 		i++;
 	}
 	if (flag == 0)
-		new[i] = ft_strdup(str);
+		new[i] = ft_strdup(str_name);
 	free_array(s);
 	return (new);
 }
@@ -98,13 +98,17 @@ int	valid_name(char *s, int in)
 
 	i = 0;
 	(void) in;
+	if (s[0] == '=')
+		return (1);
 	if (s[i] == '_' && ft_strlen(s) < 2)
 		return (1);
-	while (s[i])
+	while (s[i] && s[i] != '=')
 	{
-		if (ft_isalpha(s[i]) || s[i] != '_')
+		if (!ft_isalpha(s[i]) && s[i] != '_')
 			return (1);
 		i++;
 	}
+	if (s[0] == '_' && i < 2)
+		return (1);
 	return (0);
 }
