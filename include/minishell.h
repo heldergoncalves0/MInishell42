@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/21 11:28:45 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:24:58 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ typedef struct s_shell{
 	char	**export;
 	int		status;
 }	t_shell;
+
+t_shell	*shell(void);
 
 //--------------------------- LEXER ----------------------------//
 void	tokeniser(const char *str, t_shell *s);
@@ -144,7 +146,7 @@ char	*get_var_name(char *str);
 int		valid_name(char *s, int in);
 
 //----------------------------- ERROR ---------------------------//
-void	invalid_name_error(char *s);
+void	invalid_name_error(t_shell *shell, char *s);
 void	cmd_not_found_error(char *s);
 int		invalid_file_error(char *s, char *s2);
 void	ctrl_d_error(char *s);

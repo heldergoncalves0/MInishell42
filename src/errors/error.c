@@ -6,14 +6,15 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:13:26 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/21 11:05:06 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:25:25 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	invalid_name_error(char *s)
+void	invalid_name_error(t_shell *shell, char *s)
 {
+	shell->status = 1;
 	ft_putstr_fd("Minishell: export: \'", 2);
 	ft_putstr_fd(s, 2);
 	ft_putstr_fd("\': not a valid identifier\n", 2);

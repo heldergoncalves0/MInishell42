@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/21 15:53:28 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:50:38 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,16 @@ void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 	(void)in;
 	(void)out;
 
-	if (chdir(cmd->args[1]) == 0)
+    if (cmd->args[2])
+	{
+		s->status = 1;
+		ft_putstr_ln("cd: too many arguments", 2);
+	}
+	else if (chdir(cmd->args[1]) == 0)
 		handle_path(s);
 	else if (chdir(cmd->args[1]) != 0)
 	{
-		ft_putstr_fd("cd: not a directory: ", 2);
-		ft_putstr_fd(cmd->args[1], 2);
-		ft_putstr_fd("\n", 2);
+		s->status = 1;
+		perror("cd");
 	}
 }

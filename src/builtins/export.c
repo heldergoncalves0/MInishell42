@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 15:51:29 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:01:55 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,5 @@ void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		free(var_name);
 	}
 	else
-		invalid_name_error(cmd->args[1]);
+		invalid_name_error(s, cmd->args[1]);
 }
