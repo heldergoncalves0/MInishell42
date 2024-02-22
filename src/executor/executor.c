@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 14:55:24 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:42:36 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,7 @@ static void	wait_child(t_shell *s, t_cmd *cmd)
 	first_cmd = cmd;
 	while (cmd)
 	{
-		wait(NULL);
-			// if (waitpid(-1, &s->status, 0) == s->last_pid)
-			// {
-				
-			// }
+		waitpid(-1, &s->status, 0);
 		cmd = cmd->next;
 	}
 	s->status = div_status(s->status);
