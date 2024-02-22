@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:03:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/21 16:20:42 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:15:50 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,6 @@ int	is_arg_redir(char *s)
 	return (0);
 }
 
-char	*ft_strchr_quotes(const char *s, int c)
-{
-	int	flag;
-
-	flag = 0;
-	while (*s)
-	{
-		if (*s == 39 && flag == 0)
-			flag = 1;
-		else if ((unsigned char)c == *s && flag == 0)
-			return ((char *)s);
-		else if (*s == 39)
-			flag = 0;
-		s++;
-	}
-	return (0);
-}
-
 int	sintax_verify(t_shell *shell)
 {
 	size_t	i;
@@ -84,13 +66,90 @@ int	sintax_verify(t_shell *shell)
 	return (0);
 }
 
+int	ft_ismorealnum(int str)
+{
+	if ((str >= 97 && str <= 122) || \
+	(str >= 65 && str <= 90))
+		return (1);
+	else if (str >= 48 && str <= 57)
+		return (1);
+	else if (str == '?')
+		return (1);
+	return (0);
+}
+
+char	*ft_strchr_quotes(char *s, int c)
+{
+	int		flag;
+	size_t	i;
+
+	flag = 0;
+	i = 1;
+	while (*s)
+	{
+		if (*s == 34 && flag == 0)
+			flag = 1;
+		else if (*s == 39 && flag == 0)
+			flag = 2;
+		else if (*s == 34 && flag == 1)
+			flag = 0;
+		else if (*s == 39 && flag == 2)
+			flag = 0;
+		else if ((unsigned char)c == *s && flag < 2 && ft_ismorealnum(s[i]) == 1)
+			return ((char *)s);
+		s++;
+	}
+	return (0);
+}
+
+int	ft_strint_quotes(char *s, int c)
+{
+	int		flag;
+	size_t	i;
+	size_t	counter;
+
+	flag = 0;
+	i = 1;
+	counter = 1;
+	while (*s)
+	{
+		if (*s == 34 && flag == 0)
+			flag = 1;
+		else if (*s == 39 && flag == 0)
+			flag = 2;
+		else if (*s == 34 && flag == 1)
+			flag = 0;
+		else if (*s == 39 && flag == 2)
+			flag = 0;
+		else if ((unsigned char)c == *s && flag < 2 && ft_ismorealnum(s[i]) == 1)
+			return (counter);
+		s++;
+		counter++;
+	}
+	return (0);
+}
+
 int	ft_isquoted(char c, int flag)
 {
-	if (c == '\"')
+	if (flag == 0)
 	{
-		if (flag == 0)
+		if (c == '\"')
+			return (1);
+		else if (c == '\'')
+			return (2);
+		return (0);
+	}
+	if (flag == 1)
+	{
+		if (c == '\"')
 			return (0);
-		// return ();
+		return (1);
+	}
+	if (flag == 2)
+	{
+		if (c == '\'')
+			return (0);
+		return (2);
 	}
 	return (0);
 }

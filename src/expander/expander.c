@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/21 15:16:24 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:15:22 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@ static char	*valid_argument(char *ret)
 	i = 0;
 	while (ret[i])
 	{
-		if (ret[i] != '?' && !ft_isalnum(ret[i]))
+		if (ret[i] == '?')
+		{
+			ret[++i] = '\0';
+			break ;
+		}
+		else if (!ft_isalnum(ret[i]))
 		{
 			ret[i] = '\0';
 			break ;
@@ -33,7 +38,9 @@ char	*get_return(t_shell *s, char *ret)
 {
 	char	*env_value;
 
-	if (ft_strncmp(ret, "?", 2) == 0)
+	if (ft_strlen(ret) == 0)
+			return (ft_strdup("$"));
+	else if (ft_strncmp(ret, "?", 2) == 0)
 		return (ft_itoa(s->status));
 	else
 	{
@@ -44,24 +51,24 @@ char	*get_return(t_shell *s, char *ret)
 	}
 }
 
-static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
+static char	*clear_expand(char *str, char *arg, char *tmp, int index)
 {
 	size_t	i;
 	size_t	j;
+	int		quote;
 	char	*ret;
-	int		flag;
 
+	ret = ft_calloc(sizeof(char), (ft_strlen(str) + ft_strlen(tmp)) + 1);
 	i = 0;
 	j = 0;
-	flag = 0;
-	ret = ft_calloc(sizeof(char), (ft_strlen(str) + ft_strlen(tmp)) + 1);
+	quote = 0;
 	while (str[j])
 	{
 		quote = ft_isquoted(str[j], quote);
-		if (str[j] == '$' && flag == 0 && quote == 0)
+		if (j == index - 1 && quote < 2)
 		{
 			while ((str[++j] == *arg) && *arg)
-				flag = *arg++;
+				*arg++;
 			while (*tmp)
 				ret[i++] = *tmp++;
 		}
@@ -73,13 +80,24 @@ static char	*clear_expand(char *str, char *arg, char *tmp, int quote)
 	return (ret);
 }
 
-char	*expand_argument(t_shell *s, char *str, size_t j, int flag)
+static char	*expand(t_shell *s, char *arg, char *str, int index)
 {
-	char	*arg;
 	char	*tmp;
 
+	tmp = get_return(s, arg);
+	str = clear_expand(str, arg, tmp, index);
+	free(tmp);
+	free(arg);
+	return (str);
+}
+
+char	*expand_argument(t_shell *s, char *str, size_t j)
+{
+	int		flag;
+	char	*arg;
+
+	flag = 0;
 	arg = NULL;
-	tmp = NULL;
 	while (str[j])
 	{
 		if (str[j] == 39 && flag == 0)
@@ -88,10 +106,7 @@ char	*expand_argument(t_shell *s, char *str, size_t j, int flag)
 		{
 			arg = valid_argument(ft_strdup(ft_strchr_quotes(str, '$') + 1));
 			j += ft_strlen(arg) + 1;
-			tmp = get_return(s, arg);
-			str = clear_expand(str, arg, tmp, 0);
-			free(tmp);
-			free(arg);
+			str = expand(s, arg, str, ft_strint_quotes(str, '$'));
 			return (str);
 		}
 		if (str[j] == 39)
@@ -117,13 +132,9 @@ void	expander(t_shell *shell)
 			while (cmd->args[++j])
 			{
 				while (ft_strchr_quotes(cmd->args[j], '$') != NULL)
-					cmd->args[j] = expand_argument(shell, cmd->args[j], 0, 0);
+					cmd->args[j] = expand_argument(shell, cmd->args[j], 0);
 			}
-			j++;
 		}
 		cmd = cmd->next;
 	}
 }
-// echo ${PWD/atacu}
-
-//cat .... ctrl + c

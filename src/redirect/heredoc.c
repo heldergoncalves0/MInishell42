@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/21 21:07:49 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:21:21 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 
 	size = ft_strlen(redir->args[1]) + 1;
 	while (1)
-	{set_signal_action(1);
+	{
+		set_signal_action(1);
 		line = readline(">> ");
 		if (line == NULL && check_signal_g() == 0)
 		{
@@ -42,7 +43,7 @@ void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 			break ;
 		}
 		while (ft_strchr_quotes(line, '$') != NULL)
-			line = expand_argument(shell, line, 0, 0);
+			line = expand_argument(shell, line, 0);
 		ft_putstr_fd(line, redir->fd);
 		ft_putstr_fd("\n", redir->fd);
 		free(line);
