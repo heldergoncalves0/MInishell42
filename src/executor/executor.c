@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 16:51:29 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/23 17:53:06 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			close_fd(in);
 			dup2(out, STDOUT_FILENO);
 			close_fd(out);
-			close_fd(cmd->fd[1]);
-			close_fd(cmd->fd[0]);
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
 			cmd_error(s, cmd->args[0]);
