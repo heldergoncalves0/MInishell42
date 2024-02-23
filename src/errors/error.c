@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:13:26 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 17:05:26 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 21:32:12 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ctrl_d_error(char *s)
 	ft_putstr_fd("delimited by end-of-file (wanted \"", 2);
 	ft_putstr_fd(s, 2);
 	ft_putstr_fd("\")", 2);
+	ft_putstr_fd("\n", 2);
 }
 
 void	cd_error(char *s)

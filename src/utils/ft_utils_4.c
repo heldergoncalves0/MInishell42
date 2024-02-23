@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_4.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:26:29 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 17:41:18 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 21:20:57 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	close_fds(int fd1, int fd2)
 
 void	cmd_error(t_shell *s, char *str)
 {
-	static struct	stat stats;
+	static struct stat	stats;
 
 	if (lstat(str, &stats) != 0 && ft_strlen(str) != 0)
 	{
@@ -53,7 +53,8 @@ char	*ft_strchr_quotes(char *s, int c)
 			flag = 0;
 		else if (*s == 39 && flag == 2)
 			flag = 0;
-		else if ((unsigned char)c == *s && flag < 2 && ft_ismorealnum(s[i]) == 1)
+		else if ((unsigned char)c == *s && flag < 2 && \
+								ft_ismorealnum(s[i]) == 1)
 			return ((char *)s);
 		s++;
 	}
@@ -79,7 +80,8 @@ int	ft_strint_quotes(char *s, int c)
 			flag = 0;
 		else if (*s == 39 && flag == 2)
 			flag = 0;
-		else if ((unsigned char)c == *s && flag < 2 && ft_ismorealnum(s[i]) == 1)
+		else if ((unsigned char)c == *s && flag < 2 && \
+								ft_ismorealnum(s[i]) == 1)
 			return (counter);
 		s++;
 		counter++;

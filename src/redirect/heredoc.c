@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 17:15:11 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 21:21:17 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	handle_heredoc_read(t_redir *redir, t_shell *shell)
 			free(line);
 			break ;
 		}
-		if ((line && ft_strncmp(line, redir->args[1], size) == 0) || check_signal_g() == 1)
+		if ((line && ft_strncmp(line, redir->args[1], size) == 0) \
+						|| check_signal_g() == 1)
 		{
 			close_fd(redir->fd);
 			free(line);

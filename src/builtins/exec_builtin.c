@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:58:02 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 17:20:50 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 22:54:53 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	help_builtin(t_cmd *cmd)
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
 		return (7);
 	return (0);
- }
+}
 
 void	execute_builtin(t_cmd *cmd, t_shell *s, int in, int out)
 {
@@ -47,7 +47,7 @@ void	execute_builtin(t_cmd *cmd, t_shell *s, int in, int out)
 		exit_cmd(cmd, s, in, out);
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
 		env_cmd(cmd, s, in, out);
- }
+}
 
 int	is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out)
 {

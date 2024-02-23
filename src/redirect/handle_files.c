@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:25:04 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/22 14:38:47 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/23 21:12:45 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	handle_append(t_cmd *cmd, t_redir *redir)
 {
 	struct stat	info;
 
-	if (stat(redir->args[1], &info) == 0)
+	if (stat(redir->args[1], &info) == 0 || cmd->is_error_redir)
 	{
 		redir->fd = open(redir->args[1], O_APPEND | O_WRONLY, 0644);
 		if (redir->fd == -1 && ++cmd->is_error_redir)
@@ -45,7 +45,7 @@ int	handle_outfile(t_cmd *cmd, t_redir *redir)
 {
 	struct stat	info;
 
-	if (stat(redir->args[1], &info) == 0)
+	if (stat(redir->args[1], &info) == 0 || cmd->is_error_redir)
 	{
 		redir->fd = open(redir->args[1], O_TRUNC | O_WRONLY, 0644);
 		if (redir->fd == -1 && ++cmd->is_error_redir)
@@ -74,7 +74,7 @@ int	handle_infile(t_cmd *cmd, t_redir *redir)
 {
 	struct stat	info;
 
-	if (stat(redir->args[1], &info) == 0)
+	if (stat(redir->args[1], &info) == 0 || cmd->is_error_redir)
 	{
 		redir->fd = open(redir->args[1], O_RDONLY, 0644);
 		if (redir->fd == -1 && ++cmd->is_error_redir)

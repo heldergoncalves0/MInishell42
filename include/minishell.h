@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 17:55:41 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/23 22:45:01 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define RES "\e[0;0m"
 
 //----------------GLOBAL FOR SIGNAL----------------------------//
-extern	int g_signal;
+extern int	g_signal;
 
 typedef enum e_redir_type{
 	NONE,
@@ -72,6 +72,7 @@ typedef struct s_shell{
 	char	**env;
 	int		num_cmds;
 	char	**export;
+	int		error;
 	int		status;
 }	t_shell;
 

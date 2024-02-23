@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 17:56:50 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/23 22:57:50 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 	if (cmd->is_error_redir == 0 && cmd->args[0] != NULL)
 	{
 		cmd->pid = fork();
-		ft_putstr_ln("cmd->path:", 2);
-		ft_putstr_fd(ft_itoa(cmd->pid), 2);
 		if (cmd->pid == 0)
 		{
 			set_signal_action(3);
@@ -57,6 +55,8 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			close_fds(cmd->fd[0], cmd->fd[1]);
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
+			//ft_putstr_ln("DEU ERRADO", 2);
+			s->error++;
 			cmd_error(s, cmd->args[0]);
 			free_shell(s, s->status);
 		}
@@ -69,27 +69,33 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 
 static void	wait_child(t_shell *s)
 {
-	t_cmd *c;
+	t_cmd	*c;
 
 	c = s->cmd;
 	while (c)
-	{			ft_putstr_fd("antes status: ", 2);
-			ft_putstr_ln(ft_itoa(s->status), 2);
-			ft_putstr_fd("antes pid: ", 2);
-			ft_putstr_ln(c->args[0], 2);
-		if (c->pid != 0)
-			{waitpid(c->pid, &s->status, 0);}
-		ft_putstr_fd("depois wait status	: ", 2);
-		ft_putstr_ln(ft_itoa(s->status), 2);
-		ft_putstr_fd("depois pid: ", 2);
-		ft_putstr_ln(c->args[0], 2);
+	{
+		// ft_putstr_fd("pid: ", 2);
+		// ft_putstr_ln(ft_itoa(c->pid), 2);
+		// ft_putstr_fd("s->status quando o pid vai entrar no waitpid: ", 2);
+		// ft_putstr_ln(ft_itoa(s->status), 2);
+		if(c->pid != 0)
+		{
+			// if (s->status != 0 && s->error > 0)
+			//     waitpid(c->pid, NULL, WNOHANG);
+			// else
+			waitpid(c->pid, &s->status, 0);
+		}
+		// ft_putstr_fd("s->status depois do pid sair do waitpid: ", 2);
+		// ft_putstr_ln(ft_itoa(s->status), 2);
 		c = c->next;
 	}
-	//ft_putstr_ln(ft_itoa(s->status), 2);
-	//ft_putstr_ln(ft_itoa(s->status), 2);
+	if (s->status == 13)
+		s->status = 0;
+	if (WIFEXITED(s->status))
+		WEXITSTATUS(s->status);
+	// ft_putstr_fd("Status code inside wait_child and after waitpid: ", 2);
+	// ft_putstr_ln(ft_itoa(s->status), 2);
 	s->status = div_status(s->status);
-	ft_putstr_ln("div status: ", 2);
-	ft_putstr_ln(ft_itoa(s->status), 2);
 }
 
 void	executor(t_shell *s)
@@ -115,5 +121,7 @@ void	executor(t_shell *s)
 		in = cmd->fd[0];
 		cmd = cmd->next;
 	}
+	// ft_putstr_fd("Status code before wait_child: ", 2);
+	// ft_putstr_ln(ft_itoa(s->status), 2);
 	wait_child(s);
 }
