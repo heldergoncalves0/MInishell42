@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:03:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/22 18:15:50 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 13:28:08 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,57 +75,6 @@ int	ft_ismorealnum(int str)
 		return (1);
 	else if (str == '?')
 		return (1);
-	return (0);
-}
-
-char	*ft_strchr_quotes(char *s, int c)
-{
-	int		flag;
-	size_t	i;
-
-	flag = 0;
-	i = 1;
-	while (*s)
-	{
-		if (*s == 34 && flag == 0)
-			flag = 1;
-		else if (*s == 39 && flag == 0)
-			flag = 2;
-		else if (*s == 34 && flag == 1)
-			flag = 0;
-		else if (*s == 39 && flag == 2)
-			flag = 0;
-		else if ((unsigned char)c == *s && flag < 2 && ft_ismorealnum(s[i]) == 1)
-			return ((char *)s);
-		s++;
-	}
-	return (0);
-}
-
-int	ft_strint_quotes(char *s, int c)
-{
-	int		flag;
-	size_t	i;
-	size_t	counter;
-
-	flag = 0;
-	i = 1;
-	counter = 1;
-	while (*s)
-	{
-		if (*s == 34 && flag == 0)
-			flag = 1;
-		else if (*s == 39 && flag == 0)
-			flag = 2;
-		else if (*s == 34 && flag == 1)
-			flag = 0;
-		else if (*s == 39 && flag == 2)
-			flag = 0;
-		else if ((unsigned char)c == *s && flag < 2 && ft_ismorealnum(s[i]) == 1)
-			return (counter);
-		s++;
-		counter++;
-	}
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 18:19:56 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/23 17:13:18 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_shell{
 	char	**env;
 	int		num_cmds;
 	char	**export;
-	pid_t	last_pid;
 	int		status;
 }	t_shell;
 
@@ -83,8 +82,7 @@ void	tokeniser(const char *str, t_shell *s);
 
 //---------------------------EXPANDER---------------------------//
 void	expander(t_shell *shell);
-char	*expand_argument(t_shell *s, char *str, size_t j, int flag);
-char	*clear_expand(char *str, char *arg, char *tmp, int quote);
+char	*expand_argument(t_shell *s, char *str, size_t j);
 char	*get_env_return(t_shell *s, char *ret);
 char	*valid_argument(char *ret);
 
@@ -107,11 +105,10 @@ char	**copy_array(char **s);
 char	**search_heredocs(t_shell *s);
 char	*flag_return(int flag, char *new);
 int		ft_double_strlen(char **s);
-void	clean_expand_cmd(t_cmd *c);
 int		close_fd(int fd);
 int		ft_strncmp_env(char *key, char *str);
 char	*get_env(t_shell *s, char *key);
-void	set_env(t_shell *s, char *key, char *value);
+void	set_env(char **env, char *key, char *value);
 char	*ft_strchr_quotes(char *s, int c);
 int		ft_strint_quotes(char *s, int c);
 int		ft_isquoted(char c, int flag);
@@ -119,7 +116,7 @@ int		ft_isquoted(char c, int flag);
 //---------------------------- FREE ----------------------------//
 void	*free_array(char **args);
 t_cmd	*free_cmds(t_cmd *c);
-void	free_shell(t_shell *s);
+void	free_shell(t_shell *s, int status);
 
 //---------------------------- SIGNALS -------------------------//
 void	set_signal_action(int sigstate);
@@ -130,7 +127,7 @@ void	ft_list(t_cmd *c);
 
 //---------------------------- REDIR ---------------------------//
 void	split_redirect(t_shell *s, int i);
-int		execute_redirects(t_shell *s, t_cmd *cmd);
+void	execute_redirects(t_shell *s, t_cmd *cmd);
 t_redir	*redir_compares(char **args);
 int		is_redir(t_cmd *c, int i);
 int		handle_infile(t_cmd *cmd, t_redir *redir);
@@ -152,8 +149,9 @@ int		valid_name(char *s, int in);
 //----------------------------- ERROR ---------------------------//
 void	invalid_name_error(t_shell *shell, char *s);
 void	cmd_not_found_error(char *s);
-int		invalid_file_error(t_shell *shell, char *s, char *s2);
+int		invalid_file_error(t_cmd *cmd, char *s1, char *s2);
 void	ctrl_d_error(char *s);
+void	cd_error(char *s);
 
 int		is_arg_redir(char *s);
 int		sintax_verify(t_shell *shell);
@@ -162,7 +160,8 @@ char	**sort_env(char **env_copy, int i);
 int		var_exist(char **s, char *str);
 int		change_outfile(int out, int cmd_out, int *fd);
 int		div_status(int status);
-void	exit_status(t_shell *shell, int status);
-t_shell	*shell(void);
+void	close_fds(int fd1, int fd2);
+void	cmd_error(t_shell *s, char *str);
+int		ft_ismorealnum(int str);
 
 #endif

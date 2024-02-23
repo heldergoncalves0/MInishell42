@@ -6,18 +6,11 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 18:52:28 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 17:14:50 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_shell	*shell(void)
-{
-	static t_shell	shell;
-
-	return (&shell);
-}
 
 void	valid_input(t_shell *shell, char *str, char *line)
 {
@@ -30,8 +23,8 @@ void	valid_input(t_shell *shell, char *str, char *line)
 		split_redirect(shell, 0);
 		expander(shell);
 		handle_quotes(shell);
-		if (execute_redirects(shell, shell->cmd) == 0)
-			executor(shell);
+		execute_redirects(shell, shell->cmd);
+		executor(shell);
 	}
 	shell->cmd = free_cmds(shell->cmd);
 }
@@ -45,10 +38,11 @@ void	minishell_loop(t_shell *shell, char **env)
 	shell->export = sort_env(copy_array(shell->env), 0);
 	while (1)
 	{
+		shell->num_cmds = 0;
 		set_signal_action(0);
 		line = readline("Minishell: ");
 		if (line == NULL)
-			free_shell(shell);
+			free_shell(shell, shell->status);
 		str = ft_strtrim(line, " ");
 		if (str && *str != '\0')
 			valid_input(shell, str, line);
@@ -68,5 +62,3 @@ int	main(int ac, char **av, char **env)
 	(void) av;
 	minishell_loop(&shell, env);
 }
-
-// tcgetattr()

@@ -6,13 +6,13 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:12:46 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/19 15:03:02 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 17:26:30 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	flag_n_echo(char *s)
+static int	flag_n_echo(char *s)
 {
 	int	i;
 
