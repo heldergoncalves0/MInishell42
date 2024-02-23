@@ -6,13 +6,13 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:12:46 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 16:19:10 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/23 17:56:25 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	flag_n_echo(char *s)
+static int	flag_n_echo(char *s)
 {
 	int	i;
 

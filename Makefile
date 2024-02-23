@@ -6,7 +6,7 @@
 #    By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 12:17:17 by helferna          #+#    #+#              #
-#    Updated: 2024/02/23 17:07:31 by helferna         ###   ########.fr        #
+#    Updated: 2024/02/23 17:55:56 by helferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC   = src/main.c src/parser/lexer.c src/clean/ft_free.c src/executor/executor.
 		src/utils/ft_utils.c src/signals/signals.c src/redirect/heredoc.c src/utils/ft_lists.c \
 		src/redirect/redirect.c src/redirect/handle_files.c src/expander/expander.c \
 		src/utils/ft_utils_2.c src/parser/quotes.c src/utils/ft_export_utils.c \
-		src/errors/error.c src/utils/ft_utils_3.c
+		src/errors/error.c src/utils/ft_utils_3.c src/utils/ft_utils_4.c
 
 OBJ   = $(patsubst src/%.c, obj/%.o, $(SRC))
 

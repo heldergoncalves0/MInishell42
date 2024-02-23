@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:40 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/19 14:45:28 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:45:44 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,26 @@ char	*get_env(t_shell *s, char *key)
 	return ("");
 }
 
-void	set_env(t_shell *s, char *key, char *value)
+void	set_env(char **env, char *key, char *value)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (s->env[i])
+	while (env[i])
 	{
-		j = ft_strncmp_env(key, s->env[i]);
+		j = ft_strncmp_env(key, env[i]);
 		if (j)
 		{
-			free(s->env[i]);
+			free(env[i]);
 			if (value)
 			{
 				key = ft_strjoin(key, "=");
-				s->env[i] = ft_strjoin(key, value);
+				env[i] = ft_strjoin(key, value);
 				free(key);
 			}
 			else
-				s->env[i] = ft_strdup(key);
+				env[i] = ft_strdup(key);
 			break ;
 		}
 		i++;
