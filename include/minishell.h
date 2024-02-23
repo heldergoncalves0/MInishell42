@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 18:19:56 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:25:09 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ void	tokeniser(const char *str, t_shell *s);
 
 //---------------------------EXPANDER---------------------------//
 void	expander(t_shell *shell);
-char	*expand_argument(t_shell *s, char *str, size_t j, int flag);
-char	*clear_expand(char *str, char *arg, char *tmp, int quote);
+char	*expand_argument(t_shell *s, char *str, size_t j);
 char	*get_env_return(t_shell *s, char *ret);
 char	*valid_argument(char *ret);
 

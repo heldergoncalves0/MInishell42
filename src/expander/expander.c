@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 18:21:04 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:26:02 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*get_return(t_shell *s, char *ret)
 	return (env_value);
 }
 
-static char	*clear_expand(char *str, char *arg, char *tmp, int index)
+static char	*clear_expand(char *str, char *arg, char *tmp, size_t index)
 {
 	size_t	i;
 	size_t	j;
@@ -69,7 +69,7 @@ static char	*clear_expand(char *str, char *arg, char *tmp, int index)
 		if (j == index - 1 && quote < 2)
 		{
 			while ((str[++j] == *arg) && *arg)
-				*arg++;
+				index = *arg++;
 			while (*tmp)
 				ret[i++] = *tmp++;
 		}
@@ -81,7 +81,7 @@ static char	*clear_expand(char *str, char *arg, char *tmp, int index)
 	return (ret);
 }
 
-static char	*expand(t_shell *s, char *arg, char *str, int index)
+static char	*expand(t_shell *s, char *arg, char *str, size_t index)
 {
 	char	*tmp;
 

@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 18:20:41 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:51:29 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*find_executable_path(char *binary, int i)
 
 void	cmd_error(t_shell *s, char *str)
 {
-	struct	stat stats;
+	static struct	stat stats;
 
 	stat(str, &stats);
 	if (S_ISDIR(stats.st_mode))
@@ -96,16 +96,19 @@ static void	wait_child(t_shell *s, t_cmd *cmd)
 	t_cmd	*first_cmd;
 
 	first_cmd = cmd;
+	//ft_putstr_ln(ft_itoa(s->status), 2);
 	while (cmd)
 	{
-		wait(NULL);
-			// if (waitpid(-1, &s->status, 0) == s->last_pid)
-			// {
+		if (waitpid(-1, &s->status, 0) == s->last_pid)
+		{
 				
-			// }
+		}
 		cmd = cmd->next;
 	}
+	//ft_putstr_ln(ft_itoa(s->status), 2);
+	//ft_putstr_ln(ft_itoa(s->status), 2);
 	s->status = div_status(s->status);
+	//ft_putstr_ln(ft_itoa(s->status), 2);
 }
 
 void	executor(t_shell *s)
@@ -120,7 +123,7 @@ void	executor(t_shell *s)
 	{
 		cmd->path = find_executable_path(cmd->args[0], -1);
 		if (cmd->next && pipe(cmd->fd) == -1)
-			exit_status(s, 1);
+			exit(1);
 		out = cmd->fd[1];
 		out = change_outfile(out, cmd->out_file, cmd->fd);
 		if (cmd->in_file != -1)
