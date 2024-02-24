@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:58:02 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 22:54:53 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:10:41 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,8 @@ int	is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	int	is_builtin;
 
-	if (!cmd->args[0] || cmd->is_error_redir)
-		return (0);
 	is_builtin = help_builtin(cmd);
-	if (is_builtin == 0)
+	if (!cmd->args[0] || cmd->is_error_redir || is_builtin == 0)
 		return (0);
 	if (s->num_cmds > 1 && is_builtin != 7 && is_builtin != 5)
 	{

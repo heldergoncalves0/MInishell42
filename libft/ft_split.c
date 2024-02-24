@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 10:57:47 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/15 15:50:04 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:06:47 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ static char	*new_word(const char *s, int start, int end, int len)
 	return (new);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, int index_split)
 {
 	char	**split;
 	int		i;
 	int		end;
-	int		index_split;
 
 	if (!s)
 		return (ft_calloc(sizeof(char *), 1));
@@ -59,7 +58,6 @@ char	**ft_split(char const *s, char c)
 	if (!split)
 		return (0);
 	i = 0;
-	index_split = 0;
 	while (s[i])
 	{
 		if (s[i] != c && s[i] != '\0')

@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 22:57:50 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:29:48 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*find_executable_path(char *binary, int i)
 	{
 		if (access(binary, X_OK) == 0)
 			return (ft_strdup(binary));
-		path = ft_split(getenv("PATH"), ':');
+		path = ft_split(getenv("PATH"), ':', 0);
 		while (path[++i])
 		{
 			tmp = ft_strjoin(path[i], "/");
@@ -55,7 +55,6 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			close_fds(cmd->fd[0], cmd->fd[1]);
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
-			//ft_putstr_ln("DEU ERRADO", 2);
 			s->error++;
 			cmd_error(s, cmd->args[0]);
 			free_shell(s, s->status);
@@ -74,27 +73,14 @@ static void	wait_child(t_shell *s)
 	c = s->cmd;
 	while (c)
 	{
-		// ft_putstr_fd("pid: ", 2);
-		// ft_putstr_ln(ft_itoa(c->pid), 2);
-		// ft_putstr_fd("s->status quando o pid vai entrar no waitpid: ", 2);
-		// ft_putstr_ln(ft_itoa(s->status), 2);
-		if(c->pid != 0)
-		{
-			// if (s->status != 0 && s->error > 0)
-			//     waitpid(c->pid, NULL, WNOHANG);
-			// else
-			waitpid(c->pid, &s->status, 0);
-		}
-		// ft_putstr_fd("s->status depois do pid sair do waitpid: ", 2);
-		// ft_putstr_ln(ft_itoa(s->status), 2);
+		if (c->pid != 0)
+			waitpid (c->pid, &s->status, 0);
 		c = c->next;
 	}
 	if (s->status == 13)
 		s->status = 0;
 	if (WIFEXITED(s->status))
 		WEXITSTATUS(s->status);
-	// ft_putstr_fd("Status code inside wait_child and after waitpid: ", 2);
-	// ft_putstr_ln(ft_itoa(s->status), 2);
 	s->status = div_status(s->status);
 }
 
@@ -108,7 +94,8 @@ void	executor(t_shell *s)
 	cmd = s->cmd;
 	while (cmd)
 	{
-		set_signal_action(0);
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		cmd->path = find_executable_path(cmd->args[0], -1);
 		if (cmd->next && pipe(cmd->fd) == -1)
 			exit(s->status);
@@ -121,7 +108,5 @@ void	executor(t_shell *s)
 		in = cmd->fd[0];
 		cmd = cmd->next;
 	}
-	// ft_putstr_fd("Status code before wait_child: ", 2);
-	// ft_putstr_ln(ft_itoa(s->status), 2);
 	wait_child(s);
 }
