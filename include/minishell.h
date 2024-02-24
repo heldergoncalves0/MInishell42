@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 17:13:18 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:14:47 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int		valid_name(char *s, int in);
 //----------------------------- ERROR ---------------------------//
 void	invalid_name_error(t_shell *shell, char *s);
 void	cmd_not_found_error(char *s);
-int		invalid_file_error(t_cmd *cmd, char *s1, char *s2);
+int		invalid_file_error(char *s1, char *s2);
 void	ctrl_d_error(char *s);
 void	cd_error(char *s);
 
@@ -163,5 +163,6 @@ int		div_status(int status);
 void	close_fds(int fd1, int fd2);
 void	cmd_error(t_shell *s, char *str);
 int		ft_ismorealnum(int str);
+void	verify_files(t_cmd *cmd, t_redir *redir);
 
 #endif

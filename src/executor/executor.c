@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 17:47:39 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:15:36 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 	if (cmd->is_error_redir == 0 && cmd->args[0] != NULL)
 	{
 		cmd->pid = fork();
-		ft_putstr_ln("cmd->path:", 2);
-		ft_putstr_fd(ft_itoa(cmd->pid), 2);
 		if (cmd->pid == 0)
 		{
 			set_signal_action(3);
@@ -58,7 +56,7 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
 			cmd_error(s, cmd->args[0]);
-			free_shell(s, s->status);
+			free_shell(s, 1);
 		}
 		set_signal_action(2);
 	}
@@ -73,21 +71,11 @@ static void	wait_child(t_shell *s)
 
 	c = s->cmd;
 	while (c)
-	{			ft_putstr_fd("antes status: ", 2);
-			ft_putstr_ln(ft_itoa(s->status), 2);
-			ft_putstr_fd("antes pid: ", 2);
-			ft_putstr_ln(c->args[0], 2);
-		if (c->pid != 0)
-			{waitpid(c->pid, &s->status, 0);}
-		ft_putstr_fd("depois wait status	: ", 2);
-		ft_putstr_ln(ft_itoa(s->status), 2);
-		ft_putstr_fd("depois pid: ", 2);
-		ft_putstr_ln(c->args[0], 2);
+	{	
+			waitpid(-1, &s->status, 0);
+			// s->status = WEXITSTATUS(s->status);
 		c = c->next;
 	}
-	s->status = div_status(s->status);
-	ft_putstr_ln("div status: ", 2);
-	ft_putstr_ln(ft_itoa(s->status), 2);
 }
 
 void	executor(t_shell *s)

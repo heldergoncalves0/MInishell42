@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:13:26 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 17:05:26 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:14:40 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,12 @@ void	cmd_not_found_error(char *s)
 	ft_putstr_fd(": command not found\n", 2);
 }
 
-int	invalid_file_error(t_cmd *cmd, char *s1, char *s2)
+int	invalid_file_error(char *s1, char *s2)
 {
-	if (cmd->is_error_redir == 1)
-	{
-		ft_putstr_fd("Minishell: ", 2);
-		ft_putstr_fd(s2, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_ln(s1, 2);
-	}
+	ft_putstr_fd("Minishell: ", 2);
+	ft_putstr_fd(s2, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_ln(s1, 2);
 	return (1);
 }
 

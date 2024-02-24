@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:21:25 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 17:05:43 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:40:52 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ static t_redir	*redir_struct(char *name, char *file, t_redir_type type)
 
 t_redir	*redir_compares(char **args)
 {
-	int	i;
-
-	i = 0;
 	if (ft_strncmp(args[0], ">", 2) == 0)
 		return (redir_struct(args[0], args[1], OUTFILE));
 	else if (ft_strncmp(args[0], "<", 2) == 0)
@@ -103,15 +100,18 @@ void	execute_redirects(t_shell *s, t_cmd *cmd)
 	while (cmd)
 	{
 		redir = cmd->red;
-		while (redir)
+		verify_files(cmd, redir);
+		printf("cmd: %d\n", cmd->is_error_redir);
+		redir = cmd->red;
+		while (redir && cmd->is_error_redir == 0)
 		{
 			if (redir->type == APPEND && handle_append(cmd, redir) == 0)
-				invalid_file_error(cmd, strerror(errno), redir->args[1]);
-			if (redir->type == INFILE && handle_infile(cmd, redir) == 0)
-				invalid_file_error(cmd, strerror(errno), redir->args[1]);
-			if (redir->type == OUTFILE && handle_outfile(cmd, redir) == 0)
-				invalid_file_error(cmd, strerror(errno), redir->args[1]);
-			if (redir->type == HEREDOC)
+				invalid_file_error(strerror(errno), redir->args[1]);
+			else if (redir->type == INFILE && handle_infile(cmd, redir) == 0)
+				invalid_file_error(strerror(errno), redir->args[1]);
+			else if (redir->type == OUTFILE && handle_outfile(cmd, redir) == 0)
+				invalid_file_error(strerror(errno), redir->args[1]);
+			else if (redir->type == HEREDOC)
 				handle_heredoc(s, cmd, redir);
 			redir = redir->next;
 		}
