@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/22 18:54:59 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:14:53 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*get_return(t_shell *s, char *ret)
 	char	*env_value;
 
 	if (ft_strlen(ret) == 0)
-			return (ft_strdup("$"));
+		return (ft_strdup("$"));
 	else if (ft_strncmp(ret, "?", 2) == 0)
 		return (ft_itoa(s->status));
 	else

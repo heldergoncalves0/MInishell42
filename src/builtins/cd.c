@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 15:55:01 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 21:19:19 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@ static void	handle_path(t_shell *s)
 	set_env(s->env, "PWD", tmp);
 	set_env(s->export, "PWD", tmp);
 	free(tmp);
+}
+
+void	handle_tilde(t_shell *s)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	tmp = get_env(s, "HOME");
+	chdir(tmp);
+	set_env(s->export, "OLDPWD", get_env(s, "PWD"));
+	set_env(s->export, "PWD", tmp);
+	set_env(s->env, "OLDPWD", get_env(s, "PWD"));
+	set_env(s->env, "PWD", tmp);
 }
 
 void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)

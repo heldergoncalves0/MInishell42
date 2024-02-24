@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 17:34:05 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:07:24 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ void	cmd_loop(char *tokens, t_shell *s)
 	t_cmd	*end;
 	t_cmd	*cmd;
 
-	cmds = ft_split(tokens, '\3');
+	cmds = ft_split(tokens, '\3', 0);
 	s->cmd = NULL;
 	end = NULL;
 	i = 0;
 	while (cmds[i])
 	{
-		cmd = new_cmd(ft_split(cmds[i], '\2'));
+		cmd = new_cmd(ft_split(cmds[i], '\2', 0));
 		if (cmd == NULL)
 			break ;
 		s->num_cmds++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:05:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 17:12:59 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/23 21:18:41 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int	str_digit(char *str)
 	{
 		if (ft_isalpha(str[i]))
 			return (0);
-        i++;
-    }
+		i++;
+	}
 	return (1);
 }
 

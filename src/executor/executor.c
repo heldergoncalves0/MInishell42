@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 18:15:36 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:33:25 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*find_executable_path(char *binary, int i)
 	{
 		if (access(binary, X_OK) == 0)
 			return (ft_strdup(binary));
-		path = ft_split(getenv("PATH"), ':');
+		path = ft_split(getenv("PATH"), ':', 0);
 		while (path[++i])
 		{
 			tmp = ft_strjoin(path[i], "/");
@@ -55,6 +55,7 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			close_fds(cmd->fd[0], cmd->fd[1]);
 			if (cmd->path)
 				execve(cmd->path, cmd->args, s->env);
+			s->error++;
 			cmd_error(s, cmd->args[0]);
 			free_shell(s, 1);
 		}
@@ -67,15 +68,20 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 
 static void	wait_child(t_shell *s)
 {
-	t_cmd *c;
+	t_cmd	*c;
 
 	c = s->cmd;
 	while (c)
-	{	
-			waitpid(-1, &s->status, 0);
-			// s->status = WEXITSTATUS(s->status);
+	{
+		if (c->pid != 0)
+			waitpid (c->pid, &s->status, 0);
 		c = c->next;
 	}
+	if (s->status == 13)
+		s->status = 0;
+	if (WIFEXITED(s->status))
+		WEXITSTATUS(s->status);
+	s->status = div_status(s->status);
 }
 
 void	executor(t_shell *s)
@@ -88,7 +94,8 @@ void	executor(t_shell *s)
 	cmd = s->cmd;
 	while (cmd)
 	{
-		set_signal_action(0);
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		cmd->path = find_executable_path(cmd->args[0], -1);
 		if (cmd->next && pipe(cmd->fd) == -1)
 			exit(s->status);
