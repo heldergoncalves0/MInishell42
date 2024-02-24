@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/22 13:01:55 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:10:14 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	print_export(char **s, int out)
 	{
 		i = 0;
 		flag = 0;
+		ft_putstr_fd("declare -x ", out);
 		while (s[j][i] && s[j][i] != '\n')
 		{
 			ft_putchar_fd(s[j][i], out);

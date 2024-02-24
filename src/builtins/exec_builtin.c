@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:58:02 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/24 15:10:41 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:47:41 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out)
 			dup2(out, STDOUT_FILENO);
 			close_fds(in, out);
 			close_fds(cmd->fd[0], cmd->fd[1]);
-			execute_builtin(cmd, s, in, out);
+			execute_builtin(cmd, s, STDIN_FILENO, STDOUT_FILENO);
 			free_shell(s, s->status);
 		}
 		set_signal_action(2);

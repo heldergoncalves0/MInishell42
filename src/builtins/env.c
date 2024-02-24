@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:40 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 15:45:44 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:58:30 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,5 @@ void	env_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		ft_putstr_fd(s->env[i++], out);
 		ft_putstr_fd("\n", out);
 	}
+	s->status = 0;
 }

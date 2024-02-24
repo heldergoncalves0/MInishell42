@@ -6,7 +6,7 @@
 /*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 15:15:06 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:54:16 by helferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 		cmd->is_error_redir = 1;
 	close_fd(cmd->in_file);
 	cmd->in_file = redir->fd;
+	//close(redir->fd);
 }
