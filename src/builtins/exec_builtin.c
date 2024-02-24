@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:58:02 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/24 15:10:41 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:37:11 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static int	help_builtin(t_cmd *cmd)
 	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
 		return (2);
 	else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-		return (3);
-	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		return (4);
-	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
+	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
 		return (5);
-	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
+	else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
 		return (6);
+	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
+		return (3);
 	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
 		return (7);
 	return (0);
@@ -56,7 +56,7 @@ int	is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out)
 	is_builtin = help_builtin(cmd);
 	if (!cmd->args[0] || cmd->is_error_redir || is_builtin == 0)
 		return (0);
-	if (s->num_cmds > 1 && is_builtin != 7 && is_builtin != 5)
+	if (s->num_cmds > 1 && is_builtin < 5)
 	{
 		cmd->pid = fork();
 		if (cmd->pid == 0)
@@ -66,7 +66,7 @@ int	is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out)
 			dup2(out, STDOUT_FILENO);
 			close_fds(in, out);
 			close_fds(cmd->fd[0], cmd->fd[1]);
-			execute_builtin(cmd, s, in, out);
+			execute_builtin(cmd, s, STDIN_FILENO, STDOUT_FILENO);
 			free_shell(s, s->status);
 		}
 		set_signal_action(2);

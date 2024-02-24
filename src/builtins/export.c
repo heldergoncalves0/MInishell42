@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/22 13:01:55 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:28:18 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	print_export(char **s, int out)
 	{
 		i = 0;
 		flag = 0;
+		ft_putstr_fd("declare -x ", out);
 		while (s[j][i] && s[j][i] != '\n')
 		{
 			ft_putchar_fd(s[j][i], out);
@@ -68,31 +69,49 @@ void	print_export(char **s, int out)
 	}
 }
 
-void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+void	export_loop(char *arg, t_shell *s)
 {
 	char	*var_name;
 	char	*var;
 
-	if (!cmd->args[1])
-		print_export(s->export, out);
-	else if (valid_name(cmd->args[1], in) == 0)
+	var = ft_strdup(arg);
+	var_name = get_var_name(var);
+	if (ft_strchr(var, '=') != NULL)
 	{
-		var = ft_strdup(cmd->args[1]);
-		var_name = get_var_name(var);
-		if (ft_strchr(var, '=') != NULL)
-		{
-			if (var_exist(s->export, var_name) == 1)
-				s->export = add_var_export(s->export, var, 0);
-			else
-				s->export = overwrite_var(s->export, var_name, 0, var);
-			s->env = overwrite_var(s->env, var_name, 0, var);
-		}
+		if (var_exist(s->export, var_name) == 1)
+			s->export = add_var_export(s->export, var, 0);
 		else
-			if (var_exist(s->export, var) == 1)
-				s->export = add_var_export(s->export, var, 0);
-		free(var);
-		free(var_name);
+			s->export = overwrite_var(s->export, var_name, 0, var);
+		s->env = overwrite_var(s->env, var_name, 0, var);
 	}
 	else
-		invalid_name_error(s, cmd->args[1]);
+		if (var_exist(s->export, var) == 1)
+			s->export = add_var_export(s->export, var, 0);
+	free(var);
+	free(var_name);
+}
+
+void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+{
+	size_t	i;
+	int		flag;
+
+	i = 1;
+	flag = 0;
+	if (!cmd->args[1])
+		print_export(s->export, out);
+	while (cmd->args[i])
+	{
+		if (valid_name(cmd->args[i], in) == 0)
+			export_loop(cmd->args[i], s);
+		else
+		{
+			s->status = 1;
+			flag = 1;
+			invalid_name_error(s, cmd->args[i]);
+		}
+		i++;
+	}
+	if (flag == 0)
+		s->status = 0;
 }

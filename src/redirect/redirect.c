@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:21:25 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 19:40:52 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:34:40 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,10 @@ void	execute_redirects(t_shell *s, t_cmd *cmd)
 	while (cmd)
 	{
 		redir = cmd->red;
-		verify_files(cmd, redir);
-		printf("cmd: %d\n", cmd->is_error_redir);
-		redir = cmd->red;
 		while (redir && cmd->is_error_redir == 0)
 		{
+			if (redir->args[1][0] == '$')
+				cmd->is_error_redir++;
 			if (redir->type == APPEND && handle_append(cmd, redir) == 0)
 				invalid_file_error(strerror(errno), redir->args[1]);
 			else if (redir->type == INFILE && handle_infile(cmd, redir) == 0)
@@ -118,3 +117,23 @@ void	execute_redirects(t_shell *s, t_cmd *cmd)
 		cmd = cmd->next;
 	}
 }
+
+// << ola << oi << lol << final cat
+// << EOF cat
+// c=c a=a t=t   depois->	$c$b$c src/main.c
+
+// echo ola |			=> testar com | "" e isso 
+// | echo ola			echo gui | | echo gui
+// resolver no syntax verify
+// $sdfksd echo gui
+// 
+// cat Makefile | grep pr | head -n 5 | hello	=> exit code 127
+// cat Makefile | grep pr | head -n 5 | cat ola	=> parte a shell (suposto)
+// cat < test # with non-existent test
+// cat > gui$lherme
+// export var ="cat Makefile | grep >"
+// c$var Makefile # with var=at
+// minishell
+// ctrl-C . 130 sur bin(ex : sleep 10)&line vide
+// ctrl-\ .131 sur bin
+// cat < Makefile | grep gcc > output

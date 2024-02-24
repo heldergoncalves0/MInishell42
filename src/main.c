@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/24 15:33:00 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:42:39 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	minishell_loop(t_shell *shell, char **env)
 	while (1)
 	{
 		shell->num_cmds = 0;
-		// 		ft_putstr_fd("echo $? -> ", 2);
-		// ft_putstr_ln(ft_itoa(shell->status), 2);
 		set_signal_action(0);
 		line = readline("Minishell: ");
 		if (line == NULL)

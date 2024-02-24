@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/24 12:14:53 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:43:17 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*valid_argument(char *ret)
-{
-	int	i;
-
-	i = 0;
-	while (ret[i])
-	{
-		if (ret[i] == '?')
-		{
-			ret[++i] = '\0';
-			break ;
-		}
-		else if (!ft_isalnum(ret[i]))
-		{
-			ret[i] = '\0';
-			break ;
-		}
-		i++;
-	}
-	return (ret);
-}
 
 static char	*get_return(t_shell *s, char *ret)
 {

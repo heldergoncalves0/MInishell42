@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:13:26 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 15:33:08 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 18:58:17 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ void	cmd_not_found_error(char *s)
 
 int	invalid_file_error(char *s1, char *s2)
 {
+	if (s2[0] == '$')
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(s2, 2);
+		ft_putstr_ln(": ambiguous redirect", 2);
+		return (0);
+	}
 	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(s2, 2);
 	ft_putstr_fd(": ", 2);

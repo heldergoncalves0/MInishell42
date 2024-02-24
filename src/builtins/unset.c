@@ -6,31 +6,58 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:48:05 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/16 17:09:44 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:38:33 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 16:48:05 by helferna          #+#    #+#             */
+/*   Updated: 2024/02/24 16:15:53 by helferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+static void	unset_something(char **s, char *arg)
 {
 	int	i;
 
 	i = 0;
-	(void)in;
-	(void)out;
-	while (s->env[i])
+	while (s[i])
 	{
-		if (ft_strncmp(s->env[i], cmd->args[1], ft_strlen(cmd->args[1])) == 0)
+		if (ft_strncmp(s[i], arg, ft_strlen(arg)) == 0)
 		{
-			free(s->env[i]);
-			while (s->env[i + 1] != NULL)
+			free(s[i]);
+			while (s[i + 1] != NULL)
 			{
-				s->env[i] = s->env[i + 1];
+				s[i] = s[i + 1];
 				i++;
 			}
-			s->env[i] = 0;
+			s[i] = 0;
 		}
+		i++;
+	}
+}
+
+void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+{
+	int	i;
+
+	i = 1;
+	(void)in;
+	(void)out;
+	while (cmd->args[i])
+	{
+		unset_something(s->env, cmd->args[i]);
+		unset_something(s->export, cmd->args[i]);
 		i++;
 	}
 }

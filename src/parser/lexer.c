@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 15:07:24 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 18:19:42 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	tokeniser(const char *str, t_shell *s)
 
 	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
 	if (tokens == NULL)
-		ft_putstr_fd("Syntax error, wrong number of quotes!\n", 2);
+		ft_putstr_fd("Syntax error\n", 2);
 	else
 		cmd_loop(tokens, s);
 	free(tokens);

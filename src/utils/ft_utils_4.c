@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_4.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:26:29 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 12:16:18 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 18:25:11 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,26 @@ int	ft_strint_quotes(char *s, int c)
 		counter++;
 	}
 	return (0);
+}
+
+char	*valid_argument(char *ret)
+{
+	int	i;
+
+	i = 0;
+	while (ret[i])
+	{
+		if (ret[i] == '?')
+		{
+			ret[++i] = '\0';
+			break ;
+		}
+		else if (!ft_isalnum(ret[i]))
+		{
+			ret[i] = '\0';
+			break ;
+		}
+		i++;
+	}
+	return (ret);
 }

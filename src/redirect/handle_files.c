@@ -6,33 +6,11 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:25:04 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 15:33:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/24 18:51:14 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	verify_file(t_redir *redir)
-{
-	static struct stat	info;
-
-	if (lstat(redir->args[1], &info) == 0)
-		return (1);
-	return (0);
-}
-
-void	verify_files(t_cmd *cmd, t_redir *redir)
-{
-	while (redir && cmd->is_error_redir == 0)
-	{
-		if (verify_file(redir) == 0)
-		{
-			cmd->is_error_redir++;
-			invalid_file_error(strerror(errno), redir->args[1]);
-		}
-		redir = redir->next;
-	}
-}
 
 int	handle_append(t_cmd *cmd, t_redir *redir)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 21:19:19 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:34:08 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	handle_path(t_shell *s)
 	free(tmp);
 }
 
-void	handle_tilde(t_shell *s)
+void	handle_diacritic(t_shell *s)
 {
 	char	*tmp;
 
@@ -49,6 +49,8 @@ void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			s->status = 1;
 			ft_putstr_ln("cd: too many arguments", 2);
 		}
+		else if (cmd->args[1][0] == '~')
+			handle_diacritic(s);
 		else if (chdir(cmd->args[1]) == 0)
 			handle_path(s);
 		else if (chdir(cmd->args[1]) != 0)
@@ -58,5 +60,3 @@ void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		}
 	}
 }
-
-// ~ / - 

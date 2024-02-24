@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:05:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 21:18:41 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:03:39 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	exit_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		}
 		return ;
 	}
-	ft_putstr_fd("exit\n", out);
+	if (s->num_cmds == 1)
+		ft_putstr_fd("exit\n", out);
 	close_fds(in, out);
 	free_shell(s, s->status);
 }
