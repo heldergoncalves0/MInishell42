@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:48:05 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/24 17:38:33 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:08:48 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	unset_something(char **s, char *arg)
 	}
 }
 
-void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+int	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	int	i;
 
@@ -60,4 +60,5 @@ void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		unset_something(s->export, cmd->args[i]);
 		i++;
 	}
+	return (0);
 }

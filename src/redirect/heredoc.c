@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 18:27:22 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 16:56:48 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 18:12:13 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 	pid = fork();
 	if (pid == 0)
 	{
+		close_fd(cmd->in_file);
 		set_signal_action(1);
 		redir->fd = open("/tmp/temp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (redir->fd < 0)
@@ -65,9 +66,9 @@ void	handle_heredoc(t_shell *s, t_cmd *cmd, t_redir *redir)
 	}
 	wait(NULL);
 	set_signal_action(2);
+	close_fd(cmd->in_file);
 	redir->fd = open("/tmp/temp.txt", O_RDONLY);
 	if (redir->fd == -1)
 		cmd->is_error_redir = 1;
-	close_fd(cmd->in_file);
 	cmd->in_file = redir->fd;
 }

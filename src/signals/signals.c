@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:36:06 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 15:30:02 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:51:38 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	g_signal = 0;
 
 static void	sigint_handler(int signal)
 {
-	if (signal == SIGINT)
+	if (signal == SIGINT && terminal()->is_exec == 0)
 	{
+		terminal()->status = 33280;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -27,10 +28,13 @@ static void	sigint_handler(int signal)
 
 static void	sig_parent_handler(int signal)
 {
-	if (signal == SIGQUIT)
+	if (signal == SIGQUIT && terminal()->is_exec == 0)
 		ft_putstr_fd("Quit (core dumped)\n", 2);
-	else if (signal == SIGINT)
+	else if (signal == SIGINT && terminal()->is_exec == 0)
+	{
+		terminal()->status = 130;
 		ft_putstr_fd("\n", 2);
+	}
 }
 
 static void	sig_hd_handler(int signal)

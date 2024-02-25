@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:03:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 13:28:08 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 10:05:49 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	sintax_verify(t_shell *shell)
 	size_t	i;
 	t_cmd	*cmd;
 
-	i = 0;
 	cmd = shell->cmd;
 	while (cmd)
 	{

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 17:28:18 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:02:15 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	export_loop(char *arg, t_shell *s)
 	free(var_name);
 }
 
-void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+int	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	size_t	i;
 	int		flag;
@@ -106,12 +106,10 @@ void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			export_loop(cmd->args[i], s);
 		else
 		{
-			s->status = 1;
 			flag = 1;
 			invalid_name_error(s, cmd->args[i]);
 		}
 		i++;
 	}
-	if (flag == 0)
-		s->status = 0;
+	return (flag);
 }

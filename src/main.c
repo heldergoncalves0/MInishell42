@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/24 16:42:39 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:43:12 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,22 @@ void	valid_input(t_shell *shell, char *str, char *line)
 {
 	add_history(str);
 	free(line);
-	tokeniser(str, shell);
-	free(str);
-	if (sintax_verify(shell) == 0)
+	terminal()->is_exec = 1;
+	if (tokeniser(str, shell) == 0)
 	{
-		split_redirect(shell, 0);
-		expander(shell);
-		handle_quotes(shell);
-		execute_redirects(shell, shell->cmd);
-		executor(shell);
+		free(str);
+		if (sintax_verify(shell) == 0)
+		{
+			split_redirect(shell, 0);
+			expander(shell);
+			handle_quotes(shell);
+			execute_redirects(shell, shell->cmd);
+			executor(shell);
+		}
 	}
+	else
+		free(str);
+	terminal()->is_exec = 0;
 	shell->cmd = free_cmds(shell->cmd);
 }
 
@@ -39,7 +45,7 @@ void	minishell_loop(t_shell *shell, char **env)
 	while (1)
 	{
 		shell->num_cmds = 0;
-		set_signal_action(0);
+		set_signal_action(0);printf("STATUS: %d\n", shell->status);
 		line = readline("Minishell: ");
 		if (line == NULL)
 			free_shell(shell, shell->status);

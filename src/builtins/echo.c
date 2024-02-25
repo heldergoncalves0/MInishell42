@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: helferna <helferna@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:12:46 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/23 22:20:37 by helferna         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:40:57 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,13 @@ static int	flag_n_echo(char *s)
 		return (0);
 }
 
-void	echo_cmd(t_cmd *cmd, t_shell *s, int flag, int out)
+int	echo_cmd(t_cmd *cmd, t_shell *s, int flag, int out)
 {
 	int	i;
 
 	(void)s;
 	i = 1;
-	if (cmd->args[i] == NULL)
-		ft_putstr_fd("\n", out);
-	else
+	if (cmd->args[i] != NULL)
 	{
 		while (flag_n_echo(cmd->args[i]))
 		{
@@ -55,6 +53,8 @@ void	echo_cmd(t_cmd *cmd, t_shell *s, int flag, int out)
 		}
 		if (flag == 0)
 			ft_putstr_fd("\n", out);
-		s->status = 0;
+		return (0);
 	}
+	ft_putstr_fd("\n", out);
+	return (1);
 }

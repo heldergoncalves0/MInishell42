@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:54:09 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 18:19:42 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 10:26:20 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static t_cmd	*new_cmd(char **args)
 	return (cmd);
 }
 
-void	cmd_loop(char *tokens, t_shell *s)
+static int	cmd_loop(char *tokens, t_shell *s, int valid)
 {
 	char	**cmds;
 	size_t	i;
@@ -88,31 +88,40 @@ void	cmd_loop(char *tokens, t_shell *s)
 	cmds = ft_split(tokens, '\3', 0);
 	s->cmd = NULL;
 	end = NULL;
-	i = 0;
-	while (cmds[i])
+	i = -1;
+	while (cmds[++i])
 	{
+		if (ft_strncmp(cmds[i], "\2", 2) == 0 || cmds[i] == NULL)
+			valid = 0;
 		cmd = new_cmd(ft_split(cmds[i], '\2', 0));
-		if (cmd == NULL)
-			break ;
 		s->num_cmds++;
 		if (!s->cmd)
 			s->cmd = cmd;
 		else if (end)
 			end->next = cmd;
 		end = cmd;
-		i++;
 	}
 	free_array(cmds);
+	return (valid);
 }
 
-void	tokeniser(const char *str, t_shell *s)
+int	tokeniser(const char *str, t_shell *s)
 {
 	char	*tokens;
+	int		valid;
 
+	valid = 0;
 	tokens = line_dup((char *) str, ft_calloc(10, ft_strlen(str)));
 	if (tokens == NULL)
 		ft_putstr_fd("Syntax error\n", 2);
 	else
-		cmd_loop(tokens, s);
+	{
+		if (cmd_loop(tokens, s, 1) == 0)
+		{
+			ft_putstr_fd("Syntax Error !\n", 2);
+			valid = 1;
+		}
+	}
 	free(tokens);
+	return (valid);
 }

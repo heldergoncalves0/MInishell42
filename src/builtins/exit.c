@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:05:43 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 17:03:39 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:40:53 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,29 @@ static int	str_digit(char *str)
 	return (1);
 }
 
-void	exit_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+int		exit_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	if (cmd->args[1])
 	{
 		if (cmd->args[2])
 		{
-			s->status = 1;
-			ft_putstr_ln("exit: too many arguments", 2);
+			ft_putstr_ln("exit\nexit: too many arguments", 2);
+			close_fds(in, out);
+			return (1);
 		}
-		else if (!str_digit(cmd->args[1]))
+		else if (str_digit(cmd->args[1]) == 0)
 		{
-			ft_putstr_ln("exit: numeric argument required", 2);
+			ft_putstr_ln("exit\nMinishell: exit: numeric argument required", 2);
+			close_fds(in, out);
 			free_shell(s, 2);
 		}
-		else if (cmd->args[1])
-		{
-			ft_putstr_fd("exit\n", out);
-			close_fds(in, out);
-			free_shell(s, ft_atoi(cmd->args[1]));
-		}
-		return ;
+		ft_putstr_fd("exit\n", out);
+		close_fds(in, out);
+		free_shell(s, ft_atoi(cmd->args[1]));
 	}
 	if (s->num_cmds == 1)
 		ft_putstr_fd("exit\n", out);
 	close_fds(in, out);
-	free_shell(s, s->status);
+	free_shell(s, 0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:26:29 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/24 18:25:11 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 18:03:15 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,28 @@ void	close_fds(int fd1, int fd2)
 	close_fd(fd2);
 }
 
-void	cmd_error(t_shell *s, char *str)
+int	cmd_error(char *str)
 {
 	static struct stat	stats;
-
-	if (lstat(str, &stats) != 0 && ft_strlen(str) != 0)
+	
+	if (lstat(str, &stats) != 0)
 	{
-		s->status = 127;
-		ft_putstr_fd(str, 2);
+		if (ft_strlen(str) != 0)
+			ft_putstr_fd(str, 2);
+		else
+			ft_putstr_fd("\'\'", 2);
 		ft_putstr_ln(": command not found", 2);
+		return (127);
 	}
-	if (S_ISDIR(stats.st_mode))
+	if (errno == EACCES)
 	{
-		s->status = 126;
-		ft_putstr_fd(str, 2);
-		ft_putstr_ln(": Is a directory", 2);
+		if (S_ISDIR(stats.st_mode))
+			dir_error(str);
+		return (126);
 	}
+	if (errno == ENOENT)
+		return (2);
+	return (0);
 }
 
 char	*ft_strchr_quotes(char *s, int c)
@@ -43,6 +49,8 @@ char	*ft_strchr_quotes(char *s, int c)
 
 	flag = 0;
 	i = 1;
+	if (s == NULL)
+		return (NULL);
 	while (*s)
 	{
 		if (*s == 34 && flag == 0)
@@ -58,7 +66,7 @@ char	*ft_strchr_quotes(char *s, int c)
 			return ((char *)s);
 		s++;
 	}
-	return (0);
+	return (NULL);
 }
 
 int	ft_strint_quotes(char *s, int c)

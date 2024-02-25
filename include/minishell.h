@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/24 19:23:43 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 18:05:31 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,34 +72,31 @@ typedef struct s_shell{
 	char	**env;
 	int		num_cmds;
 	char	**export;
-	int		error;
 	int		status;
+	int		is_exec;
 }	t_shell;
 
-t_shell	*shell(void);
-
 //--------------------------- LEXER ----------------------------//
-void	tokeniser(const char *str, t_shell *s);
+int		tokeniser(const char *str, t_shell *s);
 
 //---------------------------EXPANDER---------------------------//
 void	expander(t_shell *shell);
 char	*expand_argument(t_shell *s, char *str, size_t j);
-char	*get_env_return(t_shell *s, char *ret);
 char	*valid_argument(char *ret);
 
 //---------------------------- EXE -----------------------------//
 void	executor(t_shell *s);
-char	*find_executable_path(char *binary, int i);
+char	*find_executable_path(t_shell *s, char *binary, int i);
 
 // //----------------------- BUILTINS --------------------------//
-int		is_builtin_execute(t_cmd *cmd, t_shell *s, int in, int out);
-void	echo_cmd(t_cmd *cmd, t_shell *s, int flag, int out);
-void	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
-void	unset_cmd(t_cmd *cmd, t_shell *s, int in, int out);
-void	pwd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
-void	exit_cmd(t_cmd *cmd, t_shell *s, int in, int out);
-void	env_cmd(t_cmd *cmd, t_shell *s, int in, int out);
-void	export_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+int		is_builtin(t_cmd *cmd, t_shell *s, int in, int out);
+int		echo_cmd(t_cmd *cmd, t_shell *s, int flag, int out);
+int		cd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+int		unset_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+int		pwd_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+int		exit_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+int		env_cmd(t_cmd *cmd, t_shell *s, int in, int out);
+int		export_cmd(t_cmd *cmd, t_shell *s, int in, int out);
 
 //--------------------------- UTILS ----------------------------//
 char	**copy_array(char **s);
@@ -153,6 +150,7 @@ void	cmd_not_found_error(char *s);
 int		invalid_file_error(char *s1, char *s2);
 void	ctrl_d_error(char *s);
 void	cd_error(char *s);
+void	dir_error(char *s);
 
 int		is_arg_redir(char *s);
 int		sintax_verify(t_shell *shell);
@@ -160,9 +158,11 @@ int		ft_putstr_ln(char *s, int fd);
 char	**sort_env(char **env_copy, int i);
 int		var_exist(char **s, char *str);
 int		change_outfile(int out, int cmd_out, int *fd);
-int		div_status(int status);
 void	close_fds(int fd1, int fd2);
-void	cmd_error(t_shell *s, char *str);
+int		cmd_error(char *str);
 int		ft_ismorealnum(int str);
+int		change_infile(int in, int cmd_in);
+void	clean_null_expansion(t_shell *s);
+t_shell *terminal(void);
 
 #endif

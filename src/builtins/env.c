@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:40 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/23 15:45:44 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:09:02 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	set_env(char **env, char *key, char *value)
 	}
 }
 
-void	env_cmd(t_cmd *cmd, t_shell *s, int in, int out)
+int	env_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 {
 	int		i;
 
@@ -82,4 +82,5 @@ void	env_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		ft_putstr_fd(s->env[i++], out);
 		ft_putstr_fd("\n", out);
 	}
+	return (0);
 }
