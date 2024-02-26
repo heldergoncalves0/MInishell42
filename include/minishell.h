@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 17:25:37 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/25 18:05:31 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:02:39 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@
 # define CYN "\e[0;36m"
 # define WHT "\e[0;37m"
 # define RES "\e[0;0m"
-
-//----------------GLOBAL FOR SIGNAL----------------------------//
-extern int	g_signal;
 
 typedef enum e_redir_type{
 	NONE,
@@ -74,6 +71,7 @@ typedef struct s_shell{
 	char	**export;
 	int		status;
 	int		is_exec;
+	int		hd;
 }	t_shell;
 
 //--------------------------- LEXER ----------------------------//
@@ -151,7 +149,6 @@ int		invalid_file_error(char *s1, char *s2);
 void	ctrl_d_error(char *s);
 void	cd_error(char *s);
 void	dir_error(char *s);
-
 int		is_arg_redir(char *s);
 int		sintax_verify(t_shell *shell);
 int		ft_putstr_ln(char *s, int fd);
@@ -163,6 +160,6 @@ int		cmd_error(char *str);
 int		ft_ismorealnum(int str);
 int		change_infile(int in, int cmd_in);
 void	clean_null_expansion(t_shell *s);
-t_shell *terminal(void);
+t_shell	*terminal(void);
 
 #endif

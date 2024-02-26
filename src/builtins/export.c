@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:03 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/25 16:02:15 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:26:33 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	export_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 			export_loop(cmd->args[i], s);
 		else
 		{
-			flag = 1;
+			flag = 257;
 			invalid_name_error(s, cmd->args[i]);
 		}
 		i++;

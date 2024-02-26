@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:11:31 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/25 16:25:16 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:59:15 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,6 @@ char	*expand_argument(t_shell *s, char *str, size_t j)
 	return (str);
 }
 
-static char **remove_expansions(char **args, int j, int i)
-{
-	i = j + 1;
-
-	if (args == NULL)
-		return (args);
-	free(args[j]);
-	while (args && args[i])
-	{
-		args[j++] = args[i];
-		args[j] = NULL;
-		i++;
-	}
-	args[j] = NULL;
-	return (args);
-} 
-
 void	expander(t_shell *shell)
 {
 	size_t	j;
@@ -124,7 +107,7 @@ void	expander(t_shell *shell)
 		while (cmd->args[++j])
 		{
 			while (ft_strchr_quotes(cmd->args[j], '$') != NULL)
-			{	
+			{
 				cmd->args[j] = expand_argument(shell, cmd->args[j], 0);
 				if (!cmd->args[j] || *cmd->args[j] == '\0')
 					cmd->args = remove_expansions(cmd->args, j, 0);

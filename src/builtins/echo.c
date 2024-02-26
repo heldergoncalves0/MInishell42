@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:12:46 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/25 16:40:57 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:38:25 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ int	echo_cmd(t_cmd *cmd, t_shell *s, int flag, int out)
 		return (0);
 	}
 	ft_putstr_fd("\n", out);
-	return (1);
+	return (0);
 }

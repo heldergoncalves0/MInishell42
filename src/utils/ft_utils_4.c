@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:26:29 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/25 18:03:15 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:55:20 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	close_fds(int fd1, int fd2)
 int	cmd_error(char *str)
 {
 	static struct stat	stats;
-	
-	if (lstat(str, &stats) != 0)
+
+	if (lstat(str, &stats) == -1)
 	{
 		if (ft_strlen(str) != 0)
 			ft_putstr_fd(str, 2);
@@ -31,14 +31,14 @@ int	cmd_error(char *str)
 		ft_putstr_ln(": command not found", 2);
 		return (127);
 	}
+	if (errno == ENOENT)
+		return (514);
 	if (errno == EACCES)
 	{
 		if (S_ISDIR(stats.st_mode))
 			dir_error(str);
 		return (126);
 	}
-	if (errno == ENOENT)
-		return (2);
 	return (0);
 }
 

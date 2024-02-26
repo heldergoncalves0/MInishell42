@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:13:24 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/25 18:02:13 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:58:07 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	change_outfile(int out, int cmd_out, int *fd)
 int	change_infile(int in, int cmd_in)
 {
 	if (cmd_in != -1)
-	{	
+	{
 		close_fd(in);
 		return (cmd_in);
 	}
@@ -35,7 +35,7 @@ int	change_infile(int in, int cmd_in)
 void	clean_null_expansion(t_shell *s)
 {
 	size_t	i;
-	t_cmd *cmd;
+	t_cmd	*cmd;
 	size_t	j;
 
 	i = 0;
@@ -59,7 +59,7 @@ void	clean_null_expansion(t_shell *s)
 	}
 }
 
-t_shell *terminal()
+t_shell	*terminal(void)
 {
 	static t_shell	shell;
 

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:18:45 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/25 16:43:12 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:35:04 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	minishell_loop(t_shell *shell, char **env)
 	while (1)
 	{
 		shell->num_cmds = 0;
-		set_signal_action(0);printf("STATUS: %d\n", shell->status);
+		set_signal_action(0);
 		line = readline("Minishell: ");
 		if (line == NULL)
 			free_shell(shell, shell->status);

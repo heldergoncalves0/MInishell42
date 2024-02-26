@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:52:01 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/25 16:19:43 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:27:02 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		if (cmd->args[2])
 		{
 			ft_putstr_ln("cd: too many arguments", 2);
-			return (1);
+			return (257);
 		}
 		else if (cmd->args[1][0] == '~')
 			handle_diacritic(s);
@@ -55,7 +55,7 @@ int	cd_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		else if (chdir(cmd->args[1]) != 0)
 		{
 			cd_error(cmd->args[1]);
-			return (1);
+			return (257);
 		}
 		return (0);
 	}

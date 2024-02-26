@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:58:02 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/25 16:39:30 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:25:16 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,10 @@ int	is_builtin(t_cmd *cmd, t_shell *s, int in, int out)
 	{
 		if (s->num_cmds > 1 && is_builtin < 5)
 			return (builtin_execute(cmd, s, in, out));
-		execute_builtin(cmd, s, in, out);
+		s->status = execute_builtin(cmd, s, in, out);
 		close_fds(in, out);
 		return (1);
 	}
 	close_fds(in, out);
 	return (-1);
 }
-
-//env ola

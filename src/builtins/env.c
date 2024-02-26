@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:25:40 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/25 16:09:02 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:56:53 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ int	env_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 	i = 0;
 	(void) in;
 	(void) cmd;
+	if (cmd->args[1])
+	{
+		ft_putstr_fd("env: \'", 2);
+		ft_putstr_fd(cmd->args[1], 2);
+		ft_putstr_fd("\': No such file or directory\n", 2);
+		return (32512);
+	}
 	while (s->env[i])
 	{
 		ft_putstr_fd(s->env[i++], out);

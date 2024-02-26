@@ -6,13 +6,11 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:36:06 by gcatarin          #+#    #+#             */
-/*   Updated: 2024/02/25 17:51:38 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:48:39 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_signal = 0;
 
 static void	sigint_handler(int signal)
 {
@@ -41,7 +39,7 @@ static void	sig_hd_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
-		g_signal = 10;
+		terminal()->hd = 10;
 		close(STDIN_FILENO);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gcatarin <gcatarin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:23:24 by helferna          #+#    #+#             */
-/*   Updated: 2024/02/25 18:07:59 by gcatarin         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:47:56 by gcatarin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execute_cmd(t_cmd *cmd, t_shell *s, int in, int out)
 		set_signal_action(2);
 	}
 	if (cmd->is_error_redir > 0)
-		s->status = 1;
+		s->status = 257;
 	close_fds(in, out);
 }
 
